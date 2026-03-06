@@ -1,122 +1,165 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, ChevronDown, Search, Bed } from 'lucide-react';
+import { MapPin, Search, Home, Bed, ChevronDown } from 'lucide-react';
 
-const PRICE_RANGES = ['Any Price', 'Under $500K', '$500K–$1M', '$1M–$2M', '$2M+'];
-const BEDROOM_OPTIONS = ['Any', '1+', '2+', '3+', '4+', '5+'];
-const PROPERTY_TYPES = ['Any Type', 'House', 'Apartment', 'Villa', 'Penthouse', 'Cottage'];
+const CITIES = ['Any Location', 'Marrakech', 'Casablanca', 'Rabat', 'Tangier', 'Agadir', 'Essaouira', 'Fes'];
 
-interface SelectProps {
-    icon: React.ReactNode;
-    label: string;
-    options: string[];
-    value: string;
-    onChange: (val: string) => void;
-}
+const SALE_PRICE_RANGES = [
+    { label: 'Any Price', min: 0, max: Infinity },
+    { label: 'Under 2M MAD', min: 0, max: 2_000_000 },
+    { label: '2M – 5M MAD', min: 2_000_000, max: 5_000_000 },
+    { label: '5M – 10M MAD', min: 5_000_000, max: 10_000_000 },
+    { label: '10M+ MAD', min: 10_000_000, max: Infinity },
+];
 
-function SelectField({ icon, label, options, value, onChange }: SelectProps) {
-    return (
-        <div className="relative flex-1 min-w-0">
-            <div className="flex items-center gap-2 px-4 py-3 cursor-pointer group">
-                <span className="text-[#7C5C44] shrink-0">{icon}</span>
-                <div className="flex-1 min-w-0">
-                    <p className="text-[10px] font-semibold uppercase tracking-widest text-[#999] mb-0.5" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                        {label}
-                    </p>
-                    <select
-                        value={value}
-                        onChange={(e) => onChange(e.target.value)}
-                        className="w-full bg-transparent text-[14px] font-medium text-[#1A1A1A] outline-none cursor-pointer appearance-none pr-5"
-                        style={{ fontFamily: "'Inter', sans-serif" }}
-                    >
-                        {options.map((opt) => (
-                            <option key={opt} value={opt}>{opt}</option>
-                        ))}
-                    </select>
-                </div>
-                <ChevronDown size={14} className="text-[#999] shrink-0 absolute right-4 bottom-3.5" />
-            </div>
-        </div>
-    );
-}
+const RENT_PRICE_RANGES = [
+    { label: 'Any Price', min: 0, max: Infinity },
+    { label: 'Under 8,000 MAD', min: 0, max: 8_000 },
+    { label: '8,000 – 15,000 MAD', min: 8_000, max: 15_000 },
+    { label: '15,000 – 25,000 MAD', min: 15_000, max: 25_000 },
+    { label: '25,000+ MAD', min: 25_000, max: Infinity },
+];
+
+const BEDROOM_OPTIONS = [
+    { label: 'Any', min: 0 },
+    { label: '1+', min: 1 },
+    { label: '2+', min: 2 },
+    { label: '3+', min: 3 },
+    { label: '4+', min: 4 },
+    { label: '5+', min: 5 },
+];
 
 export function PropertySearchForm() {
     const navigate = useNavigate();
-    const [location, setLocation] = useState('');
-    const [type, setType] = useState('Any Type');
-    const [price, setPrice] = useState('Any Price');
-    const [beds, setBeds] = useState('Any');
+    const [dealType, setDealType] = useState<'Sale' | 'Rent'>('Sale');
+    const [city, setCity] = useState('Any Location');
+    const [priceIdx, setPriceIdx] = useState(0);
+    const [bedsIdx, setBedsIdx] = useState(0);
+
+    const priceRanges = dealType === 'Sale' ? SALE_PRICE_RANGES : RENT_PRICE_RANGES;
 
     const handleSearch = () => {
         const params = new URLSearchParams();
-        if (location) params.set('city', location);
-        if (type !== 'Any Type') params.set('property_type', type);
+        params.set('type', dealType);
+        if (city !== 'Any Location') params.set('city', city);
+        const pr = priceRanges[priceIdx];
+        if (pr.min > 0) params.set('minPrice', String(pr.min));
+        if (pr.max !== Infinity) params.set('maxPrice', String(pr.max));
+        const br = BEDROOM_OPTIONS[bedsIdx];
+        if (br.min > 0) params.set('minBedrooms', String(br.min));
         navigate(`/properties?${params.toString()}`);
     };
 
     return (
-        <div
-            className="bg-white rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.10)] overflow-hidden flex flex-col md:flex-row md:items-center"
-            style={{ maxWidth: 860 }}
-        >
-            {/* Location */}
-            <div className="flex-1 min-w-0 border-b md:border-b-0 md:border-r border-[#EDE0D5]">
-                <div className="px-4 py-3">
-                    <p className="text-[10px] font-semibold uppercase tracking-widest text-[#999] mb-0.5" style={{ fontFamily: "'Outfit', sans-serif" }}>Location</p>
-                    <div className="flex items-center gap-2">
-                        <MapPin size={16} className="text-[#7C5C44] shrink-0" />
-                        <input
-                            type="text"
-                            placeholder="Where do you want to live?"
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            className="flex-1 text-[14px] font-medium text-[#1A1A1A] bg-transparent outline-none placeholder:text-[#BDBDBD]"
-                            style={{ fontFamily: "'Inter', sans-serif" }}
-                        />
+        <div className="w-full max-w-[900px] mx-auto">
+            {/* Rent / Buy Toggle */}
+            <div className="flex mb-4">
+                {(['Sale', 'Rent'] as const).map(t => (
+                    <button
+                        key={t}
+                        onClick={() => { setDealType(t); setPriceIdx(0); }}
+                        className="px-6 py-2.5 text-[13px] font-bold uppercase tracking-wider rounded-full transition-all duration-200 mr-2"
+                        style={{
+                            fontFamily: "'Outfit', sans-serif",
+                            background: dealType === t ? '#1A1A1A' : 'rgba(255,255,255,0.5)',
+                            color: dealType === t ? '#fff' : '#888',
+                        }}
+                    >
+                        {t === 'Sale' ? 'Buy' : 'Rent'}
+                    </button>
+                ))}
+            </div>
+
+            {/* Search Card */}
+            <div
+                className="bg-white rounded-2xl p-2"
+                style={{ boxShadow: '0 12px 48px rgba(0,0,0,0.12)' }}
+            >
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+                    {/* Location */}
+                    <div className="px-5 py-4 border-b sm:border-b lg:border-b-0 lg:border-r border-[#F0E6DB]">
+                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAAAAA' }}>
+                            Location
+                        </label>
+                        <div className="flex items-center gap-2.5">
+                            <MapPin size={16} className="shrink-0" style={{ color: '#7C5C44' }} />
+                            <select
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
+                                className="flex-1 bg-transparent text-[14px] font-medium outline-none cursor-pointer appearance-none"
+                                style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
+                            >
+                                {CITIES.map(c => <option key={c}>{c}</option>)}
+                            </select>
+                            <ChevronDown size={13} className="shrink-0" style={{ color: '#CCC' }} />
+                        </div>
+                    </div>
+
+                    {/* Property Type */}
+                    <div className="px-5 py-4 border-b sm:border-b lg:border-b-0 lg:border-r border-[#F0E6DB]">
+                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAAAAA' }}>
+                            Property Type
+                        </label>
+                        <div className="flex items-center gap-2.5">
+                            <Home size={16} className="shrink-0" style={{ color: '#7C5C44' }} />
+                            <span className="text-[14px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}>
+                                {dealType === 'Sale' ? 'For Sale' : 'For Rent'}
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Price Range */}
+                    <div className="px-5 py-4 border-b sm:border-b-0 lg:border-r border-[#F0E6DB]">
+                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAAAAA' }}>
+                            Price Range
+                        </label>
+                        <div className="flex items-center gap-2.5">
+                            <span className="shrink-0 text-[14px] font-bold" style={{ color: '#7C5C44' }}>MAD</span>
+                            <select
+                                value={priceIdx}
+                                onChange={(e) => setPriceIdx(Number(e.target.value))}
+                                className="flex-1 bg-transparent text-[14px] font-medium outline-none cursor-pointer appearance-none"
+                                style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
+                            >
+                                {priceRanges.map((pr, i) => <option key={pr.label} value={i}>{pr.label}</option>)}
+                            </select>
+                            <ChevronDown size={13} className="shrink-0" style={{ color: '#CCC' }} />
+                        </div>
+                    </div>
+
+                    {/* Bedrooms */}
+                    <div className="px-5 py-4">
+                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAAAAA' }}>
+                            Bedrooms
+                        </label>
+                        <div className="flex items-center gap-2.5">
+                            <Bed size={16} className="shrink-0" style={{ color: '#7C5C44' }} />
+                            <select
+                                value={bedsIdx}
+                                onChange={(e) => setBedsIdx(Number(e.target.value))}
+                                className="flex-1 bg-transparent text-[14px] font-medium outline-none cursor-pointer appearance-none"
+                                style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
+                            >
+                                {BEDROOM_OPTIONS.map((b, i) => <option key={b.label} value={i}>{b.label}</option>)}
+                            </select>
+                            <ChevronDown size={13} className="shrink-0" style={{ color: '#CCC' }} />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="border-b md:border-b-0 md:border-r border-[#EDE0D5]">
-                <SelectField
-                    icon={<ChevronDown size={15} />}
-                    label="Type"
-                    options={PROPERTY_TYPES}
-                    value={type}
-                    onChange={setType}
-                />
-            </div>
-
-            <div className="border-b md:border-b-0 md:border-r border-[#EDE0D5]">
-                <SelectField
-                    icon={<ChevronDown size={15} />}
-                    label="Price Range"
-                    options={PRICE_RANGES}
-                    value={price}
-                    onChange={setPrice}
-                />
-            </div>
-
-            <div className="border-b md:border-b-0 md:border-r border-[#EDE0D5]">
-                <SelectField
-                    icon={<Bed size={15} />}
-                    label="Bedrooms"
-                    options={BEDROOM_OPTIONS}
-                    value={beds}
-                    onChange={setBeds}
-                />
-            </div>
-
-            {/* Search Button */}
-            <div className="p-3">
-                <button
-                    onClick={handleSearch}
-                    className="flex items-center gap-2 bg-[#1A1A1A] hover:bg-[#7C5C44] text-white text-sm font-semibold px-6 py-3 rounded-xl transition-all duration-200 whitespace-nowrap w-full md:w-auto justify-center"
-                    style={{ fontFamily: "'Outfit', sans-serif" }}
-                >
-                    <Search size={16} />
-                    Search
-                </button>
+                {/* Search Button — full width below fields */}
+                <div className="px-2 pb-2 pt-1">
+                    <button
+                        onClick={handleSearch}
+                        className="w-full flex items-center justify-center gap-2.5 text-white text-[15px] font-bold py-4 rounded-xl transition-all duration-200"
+                        style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = '#7C5C44')}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = '#1A1A1A')}
+                    >
+                        <Search size={18} />
+                        Search Properties
+                    </button>
+                </div>
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, ArrowRight, Loader2, Home } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Loader2 } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import { Navbar } from '../../components/layout/Navbar';
 import { Footer } from '../../components/layout/Footer';
@@ -25,7 +25,6 @@ export default function Login() {
 
             if (authError) throw authError;
 
-            // Fetch user role
             const { data: userData, error: userError } = await supabase
                 .from('users')
                 .select('role')
@@ -47,34 +46,40 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen pt-20 bg-brand-bg flex flex-col">
+        <div className="min-h-screen flex flex-col" style={{ background: '#FBF8F5' }}>
             <Navbar />
-            <main className="flex-1 flex items-center justify-center p-4">
-                <div className="w-full max-w-md">
-                    <div className="bg-white rounded-[2.5rem] p-10 shadow-2xl shadow-brand-secondary/10 border border-brand-secondary/5 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-secondary/5 rounded-full translate-x-16 -translate-y-16"></div>
-
-                        <div className="text-center mb-10 relative z-10">
-                            <h1 className="text-4xl font-display font-bold text-brand-primary mb-2">Welcome Back</h1>
-                            <p className="text-brand-accent italic font-medium">Log in to manage your property journey</p>
+            <main className="flex-1 flex items-center justify-center p-5 pt-28">
+                <div className="w-full max-w-[420px]">
+                    <div className="bg-white rounded-2xl p-8 sm:p-10" style={{ boxShadow: '0 4px 32px rgba(0,0,0,0.08)' }}>
+                        {/* Header */}
+                        <div className="text-center mb-8">
+                            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                                Welcome Back
+                            </h1>
+                            <p className="text-[14px]" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
+                                Log in to your Dwellio account
+                            </p>
                         </div>
 
                         {error && (
-                            <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-medium border border-red-100 italic">
+                            <div className="mb-5 p-4 rounded-xl text-[13px] font-medium" style={{ background: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA', fontFamily: "'Inter', sans-serif" }}>
                                 {error}
                             </div>
                         )}
 
-                        <form onSubmit={handleLogin} className="space-y-6 relative z-10">
+                        <form onSubmit={handleLogin} className="space-y-5">
                             <div>
-                                <label className="block text-[10px] font-bold uppercase text-brand-accent tracking-widest mb-2 ml-4">Email Address</label>
-                                <div className="relative group">
-                                    <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-accent/40 group-focus-within:text-brand-accent transition-colors" size={18} />
+                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                    Email Address
+                                </label>
+                                <div className="relative">
+                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#CCC' }} />
                                     <input
                                         type="email"
                                         required
-                                        placeholder="name@example.com"
-                                        className="w-full pl-14 pr-6 py-4 bg-brand-bg rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-medium shadow-inner"
+                                        placeholder="you@example.com"
+                                        className="w-full pl-11 pr-4 py-3.5 rounded-xl text-[14px] font-medium outline-none transition-colors"
+                                        style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
@@ -82,17 +87,22 @@ export default function Login() {
                             </div>
 
                             <div>
-                                <div className="flex justify-between items-center mb-2 ml-4">
-                                    <label className="block text-[10px] font-bold uppercase text-brand-accent tracking-widest">Password</label>
-                                    <Link to="/forgot-password" title="reset-password" className="text-[10px] font-bold uppercase text-brand-primary hover:underline pr-4">Forgot?</Link>
+                                <div className="flex justify-between items-center mb-2">
+                                    <label className="text-[11px] font-bold uppercase tracking-widest" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                        Password
+                                    </label>
+                                    <Link to="/forgot-password" className="text-[11px] font-semibold transition-colors" style={{ fontFamily: "'Inter', sans-serif", color: '#7C5C44' }}>
+                                        Forgot password?
+                                    </Link>
                                 </div>
-                                <div className="relative group">
-                                    <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-accent/40 group-focus-within:text-brand-accent transition-colors" size={18} />
+                                <div className="relative">
+                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#CCC' }} />
                                     <input
                                         type="password"
                                         required
                                         placeholder="••••••••"
-                                        className="w-full pl-14 pr-6 py-4 bg-brand-bg rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-medium shadow-inner"
+                                        className="w-full pl-11 pr-4 py-3.5 rounded-xl text-[14px] font-medium outline-none transition-colors"
+                                        style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
@@ -102,31 +112,28 @@ export default function Login() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="btn-primary w-full py-5 text-lg flex items-center justify-center space-x-2 shadow-xl shadow-brand-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-70 disabled:hover:scale-100"
+                                className="w-full py-4 text-[15px] font-bold text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-60"
+                                style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
+                                onMouseEnter={(e) => { if (!loading) e.currentTarget.style.background = '#7C5C44'; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.background = '#1A1A1A'; }}
                             >
                                 {loading ? (
-                                    <Loader2 className="animate-spin" size={24} />
+                                    <Loader2 className="animate-spin" size={20} />
                                 ) : (
-                                    <>
-                                        <span>Log In</span>
-                                        <ArrowRight size={20} />
-                                    </>
+                                    <>Log In <ArrowRight size={16} /></>
                                 )}
                             </button>
                         </form>
 
-                        <div className="mt-10 pt-10 border-t border-brand-secondary/5 text-center">
-                            <p className="text-brand-accent text-sm font-medium">
+                        <div className="mt-8 pt-6 border-t border-[#F0E6DB] text-center">
+                            <p className="text-[14px]" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
                                 Don't have an account?{' '}
-                                <Link to="/signup" className="text-brand-primary font-bold hover:underline">Sign up for free</Link>
+                                <Link to="/signup" className="font-bold transition-colors" style={{ color: '#1A1A1A' }}>
+                                    Sign up
+                                </Link>
                             </p>
                         </div>
                     </div>
-
-                    <Link to="/" className="mt-8 flex items-center justify-center space-x-2 text-brand-accent hover:text-brand-primary transition-colors font-bold text-sm uppercase tracking-widest group">
-                        <Home size={16} className="group-hover:-translate-x-1 transition-transform" />
-                        <span>Back to homepage</span>
-                    </Link>
                 </div>
             </main>
             <Footer />

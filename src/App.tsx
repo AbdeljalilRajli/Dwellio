@@ -4,18 +4,19 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Home from './pages/Home';
 import ListingPage from './pages/ListingPage';
 import PropertyDetails from './pages/PropertyDetails';
+import Contact from './pages/Contact';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
-// Dashboard Components (To be implemented)
+// Dashboard Components
 import UserDashboard from './pages/dashboard/UserDashboard';
 import MyBookings from './pages/dashboard/MyBookings';
 import MyFavorites from './pages/dashboard/MyFavorites';
 import MyProfile from './pages/dashboard/MyProfile';
 
-// Admin Components (To be implemented)
+// Admin Components
 import AdminDashboard from './pages/admin/AdminDashboard';
 import ManageListings from './pages/admin/ManageListings';
 import ManageBookings from './pages/admin/ManageBookings';
@@ -35,9 +36,14 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/properties" element={<ListingPage />} />
             <Route path="/properties/:id" element={<PropertyDetails />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+
+            {/* Convenience routes */}
+            <Route path="/for-rent" element={<Navigate to="/properties?type=Rent" replace />} />
+            <Route path="/for-sale" element={<Navigate to="/properties?type=Sale" replace />} />
 
             {/* Protected User Routes */}
             <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>}>

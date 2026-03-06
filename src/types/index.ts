@@ -1,4 +1,4 @@
-export type PropertyType = 'House' | 'Apartment' | 'Villa' | 'Condo' | 'Cottage' | 'Penthouse';
+export type PropertyType = 'House' | 'Apartment' | 'Villa' | 'Condo' | 'Cottage' | 'Penthouse' | 'Riad';
 export type ListingType = 'Rent' | 'Sale';
 
 export interface Listing {

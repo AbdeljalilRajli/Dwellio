@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { MapPin, Bed, Bath, Maximize, Calendar, ArrowLeft, Heart, Share2, Star, CheckCircle2 } from 'lucide-react';
+import { MapPin, Bed, Bath, Maximize, Calendar, ArrowLeft, Heart, Share2, CheckCircle2, Phone, MapPinned } from 'lucide-react';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
 import { listingService } from '../services/listingService';
@@ -15,161 +15,231 @@ export default function PropertyDetails() {
         enabled: !!id
     });
 
+    const formatPrice = (price: number, type: string) => {
+        return `${price.toLocaleString()} MAD${type === 'Rent' ? '/mo' : ''}`;
+    };
+
     if (isLoading) return (
-        <div className="h-screen flex items-center justify-center bg-brand-bg">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-primary"></div>
+        <div className="h-screen flex items-center justify-center" style={{ background: '#FBF8F5' }}>
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2" style={{ borderColor: '#7C5C44' }} />
         </div>
     );
 
     if (!listing) return (
-        <div className="h-screen flex items-center justify-center bg-brand-bg">
+        <div className="h-screen flex items-center justify-center" style={{ background: '#FBF8F5' }}>
             <div className="text-center">
-                <h2 className="text-2xl font-bold text-brand-primary mb-4">Property not found</h2>
-                <button onClick={() => navigate('/properties')} className="btn-primary">Back to Listings</button>
+                <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>Property not found</h2>
+                <button
+                    onClick={() => navigate('/properties')}
+                    className="px-6 py-3 text-[14px] font-bold text-white rounded-xl"
+                    style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
+                >
+                    Back to Listings
+                </button>
             </div>
         </div>
     );
 
     return (
-        <div className="min-h-screen bg-brand-bg pt-20">
+        <div className="min-h-screen" style={{ background: '#FBF8F5' }}>
             <Navbar />
 
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <main className="max-w-7xl mx-auto px-5 sm:px-8 pt-24 pb-16">
+                {/* Back button */}
                 <button
                     onClick={() => navigate(-1)}
-                    className="group flex items-center text-brand-accent hover:text-brand-primary mb-10 transition-colors bg-white px-6 py-3 rounded-2xl shadow-sm"
+                    className="group flex items-center gap-2 mb-8 text-[14px] font-semibold transition-colors"
+                    style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}
                 >
-                    <ArrowLeft size={20} className="mr-3 group-hover:-translate-x-1 transition-transform" />
-                    <span className="font-bold">Back to Listings</span>
+                    <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                    Back to listings
                 </button>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                    {/* Left Column: Gallery and Description */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    {/* Left Column */}
                     <div className="lg:col-span-8">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
-                            <div className="md:col-span-2 rounded-[2.5rem] overflow-hidden shadow-2xl h-[500px]">
-                                <img
-                                    src={listing.images[0]}
-                                    alt={listing.title}
-                                    className="w-full h-full object-cover"
-                                />
+                        {/* Gallery */}
+                        <div className="rounded-2xl overflow-hidden mb-8 h-[350px] sm:h-[480px]">
+                            <img
+                                src={listing.images[0]}
+                                alt={listing.title}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+
+                        {/* Title & Location */}
+                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-8">
+                            <div>
+                                <div className="flex items-center gap-3 mb-3">
+                                    <span
+                                        className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider rounded-lg text-white"
+                                        style={{ fontFamily: "'Outfit', sans-serif", background: listing.type === 'Rent' ? '#7C5C44' : '#1A1A1A' }}
+                                    >
+                                        For {listing.type}
+                                    </span>
+                                    <span className="text-[12px] font-medium px-3 py-1 rounded-lg" style={{ fontFamily: "'Inter', sans-serif", background: '#F0E6DB', color: '#7C5C44' }}>
+                                        {listing.property_type}
+                                    </span>
+                                </div>
+                                <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A', letterSpacing: '-0.02em' }}>
+                                    {listing.title}
+                                </h1>
+                                <div className="flex items-center gap-1.5">
+                                    <MapPin size={15} style={{ color: '#7C5C44' }} />
+                                    <span className="text-[14px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
+                                        {listing.address}, {listing.city}, Morocco
+                                    </span>
+                                </div>
                             </div>
-                            {listing.images.slice(1).map((img, idx) => (
-                                <div key={idx} className="rounded-[2rem] overflow-hidden shadow-lg h-[240px]">
-                                    <img src={img} alt={`${listing.title} ${idx + 2}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                            <div className="flex gap-2 shrink-0">
+                                <button className="w-11 h-11 rounded-xl flex items-center justify-center transition-colors" style={{ border: '1px solid #EDE0D5', color: '#888' }}>
+                                    <Heart size={18} />
+                                </button>
+                                <button className="w-11 h-11 rounded-xl flex items-center justify-center transition-colors" style={{ border: '1px solid #EDE0D5', color: '#888' }}>
+                                    <Share2 size={18} />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Stats Grid */}
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+                            {[
+                                { icon: Bed, label: 'Bedrooms', value: listing.bedrooms },
+                                { icon: Bath, label: 'Bathrooms', value: listing.bathrooms },
+                                { icon: Maximize, label: 'Living Area', value: `${listing.area} m²` },
+                                { icon: Calendar, label: 'Year Built', value: '2023' },
+                            ].map(stat => (
+                                <div key={stat.label} className="bg-white rounded-2xl p-5 text-center" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
+                                    <stat.icon size={22} className="mx-auto mb-2" style={{ color: '#7C5C44' }} />
+                                    <p className="text-[16px] font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>{stat.value}</p>
+                                    <p className="text-[11px] font-medium uppercase tracking-wider mt-1" style={{ fontFamily: "'Inter', sans-serif", color: '#AAA' }}>{stat.label}</p>
                                 </div>
                             ))}
                         </div>
 
-                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
-                            <div>
-                                <div className="flex items-center space-x-2 mb-3">
-                                    <span className="px-3 py-1 bg-brand-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full">Verified Listing</span>
-                                    <div className="flex items-center text-amber-500">
-                                        <Star size={14} fill="currentColor" />
-                                        <span className="ml-1 text-xs font-bold">4.9 (124 reviews)</span>
+                        {/* Description */}
+                        <div className="mb-10">
+                            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                                About This Property
+                            </h2>
+                            <p className="text-[15px] leading-relaxed" style={{ fontFamily: "'Inter', sans-serif", color: '#666' }}>
+                                {listing.description}
+                            </p>
+                        </div>
+
+                        {/* Amenities */}
+                        <div className="mb-10">
+                            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                                Amenities & Features
+                            </h2>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                {[
+                                    'Private Swimming Pool',
+                                    'Covered Parking',
+                                    'Landscaped Garden',
+                                    'Central Air Conditioning',
+                                    'Smart Home System',
+                                    '24/7 Security',
+                                    'High-Speed Internet',
+                                    'Marble Flooring',
+                                ].map(item => (
+                                    <div key={item} className="flex items-center gap-3 py-3 px-4 rounded-xl" style={{ background: '#F5EEE8' }}>
+                                        <CheckCircle2 size={16} style={{ color: '#7C5C44' }} />
+                                        <span className="text-[14px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}>{item}</span>
                                     </div>
-                                </div>
-                                <h1 className="text-4xl lg:text-5xl font-display font-bold text-brand-primary mb-2 leading-tight">{listing.title}</h1>
-                                <div className="flex items-center text-brand-accent font-medium italic">
-                                    <MapPin size={18} className="mr-2" />
-                                    <span>{listing.address}, {listing.city}, California</span>
-                                </div>
-                            </div>
-                            <div className="flex gap-4">
-                                <button className="p-4 bg-white border-none rounded-2xl shadow-lg shadow-brand-secondary/10 hover:bg-brand-secondary/5 transition-all text-brand-primary active:scale-95">
-                                    <Heart size={24} />
-                                </button>
-                                <button className="p-4 bg-white border-none rounded-2xl shadow-lg shadow-brand-secondary/10 hover:bg-brand-secondary/5 transition-all text-brand-primary active:scale-95">
-                                    <Share2 size={24} />
-                                </button>
+                                ))}
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 p-8 bg-white rounded-[2.5rem] shadow-sm border border-brand-secondary/10">
-                            <div className="text-center md:border-r border-brand-secondary/20">
-                                <Bed size={28} className="mx-auto text-brand-accent mb-3" />
-                                <p className="text-sm font-bold text-brand-primary">{listing.bedrooms} Bedrooms</p>
-                                <p className="text-[10px] text-brand-accent uppercase font-bold tracking-tighter">Sleeping Space</p>
-                            </div>
-                            <div className="text-center md:border-r border-brand-secondary/20">
-                                <Bath size={28} className="mx-auto text-brand-accent mb-3" />
-                                <p className="text-sm font-bold text-brand-primary">{listing.bathrooms} Bathrooms</p>
-                                <p className="text-[10px] text-brand-accent uppercase font-bold tracking-tighter">Personal Care</p>
-                            </div>
-                            <div className="text-center md:border-r border-brand-secondary/20">
-                                <Maximize size={28} className="mx-auto text-brand-accent mb-3" />
-                                <p className="text-sm font-bold text-brand-primary">{listing.area} sq ft</p>
-                                <p className="text-[10px] text-brand-accent uppercase font-bold tracking-tighter">Total Area</p>
-                            </div>
-                            <div className="text-center">
-                                <Calendar size={28} className="mx-auto text-brand-accent mb-3" />
-                                <p className="text-sm font-bold text-brand-primary">Built 2022</p>
-                                <p className="text-[10px] text-brand-accent uppercase font-bold tracking-tighter">Modern Build</p>
-                            </div>
-                        </div>
-
-                        <div className="space-y-12">
-                            <section>
-                                <h3 className="text-2xl font-display font-bold text-brand-primary mb-6">About This Property</h3>
-                                <p className="text-brand-accent leading-relaxed text-lg italic font-medium">
-                                    {listing.description}
-                                </p>
-                                <p className="text-brand-accent opacity-80 leading-relaxed mt-4">
-                                    Experience the pinnacle of coastal California living. This residence is not just a house; it's a meticulously crafted environment designed to inspire and rejuvenate. From the moment you step through the custom entryway, you'll feel the harmony of light, space, and premium materials.
-                                </p>
-                            </section>
-
-                            <section>
-                                <h3 className="text-2xl font-display font-bold text-brand-primary mb-6">Premium Amenities</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {['Smart Home Automation', 'Chef\'s Kitchen w/ High-end Appliances', 'Private Landscaped Garden', 'Electric Vehicle Charging Station', 'Infinity Pool & Spa', '24/7 Concierge Service'].map((item) => (
-                                        <div key={item} className="flex items-center space-x-3 p-4 bg-brand-secondary/5 rounded-2xl">
-                                            <CheckCircle2 size={20} className="text-brand-accent" />
-                                            <span className="font-bold text-brand-primary text-sm">{item}</span>
-                                        </div>
-                                    ))}
+                        {/* Map Placeholder */}
+                        <div className="mb-10">
+                            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                                Location
+                            </h2>
+                            <div className="rounded-2xl overflow-hidden h-[280px] flex items-center justify-center" style={{ background: '#EDE0D5' }}>
+                                <div className="text-center">
+                                    <MapPinned size={40} style={{ color: '#7C5C44' }} className="mx-auto mb-3" />
+                                    <p className="text-[14px] font-semibold" style={{ fontFamily: "'Outfit', sans-serif", color: '#7C5C44' }}>
+                                        {listing.address}, {listing.city}
+                                    </p>
+                                    <p className="text-[12px] mt-1" style={{ fontFamily: "'Inter', sans-serif", color: '#999' }}>
+                                        Interactive map coming soon
+                                    </p>
                                 </div>
-                            </section>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Right Column: Booking Card */}
+                    {/* Right Column — Booking Card */}
                     <div className="lg:col-span-4">
-                        <div className="bg-white p-8 lg:p-10 rounded-[3rem] shadow-2xl shadow-brand-secondary/10 sticky top-32 border border-brand-secondary/5">
-                            <div className="mb-10">
-                                <p className="text-xs font-bold uppercase text-brand-accent tracking-widest mb-2">Investment</p>
-                                <div className="flex items-baseline">
-                                    <span className="text-5xl font-bold text-brand-primary">${listing.price.toLocaleString()}</span>
-                                    {listing.type === 'Rent' && <span className="text-lg font-bold text-brand-accent ml-2">/ month</span>}
+                        <div className="sticky top-28 bg-white rounded-2xl p-7" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+                            {/* Price */}
+                            <div className="mb-7">
+                                <p className="text-[11px] font-bold uppercase tracking-widest mb-1" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                    {listing.type === 'Rent' ? 'Monthly Rent' : 'Asking Price'}
+                                </p>
+                                <p className="text-3xl font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                                    {formatPrice(listing.price, listing.type)}
+                                </p>
+                            </div>
+
+                            {/* Visit Form */}
+                            <div className="space-y-4 mb-6">
+                                <div>
+                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                        Preferred Date
+                                    </label>
+                                    <input
+                                        type="date"
+                                        className="w-full px-4 py-3.5 rounded-xl text-[14px] font-medium outline-none"
+                                        style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                        Your Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Full name"
+                                        className="w-full px-4 py-3.5 rounded-xl text-[14px] font-medium outline-none"
+                                        style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                        Your Phone
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        placeholder="+212 6XX XXX XXX"
+                                        className="w-full px-4 py-3.5 rounded-xl text-[14px] font-medium outline-none"
+                                        style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
+                                    />
                                 </div>
                             </div>
 
-                            <div className="space-y-6 mb-10">
-                                <div>
-                                    <label className="block text-[10px] font-bold uppercase text-brand-accent tracking-widest mb-3">Preferred Visit Date</label>
-                                    <div className="relative">
-                                        <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-accent" size={18} />
-                                        <input type="date" className="w-full pl-14 pr-6 py-5 bg-brand-bg rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-bold text-brand-primary shadow-inner" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-[10px] font-bold uppercase text-brand-accent tracking-widest mb-3">Visitors Count</label>
-                                    <select className="w-full px-6 py-5 bg-brand-bg rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-bold text-brand-primary appearance-none cursor-pointer shadow-inner">
-                                        <option>1-2 Person</option>
-                                        <option>3-5 Person</option>
-                                        <option>6+ Person</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <button className="btn-primary w-full py-6 text-xl shadow-xl shadow-brand-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                            <button
+                                className="w-full py-4 text-[15px] font-bold text-white rounded-xl transition-all duration-200 mb-3"
+                                style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
+                                onMouseEnter={(e) => (e.currentTarget.style.background = '#7C5C44')}
+                                onMouseLeave={(e) => (e.currentTarget.style.background = '#1A1A1A')}
+                            >
                                 Schedule a Visit
                             </button>
 
-                            <div className="mt-8 p-6 bg-brand-secondary/5 rounded-[2rem] text-center">
-                                <p className="text-xs font-bold text-brand-accent uppercase tracking-widest mb-2">No upfront fee</p>
-                                <p className="text-sm text-brand-primary italic">You only pay once you decide to move forward. Visit first, decide later.</p>
+                            <button
+                                className="w-full py-4 text-[15px] font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
+                                style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A', border: '1.5px solid #EDE0D5' }}
+                            >
+                                <Phone size={16} style={{ color: '#7C5C44' }} />
+                                Contact Agent
+                            </button>
+
+                            <div className="mt-6 p-4 rounded-xl text-center" style={{ background: '#F5EEE8' }}>
+                                <p className="text-[12px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
+                                    No commitment required. Visit first, decide later.
+                                </p>
                             </div>
                         </div>
                     </div>

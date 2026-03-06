@@ -1,31 +1,40 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Bed, Bath, Maximize, Heart } from 'lucide-react';
+import { MapPin, Bed, Bath, Maximize, Heart, ArrowRight } from 'lucide-react';
 import type { Listing } from '../../types';
 
-interface PropertyCardProps {
+interface Props {
     listing: Listing;
 }
 
-export function PropertyCard({ listing }: PropertyCardProps) {
+export function PropertyCard({ listing }: Props) {
     const [liked, setLiked] = useState(false);
 
+    const formatPrice = (price: number, type: string) => {
+        if (type === 'Rent') {
+            return `${price.toLocaleString()} MAD/mo`;
+        }
+        if (price >= 1_000_000) {
+            return `${(price / 1_000_000).toFixed(1).replace('.0', '')}M MAD`;
+        }
+        return `${price.toLocaleString()} MAD`;
+    };
+
     return (
-        <div className="group bg-white rounded-[1.75rem] overflow-hidden transition-all duration-300 hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)] hover:-translate-y-1 card-shadow">
+        <div className="group rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1" style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
             {/* Image */}
-            <Link to={`/properties/${listing.id}`} className="block relative overflow-hidden h-56">
+            <div className="relative h-[240px] overflow-hidden">
                 <img
                     src={listing.images[0]}
                     alt={listing.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 {/* Type Badge */}
                 <span
-                    className="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-bold tracking-wider"
+                    className="absolute top-4 left-4 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-lg text-white"
                     style={{
                         fontFamily: "'Outfit', sans-serif",
-                        background: listing.type === 'Sale' ? '#1A1A1A' : '#7C5C44',
-                        color: '#fff',
+                        background: listing.type === 'Rent' ? '#7C5C44' : '#1A1A1A',
                     }}
                 >
                     For {listing.type}
@@ -33,78 +42,83 @@ export function PropertyCard({ listing }: PropertyCardProps) {
                 {/* Favorite */}
                 <button
                     onClick={(e) => { e.preventDefault(); setLiked(!liked); }}
-                    className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center transition-all hover:scale-110"
+                    className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200"
+                    style={{
+                        background: liked ? '#1A1A1A' : 'rgba(255,255,255,0.85)',
+                        backdropFilter: 'blur(8px)',
+                    }}
                 >
                     <Heart
-                        size={15}
-                        className={liked ? 'fill-red-500 text-red-500' : 'text-[#888]'}
+                        size={16}
+                        fill={liked ? '#fff' : 'none'}
+                        style={{ color: liked ? '#fff' : '#666' }}
                     />
                 </button>
-            </Link>
-
-            {/* Content */}
-            <div className="bg-[#F7F2EE] px-5 py-4">
-                {/* Location */}
-                <div className="flex items-center gap-1.5 mb-2">
-                    <MapPin size={13} className="text-[#7C5C44] shrink-0" strokeWidth={2.5} />
+                {/* Price Overlay */}
+                <div className="absolute bottom-4 left-4">
                     <span
-                        className="text-[12px] text-[#888] font-medium"
-                        style={{ fontFamily: "'Inter', sans-serif" }}
+                        className="px-3 py-1.5 rounded-lg text-white text-[15px] font-bold"
+                        style={{
+                            fontFamily: "'Outfit', sans-serif",
+                            background: 'rgba(0,0,0,0.7)',
+                            backdropFilter: 'blur(8px)',
+                        }}
                     >
-                        {listing.city}, California
+                        {formatPrice(listing.price, listing.type)}
                     </span>
                 </div>
-                {/* Title */}
-                <Link to={`/properties/${listing.id}`}>
-                    <h3
-                        className="text-[16px] font-bold text-[#1A1A1A] mb-3 leading-tight hover:text-[#7C5C44] transition-colors line-clamp-1"
-                        style={{ fontFamily: "'Outfit', sans-serif", letterSpacing: '-0.01em' }}
+            </div>
+
+            {/* Content */}
+            <div className="p-5">
+                <h3
+                    className="text-[17px] font-bold mb-1.5 line-clamp-1"
+                    style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}
+                >
+                    {listing.title}
+                </h3>
+                <div className="flex items-center gap-1.5 mb-4">
+                    <MapPin size={13} style={{ color: '#7C5C44' }} />
+                    <span className="text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#999' }}>
+                        {listing.city}, Morocco
+                    </span>
+                </div>
+
+                {/* Details Row */}
+                <div className="flex items-center gap-4 pb-4 border-b border-[#F0E6DB]">
+                    <div className="flex items-center gap-1.5">
+                        <Bed size={14} style={{ color: '#7C5C44' }} />
+                        <span className="text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#666' }}>
+                            {listing.bedrooms} {listing.bedrooms === 1 ? 'Bed' : 'Beds'}
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                        <Bath size={14} style={{ color: '#7C5C44' }} />
+                        <span className="text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#666' }}>
+                            {listing.bathrooms} {listing.bathrooms === 1 ? 'Bath' : 'Baths'}
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                        <Maximize size={14} style={{ color: '#7C5C44' }} />
+                        <span className="text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#666' }}>
+                            {listing.area} m²
+                        </span>
+                    </div>
+                </div>
+
+                {/* View Details */}
+                <Link
+                    to={`/properties/${listing.id}`}
+                    className="flex items-center justify-between mt-4 group/link"
+                >
+                    <span
+                        className="text-[13px] font-semibold transition-colors group-hover/link:text-[#7C5C44]"
+                        style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}
                     >
-                        {listing.title}
-                    </h3>
+                        View Details
+                    </span>
+                    <ArrowRight size={16} className="transition-transform group-hover/link:translate-x-1" style={{ color: '#7C5C44' }} />
                 </Link>
-                {/* Details row */}
-                <div className="flex items-center gap-4 mb-3 pb-3 border-b border-[#EDE0D5]">
-                    <div className="flex items-center gap-1.5">
-                        <Bed size={14} className="text-[#7C5C44]" strokeWidth={2} />
-                        <span className="text-[12px] text-[#666] font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
-                            {listing.bedrooms} Beds
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                        <Bath size={14} className="text-[#7C5C44]" strokeWidth={2} />
-                        <span className="text-[12px] text-[#666] font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
-                            {listing.bathrooms} Baths
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                        <Maximize size={14} className="text-[#7C5C44]" strokeWidth={2} />
-                        <span className="text-[12px] text-[#666] font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
-                            {listing.area} ft²
-                        </span>
-                    </div>
-                </div>
-                {/* Price */}
-                <div className="flex items-center justify-between">
-                    <div>
-                        <p className="text-[10px] text-[#aaa] font-semibold uppercase tracking-widest mb-0.5" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                            {listing.type === 'Rent' ? 'Monthly' : 'Price'}
-                        </p>
-                        <p
-                            className="text-[22px] font-bold text-[#1A1A1A] leading-none"
-                            style={{ fontFamily: "'Outfit', sans-serif", letterSpacing: '-0.02em' }}
-                        >
-                            ${listing.price.toLocaleString()}
-                        </p>
-                    </div>
-                    <Link
-                        to={`/properties/${listing.id}`}
-                        className="text-[12px] font-semibold text-[#7C5C44] hover:text-[#1A1A1A] transition-colors underline underline-offset-2"
-                        style={{ fontFamily: "'Outfit', sans-serif" }}
-                    >
-                        View Details →
-                    </Link>
-                </div>
             </div>
         </div>
     );

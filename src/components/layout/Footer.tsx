@@ -1,67 +1,123 @@
-import { Facebook, Instagram, Twitter, Mail } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function Footer() {
     return (
-        <footer className="bg-[#F7F2EF] pt-24 pb-12 border-t border-brand-secondary/5">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-16 mb-20">
-                    <div className="lg:col-span-2">
-                        <Link to="/" className="text-[32px] font-display font-bold text-brand-primary mb-8 block tracking-tight">
+        <footer style={{ background: '#1A1A1A' }} className="pt-20 pb-10">
+            <div className="max-w-7xl mx-auto px-5 sm:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                    {/* Brand */}
+                    <div>
+                        <Link
+                            to="/"
+                            className="text-[28px] font-bold tracking-tight block mb-5"
+                            style={{ fontFamily: "'Playfair Display', serif", color: '#fff' }}
+                        >
                             Dwellio
                         </Link>
-                        <p className="text-brand-accent/60 max-w-sm text-lg leading-relaxed font-medium">
-                            Bringing you closer to your dream home, one click at a time. Explore our curated selection of ultra-luxury properties.
+                        <p className="text-[15px] leading-relaxed mb-8" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
+                            Morocco's premier real estate platform. Find luxury villas, modern apartments, and charming riads across the kingdom.
                         </p>
-                        <div className="flex items-center gap-6 mt-10">
-                            <a href="#" className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-brand-primary hover:bg-brand-primary hover:text-white transition-all shadow-sm">
-                                <Instagram size={20} />
-                            </a>
-                            <a href="#" className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-brand-primary hover:bg-brand-primary hover:text-white transition-all shadow-sm">
-                                <Facebook size={20} />
-                            </a>
-                            <a href="#" className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-brand-primary hover:bg-brand-primary hover:text-white transition-all shadow-sm">
-                                <Twitter size={20} />
-                            </a>
+                        <div className="flex items-center gap-3">
+                            {[Instagram, Facebook, Twitter].map((Icon, i) => (
+                                <a
+                                    key={i}
+                                    href="#"
+                                    className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200"
+                                    style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.5)' }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.background = '#7C5C44'; e.currentTarget.style.color = '#fff'; }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; }}
+                                >
+                                    <Icon size={18} />
+                                </a>
+                            ))}
                         </div>
                     </div>
 
+                    {/* Quick Links */}
                     <div>
-                        <h3 className="text-brand-primary font-bold text-lg mb-8 tracking-tight">About</h3>
-                        <ul className="space-y-5 text-[15px] font-medium text-brand-accent/70">
-                            <li className="hover:text-brand-primary transition-colors cursor-pointer">Company</li>
-                            <li className="hover:text-brand-primary transition-colors cursor-pointer">Careers</li>
-                            <li className="hover:text-brand-primary transition-colors cursor-pointer">Our Story</li>
-                            <li className="hover:text-brand-primary transition-colors cursor-pointer">Resources</li>
+                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Outfit', sans-serif", color: '#fff' }}>
+                            Quick Links
+                        </h3>
+                        <ul className="space-y-3">
+                            {[
+                                { label: 'For Rent', path: '/properties?type=Rent' },
+                                { label: 'For Sale', path: '/properties?type=Sale' },
+                                { label: 'Contact Us', path: '/contact' },
+                                { label: 'About Us', path: '/' },
+                            ].map(link => (
+                                <li key={link.label}>
+                                    <Link
+                                        to={link.path}
+                                        className="text-[14px] font-medium transition-colors"
+                                        style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.color = '#fff'; }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; }}
+                                    >
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
+                    {/* Cities */}
                     <div>
-                        <h3 className="text-brand-primary font-bold text-lg mb-8 tracking-tight">Support</h3>
-                        <ul className="space-y-5 text-[15px] font-medium text-brand-accent/70">
-                            <li className="hover:text-brand-primary transition-colors cursor-pointer">FAQ</li>
-                            <li className="hover:text-brand-primary transition-colors cursor-pointer">Contact Us</li>
-                            <li className="hover:text-brand-primary transition-colors cursor-pointer">Help Center</li>
-                            <li className="hover:text-brand-primary transition-colors cursor-pointer">Terms of Service</li>
+                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Outfit', sans-serif", color: '#fff' }}>
+                            Popular Cities
+                        </h3>
+                        <ul className="space-y-3">
+                            {['Marrakech', 'Casablanca', 'Rabat', 'Tangier', 'Agadir', 'Fes'].map(city => (
+                                <li key={city}>
+                                    <Link
+                                        to={`/properties?city=${city}`}
+                                        className="text-[14px] font-medium transition-colors"
+                                        style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.color = '#fff'; }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; }}
+                                    >
+                                        {city}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
+                    {/* Contact */}
                     <div>
-                        <h3 className="text-brand-primary font-bold text-lg mb-8 tracking-tight">Get in Touch</h3>
-                        <ul className="space-y-5 text-[15px] font-medium text-brand-accent/70">
-                            <li className="flex items-center gap-3 hover:text-brand-primary transition-colors cursor-pointer">
-                                <Mail size={16} strokeWidth={2.5} />
-                                hello@dwellio.com
+                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Outfit', sans-serif", color: '#fff' }}>
+                            Get in Touch
+                        </h3>
+                        <ul className="space-y-4">
+                            <li className="flex items-start gap-3">
+                                <MapPin size={16} className="shrink-0 mt-0.5" style={{ color: '#7C5C44' }} />
+                                <span className="text-[14px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
+                                    123 Boulevard Mohammed V, Casablanca, Morocco
+                                </span>
+                            </li>
+                            <li className="flex items-center gap-3">
+                                <Mail size={16} className="shrink-0" style={{ color: '#7C5C44' }} />
+                                <span className="text-[14px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
+                                    hello@dwellio.com
+                                </span>
+                            </li>
+                            <li className="flex items-center gap-3">
+                                <Phone size={16} className="shrink-0" style={{ color: '#7C5C44' }} />
+                                <span className="text-[14px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
+                                    +212 5 22 00 00 00
+                                </span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div className="border-t border-brand-secondary/10 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-[13px] font-medium text-brand-accent/40">© 2024 Dwellio. All rights reserved.</p>
-                    <div className="flex gap-10 text-[13px] font-medium text-brand-accent/40">
-                        <a href="#" className="hover:text-brand-primary transition-colors">Privacy Policy</a>
-                        <a href="#" className="hover:text-brand-primary transition-colors">Terms of Use</a>
+                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p className="text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.3)' }}>
+                        © 2026 Dwellio. All rights reserved.
+                    </p>
+                    <div className="flex gap-8 text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.3)' }}>
+                        <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="#" className="hover:text-white transition-colors">Terms of Use</a>
                     </div>
                 </div>
             </div>

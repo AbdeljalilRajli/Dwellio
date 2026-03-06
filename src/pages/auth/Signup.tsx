@@ -33,7 +33,6 @@ export default function Signup() {
             if (authError) throw authError;
 
             if (data.user) {
-                // Insert into our custom users table
                 const { error: dbError } = await supabase.from('users').insert([
                     {
                         id: data.user.id,
@@ -56,18 +55,22 @@ export default function Signup() {
 
     if (success) {
         return (
-            <div className="min-h-screen pt-20 bg-brand-bg flex flex-col">
+            <div className="min-h-screen flex flex-col" style={{ background: '#FBF8F5' }}>
                 <Navbar />
-                <main className="flex-1 flex items-center justify-center p-4 text-center">
-                    <div className="max-w-md w-full bg-white rounded-[3rem] p-12 shadow-2xl shadow-brand-secondary/10 border border-brand-secondary/5">
-                        <div className="w-24 h-24 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
-                            <CheckCircle2 size={48} />
+                <main className="flex-1 flex items-center justify-center p-5 pt-28">
+                    <div className="max-w-md w-full bg-white rounded-2xl p-10 text-center" style={{ boxShadow: '0 4px 32px rgba(0,0,0,0.08)' }}>
+                        <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{ background: '#E8F5E9' }}>
+                            <CheckCircle2 size={32} style={{ color: '#2E7D32' }} />
                         </div>
-                        <h1 className="text-3xl font-display font-bold text-brand-primary mb-4">Account Created!</h1>
-                        <p className="text-brand-accent italic font-medium leading-relaxed">
-                            We've sent a verification email to <span className="text-brand-primary font-bold not-italic">{email}</span>. Please check your inbox to activate your account.
+                        <h1 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                            Account Created!
+                        </h1>
+                        <p className="text-[14px] leading-relaxed mb-6" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
+                            We've sent a verification email to <span className="font-bold" style={{ color: '#1A1A1A' }}>{email}</span>. Check your inbox to activate your account.
                         </p>
-                        <p className="mt-8 text-xs text-brand-accent uppercase font-bold tracking-tighter animate-pulse">Redirecting to login...</p>
+                        <p className="text-[12px] font-semibold uppercase tracking-wider animate-pulse" style={{ fontFamily: "'Outfit', sans-serif", color: '#7C5C44' }}>
+                            Redirecting to login...
+                        </p>
                     </div>
                 </main>
                 <Footer />
@@ -76,34 +79,40 @@ export default function Signup() {
     }
 
     return (
-        <div className="min-h-screen pt-20 bg-brand-bg flex flex-col">
+        <div className="min-h-screen flex flex-col" style={{ background: '#FBF8F5' }}>
             <Navbar />
-            <main className="flex-1 flex items-center justify-center p-4">
-                <div className="w-full max-w-md">
-                    <div className="bg-white rounded-[2.5rem] p-10 shadow-2xl shadow-brand-secondary/10 border border-brand-secondary/5 overflow-hidden relative">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-secondary/5 rounded-full translate-x-16 -translate-y-16"></div>
-
-                        <div className="text-center mb-10 relative z-10">
-                            <h1 className="text-4xl font-display font-bold text-brand-primary mb-2">Join Dwello</h1>
-                            <p className="text-brand-accent italic font-medium">Start your journey to the perfect home</p>
+            <main className="flex-1 flex items-center justify-center p-5 pt-28">
+                <div className="w-full max-w-[420px]">
+                    <div className="bg-white rounded-2xl p-8 sm:p-10" style={{ boxShadow: '0 4px 32px rgba(0,0,0,0.08)' }}>
+                        {/* Header */}
+                        <div className="text-center mb-8">
+                            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                                Join Dwellio
+                            </h1>
+                            <p className="text-[14px]" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
+                                Create your account and start exploring
+                            </p>
                         </div>
 
                         {error && (
-                            <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-medium border border-red-100 italic">
+                            <div className="mb-5 p-4 rounded-xl text-[13px] font-medium" style={{ background: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA', fontFamily: "'Inter', sans-serif" }}>
                                 {error}
                             </div>
                         )}
 
-                        <form onSubmit={handleSignup} className="space-y-6 relative z-10">
+                        <form onSubmit={handleSignup} className="space-y-5">
                             <div>
-                                <label className="block text-[10px] font-bold uppercase text-brand-accent tracking-widest mb-2 ml-4">Full Name</label>
-                                <div className="relative group">
-                                    <User className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-accent/40 group-focus-within:text-brand-accent transition-colors" size={18} />
+                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                    Full Name
+                                </label>
+                                <div className="relative">
+                                    <User className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#CCC' }} />
                                     <input
                                         type="text"
                                         required
                                         placeholder="John Doe"
-                                        className="w-full pl-14 pr-6 py-4 bg-brand-bg rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-medium shadow-inner"
+                                        className="w-full pl-11 pr-4 py-3.5 rounded-xl text-[14px] font-medium outline-none"
+                                        style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
                                         value={fullName}
                                         onChange={(e) => setFullName(e.target.value)}
                                     />
@@ -111,14 +120,17 @@ export default function Signup() {
                             </div>
 
                             <div>
-                                <label className="block text-[10px] font-bold uppercase text-brand-accent tracking-widest mb-2 ml-4">Email Address</label>
-                                <div className="relative group">
-                                    <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-accent/40 group-focus-within:text-brand-accent transition-colors" size={18} />
+                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                    Email Address
+                                </label>
+                                <div className="relative">
+                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#CCC' }} />
                                     <input
                                         type="email"
                                         required
-                                        placeholder="name@example.com"
-                                        className="w-full pl-14 pr-6 py-4 bg-brand-bg rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-medium shadow-inner"
+                                        placeholder="you@example.com"
+                                        className="w-full pl-11 pr-4 py-3.5 rounded-xl text-[14px] font-medium outline-none"
+                                        style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
@@ -126,41 +138,48 @@ export default function Signup() {
                             </div>
 
                             <div>
-                                <label className="block text-[10px] font-bold uppercase text-brand-accent tracking-widest mb-2 ml-4">Password</label>
-                                <div className="relative group">
-                                    <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-accent/40 group-focus-within:text-brand-accent transition-colors" size={18} />
+                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2" size={16} style={{ color: '#CCC' }} />
                                     <input
                                         type="password"
                                         required
                                         placeholder="••••••••"
-                                        className="w-full pl-14 pr-6 py-4 bg-brand-bg rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-medium shadow-inner"
+                                        className="w-full pl-11 pr-4 py-3.5 rounded-xl text-[14px] font-medium outline-none"
+                                        style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </div>
-                                <p className="mt-2 text-[10px] text-brand-accent/60 ml-4 font-medium italic">Must be at least 6 characters.</p>
+                                <p className="mt-2 text-[11px]" style={{ fontFamily: "'Inter', sans-serif", color: '#AAA' }}>
+                                    Must be at least 6 characters.
+                                </p>
                             </div>
 
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="btn-primary w-full py-5 text-lg flex items-center justify-center space-x-2 shadow-xl shadow-brand-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-70 disabled:hover:scale-100"
+                                className="w-full py-4 text-[15px] font-bold text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-60"
+                                style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
+                                onMouseEnter={(e) => { if (!loading) e.currentTarget.style.background = '#7C5C44'; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.background = '#1A1A1A'; }}
                             >
                                 {loading ? (
-                                    <Loader2 className="animate-spin" size={24} />
+                                    <Loader2 className="animate-spin" size={20} />
                                 ) : (
-                                    <>
-                                        <span>Create Account</span>
-                                        <ArrowRight size={20} />
-                                    </>
+                                    <>Create Account <ArrowRight size={16} /></>
                                 )}
                             </button>
                         </form>
 
-                        <div className="mt-10 pt-10 border-t border-brand-secondary/5 text-center">
-                            <p className="text-brand-accent text-sm font-medium">
+                        <div className="mt-8 pt-6 border-t border-[#F0E6DB] text-center">
+                            <p className="text-[14px]" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
                                 Already have an account?{' '}
-                                <Link to="/login" className="text-brand-primary font-bold hover:underline">Log in</Link>
+                                <Link to="/login" className="font-bold transition-colors" style={{ color: '#1A1A1A' }}>
+                                    Log in
+                                </Link>
                             </p>
                         </div>
                     </div>

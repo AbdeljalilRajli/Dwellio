@@ -1,108 +1,237 @@
-import { useState } from 'react';
-import { Search, SlidersHorizontal } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Search, SlidersHorizontal, MapPin, X, Bed, ChevronDown } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
 import { PropertyCard } from '../components/ui/PropertyCard';
 import { listingService } from '../services/listingService';
 
+const CITIES = ['All Cities', 'Marrakech', 'Casablanca', 'Rabat', 'Tangier', 'Agadir', 'Essaouira', 'Fes'];
+const PROPERTY_TYPES = ['All Types', 'Villa', 'Apartment', 'House', 'Penthouse', 'Riad'];
+
 export default function ListingPage() {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [dealType, setDealType] = useState<'All' | 'Sale' | 'Rent'>(
+        (searchParams.get('type') as 'Sale' | 'Rent') || 'All'
+    );
+    const [city, setCity] = useState(searchParams.get('city') || 'All Cities');
+    const [propertyType, setPropertyType] = useState(searchParams.get('property_type') || 'All Types');
     const [search, setSearch] = useState('');
-    const [typeFilter, setTypeFilter] = useState<'All' | 'Sale' | 'Rent'>('All');
+    const [bedsMin, setBedsMin] = useState(0);
+
+    const filters = {
+        type: dealType !== 'All' ? (dealType as 'Sale' | 'Rent') : undefined,
+        city: city !== 'All Cities' ? city : undefined,
+        property_type: propertyType !== 'All Types' ? propertyType : undefined,
+        minPrice: searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined,
+        maxPrice: searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined,
+        minBedrooms: bedsMin > 0 ? bedsMin : undefined,
+    };
 
     const { data: listings, isLoading } = useQuery({
-        queryKey: ['listings'],
-        queryFn: () => listingService.getAllListings()
+        queryKey: ['listings', filters],
+        queryFn: () => listingService.getAllListings(filters),
     });
 
     const filteredListings = listings?.filter(l => {
-        const matchesSearch = l.title.toLowerCase().includes(search.toLowerCase()) || l.city.toLowerCase().includes(search.toLowerCase());
-        const matchesType = typeFilter === 'All' || l.type === typeFilter;
-        return matchesSearch && matchesType;
+        if (!search) return true;
+        const q = search.toLowerCase();
+        return l.title.toLowerCase().includes(q) || l.city.toLowerCase().includes(q) || l.address.toLowerCase().includes(q);
     });
+
+    const hasFilters = dealType !== 'All' || city !== 'All Cities' || propertyType !== 'All Types' || search || bedsMin > 0;
+
+    const clearFilters = () => {
+        setDealType('All');
+        setCity('All Cities');
+        setPropertyType('All Types');
+        setSearch('');
+        setBedsMin(0);
+        setSearchParams({});
+    };
+
+    useEffect(() => {
+        const params: Record<string, string> = {};
+        if (dealType !== 'All') params.type = dealType;
+        if (city !== 'All Cities') params.city = city;
+        if (propertyType !== 'All Types') params.property_type = propertyType;
+        if (bedsMin > 0) params.minBedrooms = String(bedsMin);
+        setSearchParams(params, { replace: true });
+    }, [dealType, city, propertyType, bedsMin]);
+
+    const pageTitle = dealType === 'Rent' ? 'Properties for Rent' : dealType === 'Sale' ? 'Properties for Sale' : 'All Properties';
 
     return (
         <div className="min-h-screen" style={{ background: '#FBF8F5' }}>
             <Navbar />
 
-            {/* Page Header */}
-            <div className="pt-24 pb-12" style={{ background: '#F5EEE8' }}>
+            {/* Header */}
+            <div className="pt-24 pb-8" style={{ background: '#F5EEE8' }}>
                 <div className="max-w-7xl mx-auto px-5 sm:px-8">
-                    <p className="text-[#7C5C44] text-sm font-semibold tracking-widest uppercase mb-3" style={{ fontFamily: "'Outfit', sans-serif" }}>Browse Properties</p>
-                    <h1 className="text-[#1A1A1A] mb-2" style={{ fontFamily: "'Outfit', sans-serif", fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 700, letterSpacing: '-0.025em' }}>
-                        Find Your Perfect{' '}
-                        <span style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', color: '#7C5C44' }}>
-                            Living Space
-                        </span>
+                    <p className="text-[12px] font-bold uppercase tracking-[0.2em] mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#7C5C44' }}>
+                        Browse Listings
+                    </p>
+                    <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A', letterSpacing: '-0.02em' }}>
+                        {pageTitle}
                     </h1>
-                    <p className="text-[#888]" style={{ fontFamily: "'Inter', sans-serif" }}>Discover our curated selection of premium properties.</p>
+                    <p className="text-[15px] mt-2" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
+                        Discover verified properties across Morocco's most desirable cities.
+                    </p>
                 </div>
             </div>
 
-            <main className="max-w-7xl mx-auto px-5 sm:px-8 py-12">
-                {/* Search & Filters */}
-                <div className="flex flex-col sm:flex-row gap-4 mb-10">
-                    <div className="relative flex-1">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999]" size={18} />
-                        <input
-                            type="text"
-                            placeholder="Search by location or title..."
-                            className="w-full pl-12 pr-5 py-3.5 bg-white border border-[#EDE0D5] rounded-xl focus:outline-none focus:border-[#7C5C44] text-[14px] transition-colors"
-                            style={{ fontFamily: "'Inter', sans-serif" }}
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                    </div>
-                    <div className="flex gap-2">
-                        {(['All', 'Sale', 'Rent'] as const).map(f => (
-                            <button
-                                key={f}
-                                onClick={() => setTypeFilter(f)}
-                                className="px-5 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200"
-                                style={{
-                                    fontFamily: "'Outfit', sans-serif",
-                                    background: typeFilter === f ? '#1A1A1A' : '#fff',
-                                    color: typeFilter === f ? '#fff' : '#888',
-                                    border: `2px solid ${typeFilter === f ? '#1A1A1A' : '#EDE0D5'}`,
-                                }}
+            <main className="max-w-7xl mx-auto px-5 sm:px-8 py-8">
+                {/* Filter Bar */}
+                <div className="bg-white rounded-2xl p-4 mb-8" style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}>
+                    <div className="flex flex-wrap gap-3 items-center">
+                        {/* Search */}
+                        <div className="relative flex-1 min-w-[200px]">
+                            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2" size={15} style={{ color: '#AAA' }} />
+                            <input
+                                type="text"
+                                placeholder="Search by name, city, or address..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className="w-full pl-10 pr-4 py-3 rounded-xl text-[14px] font-medium outline-none"
+                                style={{ fontFamily: "'Inter', sans-serif", background: '#FAFAFA', border: '1px solid #EDE0D5', color: '#1A1A1A' }}
+                            />
+                        </div>
+
+                        {/* Deal Type */}
+                        <div className="flex rounded-xl overflow-hidden" style={{ border: '1px solid #EDE0D5' }}>
+                            {(['All', 'Sale', 'Rent'] as const).map(t => (
+                                <button
+                                    key={t}
+                                    onClick={() => setDealType(t)}
+                                    className="px-4 py-3 text-[13px] font-semibold transition-all"
+                                    style={{
+                                        fontFamily: "'Outfit', sans-serif",
+                                        background: dealType === t ? '#1A1A1A' : 'transparent',
+                                        color: dealType === t ? '#fff' : '#888',
+                                    }}
+                                >
+                                    {t === 'All' ? 'All' : t === 'Sale' ? 'Buy' : 'Rent'}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* City */}
+                        <div className="flex items-center gap-2 px-4 py-3 rounded-xl" style={{ background: '#FAFAFA', border: '1px solid #EDE0D5' }}>
+                            <MapPin size={14} style={{ color: '#7C5C44' }} />
+                            <select
+                                value={city}
+                                onChange={(e) => setCity(e.target.value)}
+                                className="bg-transparent text-[13px] font-medium outline-none cursor-pointer appearance-none pr-4"
+                                style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
                             >
-                                {f === 'All' ? 'All Types' : `For ${f}`}
+                                {CITIES.map(c => <option key={c}>{c}</option>)}
+                            </select>
+                            <ChevronDown size={12} style={{ color: '#CCC' }} />
+                        </div>
+
+                        {/* Property Type */}
+                        <div className="flex items-center gap-2 px-4 py-3 rounded-xl" style={{ background: '#FAFAFA', border: '1px solid #EDE0D5' }}>
+                            <SlidersHorizontal size={14} style={{ color: '#7C5C44' }} />
+                            <select
+                                value={propertyType}
+                                onChange={(e) => setPropertyType(e.target.value)}
+                                className="bg-transparent text-[13px] font-medium outline-none cursor-pointer appearance-none pr-4"
+                                style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
+                            >
+                                {PROPERTY_TYPES.map(p => <option key={p}>{p}</option>)}
+                            </select>
+                            <ChevronDown size={12} style={{ color: '#CCC' }} />
+                        </div>
+
+                        {/* Bedrooms */}
+                        <div className="flex items-center gap-2 px-4 py-3 rounded-xl" style={{ background: '#FAFAFA', border: '1px solid #EDE0D5' }}>
+                            <Bed size={14} style={{ color: '#7C5C44' }} />
+                            <select
+                                value={bedsMin}
+                                onChange={(e) => setBedsMin(Number(e.target.value))}
+                                className="bg-transparent text-[13px] font-medium outline-none cursor-pointer appearance-none pr-4"
+                                style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
+                            >
+                                <option value={0}>Beds</option>
+                                {[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n}+</option>)}
+                            </select>
+                            <ChevronDown size={12} style={{ color: '#CCC' }} />
+                        </div>
+
+                        {/* Clear */}
+                        {hasFilters && (
+                            <button
+                                onClick={clearFilters}
+                                className="flex items-center gap-1.5 px-4 py-3 rounded-xl text-[13px] font-semibold transition-colors"
+                                style={{ fontFamily: "'Outfit', sans-serif", color: '#7C5C44', border: '1px solid #7C5C44' }}
+                            >
+                                <X size={13} /> Clear
                             </button>
-                        ))}
+                        )}
                     </div>
                 </div>
 
-                {/* Results count */}
-                {!isLoading && (
-                    <p className="text-[#888] text-sm mb-6" style={{ fontFamily: "'Inter', sans-serif" }}>
-                        {filteredListings?.length} {filteredListings?.length === 1 ? 'property' : 'properties'} found
+                {/* Results info */}
+                <div className="flex items-center justify-between mb-6">
+                    <p className="text-[14px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
+                        {isLoading ? 'Loading...' : `${filteredListings?.length ?? 0} ${(filteredListings?.length ?? 0) === 1 ? 'property' : 'properties'} found`}
                     </p>
-                )}
+                    <div className="flex gap-2 flex-wrap justify-end">
+                        {dealType !== 'All' && (
+                            <span className="text-[11px] font-bold px-3 py-1 rounded-full text-white" style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}>
+                                {dealType === 'Sale' ? 'For Sale' : 'For Rent'}
+                            </span>
+                        )}
+                        {city !== 'All Cities' && (
+                            <span className="text-[11px] font-bold px-3 py-1 rounded-full" style={{ fontFamily: "'Outfit', sans-serif", background: '#F0E6DB', color: '#7C5C44' }}>
+                                {city}
+                            </span>
+                        )}
+                        {propertyType !== 'All Types' && (
+                            <span className="text-[11px] font-bold px-3 py-1 rounded-full" style={{ fontFamily: "'Outfit', sans-serif", background: '#F0E6DB', color: '#7C5C44' }}>
+                                {propertyType}
+                            </span>
+                        )}
+                    </div>
+                </div>
 
-                {/* Listings Grid */}
+                {/* Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {isLoading ? (
-                        [1, 2, 3, 4, 5, 6].map(i => (
-                            <div key={i} className="h-96 bg-[#EDE0D5]/50 animate-pulse rounded-[1.75rem]" />
+                    {isLoading
+                        ? Array.from({ length: 6 }).map((_, i) => (
+                            <div key={i} className="h-[400px] bg-[#EDE0D5]/40 animate-pulse rounded-2xl" />
                         ))
-                    ) : (
-                        filteredListings?.map(listing => (
+                        : filteredListings?.map(listing => (
                             <PropertyCard key={listing.id} listing={listing} />
                         ))
-                    )}
+                    }
                 </div>
 
                 {/* Empty state */}
                 {!isLoading && filteredListings?.length === 0 && (
                     <div className="text-center py-24">
-                        <div className="w-16 h-16 bg-[#F0E6DB] rounded-2xl flex items-center justify-center mx-auto mb-5">
-                            <SlidersHorizontal className="text-[#7C5C44]" size={26} />
+                        <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5" style={{ background: '#F0E6DB' }}>
+                            <SlidersHorizontal size={26} style={{ color: '#7C5C44' }} />
                         </div>
-                        <p className="text-xl font-bold text-[#1A1A1A] mb-2" style={{ fontFamily: "'Outfit', sans-serif" }}>No properties found</p>
-                        <p className="text-[#888]" style={{ fontFamily: "'Inter', sans-serif" }}>Try adjusting your search or filters.</p>
+                        <p className="text-xl font-bold mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                            No properties found
+                        </p>
+                        <p className="text-[15px] mb-6" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
+                            Try adjusting your search or filters.
+                        </p>
+                        <button
+                            onClick={clearFilters}
+                            className="text-[14px] font-bold text-white px-6 py-3 rounded-xl transition-all"
+                            style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
+                        >
+                            Clear All Filters
+                        </button>
                     </div>
                 )}
             </main>
+
             <Footer />
         </div>
     );
