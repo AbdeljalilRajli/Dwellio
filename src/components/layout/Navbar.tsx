@@ -33,8 +33,7 @@ export function Navbar() {
             <nav
                 className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
                 style={{
-                    background: scrolled ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0.85)',
-                    backdropFilter: 'blur(20px)',
+                    background: '#FFFFFF',
                     boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.06)' : 'none',
                 }}
             >

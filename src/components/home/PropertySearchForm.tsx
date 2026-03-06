@@ -61,8 +61,10 @@ export function PropertySearchForm() {
                         className="px-6 py-2.5 text-[13px] font-bold uppercase tracking-wider rounded-full transition-all duration-200 mr-2"
                         style={{
                             fontFamily: "'Outfit', sans-serif",
-                            background: dealType === t ? '#1A1A1A' : 'rgba(255,255,255,0.5)',
-                            color: dealType === t ? '#fff' : '#888',
+                            background: dealType === t ? '#1A1A1A' : 'rgba(255,255,255,0.15)',
+                            color: dealType === t ? '#fff' : '#EDE0D5',
+                            border: dealType === t ? 'none' : '1px solid rgba(255,255,255,0.2)',
+                            backdropFilter: dealType === t ? 'none' : 'blur(4px)',
                         }}
                     >
                         {t === 'Sale' ? 'Buy' : 'Rent'}

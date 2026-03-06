@@ -68,3 +68,17 @@
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
   }
 }
+
+@keyframes slow-zoom {
+  from {
+    transform: scale(1.1);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+.animate-slow-zoom {
+  animation: slow-zoom 20s ease-out infinite alternate;
+}
