@@ -1,36 +1,70 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-primary: #1F1B18;
-  --color-brand-secondary: #E9D5C3;
-  --color-brand-accent: #8D5E3D;
-  --color-brand-bg: #FDFBF9;
-  --color-brand-card: #EADBCF;
-  
-  --font-display: "Outfit", sans-serif;
-  --font-body: "Inter", sans-serif;
+  /* Figma accurate colors */
+  --color-brand-primary: #1A1A1A;
+  --color-brand-secondary: #EDE0D5;
+  --color-brand-accent: #7C5C44;
+  --color-brand-bg: #FBF8F5;
+  --color-brand-card: #F0E6DB;
+  --color-brand-muted: #888888;
+
+  /* Typography */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: "Outfit", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
 }
 
 @layer base {
   html {
     @apply scroll-smooth;
   }
+
   body {
-    @apply bg-brand-bg text-brand-primary font-body antialiased;
+    background-color: #FBF8F5;
+    color: #1A1A1A;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Outfit", sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #1A1A1A;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-brand-primary text-white px-6 py-3 rounded-md font-medium transition-all hover:opacity-90 active:scale-95;
+    @apply bg-brand-primary text-white px-7 py-3 rounded-xl font-sans font-semibold text-sm tracking-wide transition-all duration-200 hover:bg-brand-accent active:scale-95 shadow-sm;
   }
-  .btn-secondary {
-    @apply bg-brand-secondary text-brand-primary px-6 py-3 rounded-md font-medium transition-all hover:bg-brand-card;
+
+  .btn-outline {
+    @apply border-2 border-brand-primary text-brand-primary px-7 py-3 rounded-xl font-sans font-semibold text-sm tracking-wide transition-all duration-200 hover:bg-brand-primary hover:text-white active:scale-95;
   }
-  .glass-card {
-    @apply bg-white/40 backdrop-blur-md border border-white/20 rounded-xl p-6 shadow-sm;
+
+  .section-title {
+    font-family: "Outfit", sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+
+  .section-subtitle {
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    color: #888888;
+    line-height: 1.7;
+  }
+
+  .card-shadow {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
   }
 }
