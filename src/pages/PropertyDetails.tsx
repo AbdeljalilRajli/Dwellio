@@ -4,10 +4,15 @@ import { MapPin, Bed, Bath, Maximize, Calendar, ArrowLeft, Heart, Share2, CheckC
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
 import { listingService } from '../services/listingService';
+import { useAuth } from '../hooks/useAuth';
+import { useState } from 'react';
 
 export default function PropertyDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user } = useAuth();
+    const [message, setMessage] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { data: listing, isLoading } = useQuery({
         queryKey: ['listing', id],
@@ -183,58 +188,62 @@ export default function PropertyDetails() {
                                 </p>
                             </div>
 
-                            {/* Visit Form */}
+                            {/* Message Form */}
                             <div className="space-y-4 mb-6">
                                 <div>
                                     <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
-                                        Preferred Date
+                                        Send Message to Owner
                                     </label>
-                                    <input
-                                        type="date"
-                                        className="w-full px-4 py-3.5 rounded-xl text-[14px] font-medium outline-none"
-                                        style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
-                                        Your Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        placeholder="Full name"
-                                        className="w-full px-4 py-3.5 rounded-xl text-[14px] font-medium outline-none"
-                                        style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
-                                        Your Phone
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        placeholder="+212 6XX XXX XXX"
-                                        className="w-full px-4 py-3.5 rounded-xl text-[14px] font-medium outline-none"
+                                    <textarea
+                                        rows={4}
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
+                                        placeholder="I am interested in this property. Please let me know when we can discuss further..."
+                                        className="w-full px-4 py-3.5 rounded-xl text-[14px] font-medium outline-none resize-none"
                                         style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
                                     />
                                 </div>
                             </div>
 
                             <button
-                                className="w-full py-4 text-[15px] font-bold text-white rounded-xl transition-all duration-200 mb-3"
+                                onClick={async () => {
+                                    if (!user) {
+                                        navigate('/login');
+                                        return;
+                                    }
+                                    if (!message.trim()) return;
+
+                                    setIsSubmitting(true);
+                                    try {
+                                        await listingService.submitInquiry({
+                                            sender_id: user.id,
+                                            receiver_id: listing.owner_id,
+                                            property_id: listing.id,
+                                            content: message
+                                        });
+                                        setMessage('');
+                                        alert('Message sent successfully!');
+                                    } catch (err: any) {
+                                        alert(err.message || 'Error sending message');
+                                    } finally {
+                                        setIsSubmitting(false);
+                                    }
+                                }}
+                                disabled={isSubmitting}
+                                className="w-full py-4 text-[15px] font-bold text-white rounded-xl transition-all duration-200 mb-3 disabled:opacity-50"
                                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: '#1A1A1A' }}
-                                onMouseEnter={(e) => (e.currentTarget.style.background = '#7C5C44')}
-                                onMouseLeave={(e) => (e.currentTarget.style.background = '#1A1A1A')}
                             >
-                                Schedule a Visit
+                                {isSubmitting ? 'Sending...' : 'Send Message'}
                             </button>
 
-                            <button
+                            <a
+                                href={`tel:${(listing as any).owner_phone || '+212 600 000 000'}`}
                                 className="w-full py-4 text-[15px] font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
                                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A', border: '1.5px solid #EDE0D5' }}
                             >
                                 <Phone size={16} style={{ color: '#7C5C44' }} />
-                                Contact Agent
-                            </button>
+                                Contact via Phone
+                            </a>
 
                             <div className="mt-6 p-4 rounded-xl text-center" style={{ background: '#F5EEE8' }}>
                                 <p className="text-[12px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>

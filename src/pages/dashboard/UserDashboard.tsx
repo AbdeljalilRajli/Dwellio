@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { Heart, Calendar, User, LogOut, Home } from 'lucide-react';
+import { Heart, MessageSquare, User, LogOut, Home, PlusCircle, List } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { Navbar } from '../../components/layout/Navbar';
 
@@ -13,7 +13,9 @@ export default function UserDashboard() {
     };
 
     const navItems = [
-        { icon: Calendar, label: 'My Bookings', path: '/dashboard/bookings' },
+        { icon: List, label: 'My Listings', path: '/dashboard/listings' },
+        { icon: PlusCircle, label: 'Create Listing', path: '/dashboard/listings/create' },
+        { icon: MessageSquare, label: 'Messages', path: '/dashboard/messages' },
         { icon: Heart, label: 'My Favorites', path: '/dashboard/favorites' },
         { icon: User, label: 'My Profile', path: '/dashboard/profile' },
     ];

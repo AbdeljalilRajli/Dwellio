@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Camera, Save, ArrowLeft, Loader2, Maximize, Bed, Bath, MapPin, Plus } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Maximize, Bed, Bath, MapPin, Plus, X as CloseIcon, Image as ImageIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { listingService } from '../../services/listingService';
+import { useAuth } from '../../hooks/useAuth';
 import type { Listing } from '../../types';
 
 interface ListingFormProps {
@@ -10,6 +12,7 @@ interface ListingFormProps {
 }
 
 export default function ListingForm({ initialData, onSubmit, title }: ListingFormProps) {
+    const { user } = useAuth();
     const [formData, setFormData] = useState({
         title: initialData?.title || '',
         description: initialData?.description || '',
@@ -21,9 +24,11 @@ export default function ListingForm({ initialData, onSubmit, title }: ListingFor
         bedrooms: initialData?.bedrooms || '',
         bathrooms: initialData?.bathrooms || '',
         area: initialData?.area || '',
-        images: initialData?.images || [''],
+        images: initialData?.images || [],
     });
 
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
+    const [previews, setPreviews] = useState<string[]>(initialData?.images || []);
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -31,21 +36,55 @@ export default function ListingForm({ initialData, onSubmit, title }: ListingFor
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleImageChange = (index: number, value: string) => {
-        const newImages = [...formData.images];
-        newImages[index] = value;
-        setFormData(prev => ({ ...prev, images: newImages }));
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = Array.from(e.target.files || []);
+        if (files.length === 0) return;
+
+        setImageFiles(prev => [...prev, ...files]);
+
+        const newPreviews = files.map(file => URL.createObjectURL(file));
+        setPreviews(prev => [...prev, ...newPreviews]);
     };
 
-    const addImageField = () => {
-        setFormData(prev => ({ ...prev, images: [...prev.images, ''] }));
+    const removeImage = (index: number) => {
+        // If it's a new file
+        const previewCount = previews.length;
+        const fileIndex = index - (previewCount - imageFiles.length);
+
+        if (fileIndex >= 0) {
+            setImageFiles(prev => prev.filter((_, i) => i !== fileIndex));
+        } else {
+            // It was an existing image
+            setFormData(prev => ({
+                ...prev,
+                images: prev.images.filter((_, i) => i !== index)
+            }));
+        }
+
+        setPreviews(prev => prev.filter((_, i) => i !== index));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!user) return;
+
         setLoading(true);
         try {
-            await onSubmit(formData);
+            let finalImages = [...formData.images];
+
+            if (imageFiles.length > 0) {
+                const uploadedUrls = await listingService.uploadImages(imageFiles, user.id);
+                finalImages = [...finalImages, ...uploadedUrls];
+            }
+
+            if (finalImages.length === 0) {
+                alert('Please upload at least one image');
+                return;
+            }
+
+            await onSubmit({ ...formData, images: finalImages });
+        } catch (error: any) {
+            alert(error.message || 'Error saving listing');
         } finally {
             setLoading(false);
         }
@@ -207,25 +246,50 @@ export default function ListingForm({ initialData, onSubmit, title }: ListingFor
                 <div className="bg-brand-bg/30 p-10 rounded-[3rem] border border-brand-secondary/5 space-y-6">
                     <div className="flex justify-between items-center mb-4 ml-4">
                         <label className="block text-xs font-bold uppercase text-brand-accent tracking-widest">Property Images</label>
-                        <button type="button" onClick={addImageField} className="text-xs font-bold text-brand-primary hover:underline flex items-center bg-white px-4 py-2 rounded-full shadow-sm uppercase tracking-tighter">
-                            <Plus size={14} className="mr-1" /> Add Image URL
-                        </button>
+                        <label className="cursor-pointer text-xs font-bold text-brand-primary hover:underline flex items-center bg-white px-4 py-2 rounded-full shadow-sm uppercase tracking-tighter">
+                            <Plus size={14} className="mr-1" /> Add Images
+                            <input
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                className="hidden"
+                                onChange={handleImageChange}
+                            />
+                        </label>
                     </div>
-                    <div className="space-y-4">
-                        {formData.images.map((img, idx) => (
-                            <div key={idx} className="relative group">
-                                <Camera className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-accent/30" size={20} />
-                                <input
-                                    type="url"
-                                    className="w-full pl-16 pr-8 py-5 bg-white rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-medium text-brand-primary shadow-sm"
-                                    value={img}
-                                    onChange={(e) => handleImageChange(idx, e.target.value)}
-                                    placeholder="https://unsplash.com/photo-..."
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        {previews.map((preview, idx) => (
+                            <div key={idx} className="relative aspect-square group">
+                                <img
+                                    src={preview}
+                                    alt={`Preview ${idx}`}
+                                    className="w-full h-full object-cover rounded-2xl shadow-sm border border-brand-secondary/10"
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => removeImage(idx)}
+                                    className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center text-brand-primary shadow-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-brand-bg"
+                                >
+                                    <CloseIcon size={16} />
+                                </button>
                             </div>
                         ))}
+
+                        <label className="aspect-square rounded-2xl border-2 border-dashed border-brand-accent/20 flex flex-col items-center justify-center text-brand-accent hover:border-brand-primary/40 hover:text-brand-primary transition-all cursor-pointer bg-white/50">
+                            <ImageIcon size={32} className="mb-2 opacity-50" />
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Upload Image</span>
+                            <input
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                className="hidden"
+                                onChange={handleImageChange}
+                            />
+                        </label>
                     </div>
-                    <p className="text-xs text-brand-accent italic ml-4">Paste image URLs from Unsplash for the best visual experience.</p>
+
+                    <p className="text-xs text-brand-accent italic ml-4">Upload high-quality images to attract more buyers.</p>
                 </div>
 
                 <button

@@ -22,7 +22,7 @@ export default function CreateListing() {
                 }]);
 
             if (error) throw error;
-            navigate('/admin/listings');
+            navigate('/dashboard/listings');
         } catch (err: any) {
             alert(err.message || 'Error occurred while creating listing');
         }

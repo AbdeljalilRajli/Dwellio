@@ -11,7 +11,6 @@ export default function Signup() {
     const [fullName, setFullName] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
     const handleSignup = async (e: React.FormEvent) => {
@@ -43,8 +42,9 @@ export default function Signup() {
                 ]);
 
                 if (dbError) throw dbError;
-                setSuccess(true);
-                setTimeout(() => navigate('/login'), 3000);
+
+                // Navigate to dashboard immediately
+                navigate('/dashboard');
             }
         } catch (err: any) {
             setError(err.message || 'An error occurred during signup');
@@ -52,31 +52,6 @@ export default function Signup() {
             setLoading(false);
         }
     };
-
-    if (success) {
-        return (
-            <div className="min-h-screen flex flex-col" style={{ background: '#FBF8F5' }}>
-                <Navbar />
-                <main className="flex-1 flex items-center justify-center p-5 pt-28">
-                    <div className="max-w-md w-full bg-white rounded-2xl p-10 text-center" style={{ boxShadow: '0 4px 32px rgba(0,0,0,0.08)' }}>
-                        <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{ background: '#E8F5E9' }}>
-                            <CheckCircle2 size={32} style={{ color: '#2E7D32' }} />
-                        </div>
-                        <h1 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
-                            Account Created!
-                        </h1>
-                        <p className="text-[14px] leading-relaxed mb-6" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
-                            We've sent a verification email to <span className="font-bold" style={{ color: '#1A1A1A' }}>{email}</span>. Check your inbox to activate your account.
-                        </p>
-                        <p className="text-[12px] font-semibold uppercase tracking-wider animate-pulse" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#7C5C44' }}>
-                            Redirecting to login...
-                        </p>
-                    </div>
-                </main>
-                <Footer />
-            </div>
-        );
-    }
 
     return (
         <div className="min-h-screen flex flex-col" style={{ background: '#FBF8F5' }}>

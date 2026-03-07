@@ -37,10 +37,16 @@ export function useAuth() {
                 .from('users')
                 .select('*')
                 .eq('id', userId)
-                .single();
+                .maybeSingle(); // Better than .single() when profile might be delayed
 
-            if (error) console.error('Error fetching profile:', error);
-            setProfile(data);
+            if (error) {
+                console.warn('Profile fetch issue:', error.message);
+                setProfile(null);
+            } else {
+                setProfile(data);
+            }
+        } catch (err) {
+            setProfile(null);
         } finally {
             setLoading(false);
         }

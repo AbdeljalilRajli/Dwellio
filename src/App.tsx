@@ -13,15 +13,12 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 
 // Dashboard Components
 import UserDashboard from './pages/dashboard/UserDashboard';
-import MyBookings from './pages/dashboard/MyBookings';
 import MyFavorites from './pages/dashboard/MyFavorites';
 import MyProfile from './pages/dashboard/MyProfile';
+import Messages from './pages/dashboard/Messages';
 
-// Admin Components
-import AdminDashboard from './pages/admin/AdminDashboard';
+// Marketplace Management Components
 import ManageListings from './pages/admin/ManageListings';
-import ManageBookings from './pages/admin/ManageBookings';
-import ManageUsers from './pages/admin/ManageUsers';
 import CreateListing from './pages/admin/CreateListing';
 import EditListing from './pages/admin/EditListing';
 
@@ -59,22 +56,15 @@ function AnimatedRoutes() {
         <Route path="/for-rent" element={<Navigate to="/properties?type=Rent" replace />} />
         <Route path="/for-sale" element={<Navigate to="/properties?type=Sale" replace />} />
 
-        {/* Protected User Routes */}
+        {/* Protected Dashboard Routes */}
         <Route path="/dashboard" element={<ProtectedRoute><PageWrapper><UserDashboard /></PageWrapper></ProtectedRoute>}>
-          <Route index element={<Navigate to="/dashboard/bookings" replace />} />
-          <Route path="bookings" element={<MyBookings />} />
-          <Route path="favorites" element={<MyFavorites />} />
-          <Route path="profile" element={<MyProfile />} />
-        </Route>
-
-        {/* Protected Admin Routes */}
-        <Route path="/admin" element={<ProtectedRoute requireAdmin><PageWrapper><AdminDashboard /></PageWrapper></ProtectedRoute>}>
-          <Route index element={<Navigate to="/admin/listings" replace />} />
+          <Route index element={<Navigate to="/dashboard/listings" replace />} />
           <Route path="listings" element={<ManageListings />} />
-          <Route path="bookings" element={<ManageBookings />} />
-          <Route path="users" element={<ManageUsers />} />
           <Route path="listings/create" element={<CreateListing />} />
           <Route path="listings/edit/:id" element={<EditListing />} />
+          <Route path="messages" element={<Messages />} />
+          <Route path="favorites" element={<MyFavorites />} />
+          <Route path="profile" element={<MyProfile />} />
         </Route>
 
         {/* Fallback */}

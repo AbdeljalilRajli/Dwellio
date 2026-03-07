@@ -2,11 +2,14 @@ import { Plus, Search, Edit2, Trash2, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { listingService } from '../../services/listingService';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function ManageListings() {
-    const { data: listings, isLoading } = useQuery({
-        queryKey: ['admin-listings'],
-        queryFn: () => listingService.getAllListings()
+    const { user } = useAuth();
+    const { data: listings, isLoading, refetch } = useQuery({
+        queryKey: ['user-listings', user?.id],
+        queryFn: () => listingService.getUserListings(user!.id),
+        enabled: !!user?.id
     });
 
     return (
@@ -17,7 +20,7 @@ export default function ManageListings() {
                     <p className="text-brand-accent italic">Overview of all properties on the platform</p>
                 </div>
                 <Link
-                    to="/admin/listings/create"
+                    to="/dashboard/listings/create"
                     className="btn-primary flex items-center space-x-2 px-8 py-4 shadow-xl shadow-brand-primary/20"
                 >
                     <Plus size={20} />
@@ -82,10 +85,18 @@ export default function ManageListings() {
                                                 <Link to={`/properties/${item.id}`} className="p-2 text-brand-accent hover:text-brand-primary transition-colors">
                                                     <Eye size={18} />
                                                 </Link>
-                                                <Link to={`/admin/listings/edit/${item.id}`} className="p-2 text-brand-accent hover:text-brand-primary transition-colors">
+                                                <Link to={`/dashboard/listings/edit/${item.id}`} className="p-2 text-brand-accent hover:text-brand-primary transition-colors">
                                                     <Edit2 size={18} />
                                                 </Link>
-                                                <button className="p-2 text-brand-accent hover:text-red-500 transition-colors">
+                                                <button
+                                                    onClick={async () => {
+                                                        if (confirm('Are you sure you want to delete this listing?')) {
+                                                            await listingService.deleteListing(item.id);
+                                                            refetch();
+                                                        }
+                                                    }}
+                                                    className="p-2 text-brand-accent hover:text-red-500 transition-colors"
+                                                >
                                                     <Trash2 size={18} />
                                                 </button>
                                             </div>

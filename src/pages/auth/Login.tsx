@@ -18,26 +18,15 @@ export default function Login() {
         setError(null);
 
         try {
-            const { data, error: authError } = await supabase.auth.signInWithPassword({
+            const { error: authError } = await supabase.auth.signInWithPassword({
                 email,
                 password,
             });
 
             if (authError) throw authError;
 
-            const { data: userData, error: userError } = await supabase
-                .from('users')
-                .select('role')
-                .eq('id', data.user.id)
-                .single();
-
-            if (userError) throw userError;
-
-            if (userData.role === 'admin') {
-                navigate('/admin');
-            } else {
-                navigate('/dashboard');
-            }
+            // Simple redirect to dashboard, useAuth will handle profile state
+            navigate('/dashboard');
         } catch (err: any) {
             setError(err.message || 'An error occurred during login');
         } finally {

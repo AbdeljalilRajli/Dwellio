@@ -15,7 +15,25 @@ export interface Listing {
     area: number;
     images: string[];
     owner_id: string;
+    owner_phone?: string;
     created_at: string;
+}
+
+export interface Message {
+    id: string;
+    sender_id: string;
+    receiver_id: string;
+    property_id: string;
+    content: string;
+    created_at: string;
+    listings?: {
+        title: string;
+        images: string[];
+    };
+    sender?: {
+        full_name: string;
+        email: string;
+    };
 }
 
 export interface User {
@@ -24,15 +42,6 @@ export interface User {
     full_name?: string;
     avatar_url?: string;
     role: 'user' | 'admin';
-}
-
-export interface Booking {
-    id: string;
-    listing_id: string;
-    user_id: string;
-    visit_date: string;
-    status: 'pending' | 'confirmed' | 'cancelled';
-    created_at: string;
 }
 
 export interface Favorite {
