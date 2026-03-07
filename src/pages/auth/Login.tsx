@@ -53,7 +53,7 @@ export default function Login() {
                     <div className="bg-white rounded-2xl p-8 sm:p-10" style={{ boxShadow: '0 4px 32px rgba(0,0,0,0.08)' }}>
                         {/* Header */}
                         <div className="text-center mb-8">
-                            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
                                 Welcome Back
                             </h1>
                             <p className="text-[14px]" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
@@ -69,7 +69,7 @@ export default function Login() {
 
                         <form onSubmit={handleLogin} className="space-y-5">
                             <div>
-                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
                                     Email Address
                                 </label>
                                 <div className="relative">
@@ -88,7 +88,7 @@ export default function Login() {
 
                             <div>
                                 <div className="flex justify-between items-center mb-2">
-                                    <label className="text-[11px] font-bold uppercase tracking-widest" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                    <label className="text-[11px] font-bold uppercase tracking-widest" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
                                         Password
                                     </label>
                                     <Link to="/forgot-password" className="text-[11px] font-semibold transition-colors" style={{ fontFamily: "'Inter', sans-serif", color: '#7C5C44' }}>
@@ -113,7 +113,7 @@ export default function Login() {
                                 type="submit"
                                 disabled={loading}
                                 className="w-full py-4 text-[15px] font-bold text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-60"
-                                style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
+                                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: '#1A1A1A' }}
                                 onMouseEnter={(e) => { if (!loading) e.currentTarget.style.background = '#7C5C44'; }}
                                 onMouseLeave={(e) => { e.currentTarget.style.background = '#1A1A1A'; }}
                             >

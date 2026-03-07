@@ -62,13 +62,13 @@ export default function Signup() {
                         <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{ background: '#E8F5E9' }}>
                             <CheckCircle2 size={32} style={{ color: '#2E7D32' }} />
                         </div>
-                        <h1 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                        <h1 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
                             Account Created!
                         </h1>
                         <p className="text-[14px] leading-relaxed mb-6" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
                             We've sent a verification email to <span className="font-bold" style={{ color: '#1A1A1A' }}>{email}</span>. Check your inbox to activate your account.
                         </p>
-                        <p className="text-[12px] font-semibold uppercase tracking-wider animate-pulse" style={{ fontFamily: "'Outfit', sans-serif", color: '#7C5C44' }}>
+                        <p className="text-[12px] font-semibold uppercase tracking-wider animate-pulse" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#7C5C44' }}>
                             Redirecting to login...
                         </p>
                     </div>
@@ -86,7 +86,7 @@ export default function Signup() {
                     <div className="bg-white rounded-2xl p-8 sm:p-10" style={{ boxShadow: '0 4px 32px rgba(0,0,0,0.08)' }}>
                         {/* Header */}
                         <div className="text-center mb-8">
-                            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                            <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
                                 Join Dwellio
                             </h1>
                             <p className="text-[14px]" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
@@ -102,7 +102,7 @@ export default function Signup() {
 
                         <form onSubmit={handleSignup} className="space-y-5">
                             <div>
-                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
                                     Full Name
                                 </label>
                                 <div className="relative">
@@ -120,7 +120,7 @@ export default function Signup() {
                             </div>
 
                             <div>
-                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
                                     Email Address
                                 </label>
                                 <div className="relative">
@@ -138,7 +138,7 @@ export default function Signup() {
                             </div>
 
                             <div>
-                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
                                     Password
                                 </label>
                                 <div className="relative">
@@ -162,7 +162,7 @@ export default function Signup() {
                                 type="submit"
                                 disabled={loading}
                                 className="w-full py-4 text-[15px] font-bold text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-60"
-                                style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
+                                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: '#1A1A1A' }}
                                 onMouseEnter={(e) => { if (!loading) e.currentTarget.style.background = '#7C5C44'; }}
                                 onMouseLeave={(e) => { e.currentTarget.style.background = '#1A1A1A'; }}
                             >

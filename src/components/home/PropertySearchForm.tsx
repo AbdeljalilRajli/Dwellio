@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Search, Home, Bed, ChevronDown } from 'lucide-react';
+import { MapPin, Home, Search, ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const CITIES = ['Any Location', 'Marrakech', 'Casablanca', 'Rabat', 'Tangier', 'Agadir', 'Essaouira', 'Fes'];
 
@@ -34,7 +35,7 @@ export function PropertySearchForm() {
     const [dealType, setDealType] = useState<'Sale' | 'Rent'>('Sale');
     const [city, setCity] = useState('Any Location');
     const [priceIdx, setPriceIdx] = useState(0);
-    const [bedsIdx, setBedsIdx] = useState(0);
+    const [bedsIdx, _setBedsIdx] = useState(0);
 
     const priceRanges = dealType === 'Sale' ? SALE_PRICE_RANGES : RENT_PRICE_RANGES;
 
@@ -55,12 +56,14 @@ export function PropertySearchForm() {
             {/* Rent / Buy Toggle */}
             <div className="flex mb-4">
                 {(['Sale', 'Rent'] as const).map(t => (
-                    <button
+                    <motion.button
                         key={t}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         onClick={() => { setDealType(t); setPriceIdx(0); }}
-                        className="px-6 py-2.5 text-[13px] font-bold uppercase tracking-wider rounded-full transition-all duration-200 mr-2"
+                        className="px-6 py-2.5 text-[13px] font-bold uppercase tracking-wider rounded-full transition-colors duration-200 mr-2"
                         style={{
-                            fontFamily: "'Outfit', sans-serif",
+                            fontFamily: "'Plus Jakarta Sans', sans-serif",
                             background: dealType === t ? '#1A1A1A' : 'rgba(255,255,255,0.15)',
                             color: dealType === t ? '#fff' : '#EDE0D5',
                             border: dealType === t ? 'none' : '1px solid rgba(255,255,255,0.2)',
@@ -68,101 +71,104 @@ export function PropertySearchForm() {
                         }}
                     >
                         {t === 'Sale' ? 'Buy' : 'Rent'}
-                    </button>
+                    </motion.button>
                 ))}
             </div>
 
             {/* Search Card */}
             <div
-                className="bg-white rounded-2xl p-2"
-                style={{ boxShadow: '0 12px 48px rgba(0,0,0,0.12)' }}
+                className="bg-white/10 backdrop-blur-2xl rounded-[28px] p-3 border border-white/20 shadow-[0_32px_120px_-20px_rgba(0,0,0,0.5)]"
             >
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                     {/* Location */}
-                    <div className="px-5 py-4 border-b sm:border-b lg:border-b-0 lg:border-r border-[#F0E6DB]">
-                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAAAAA' }}>
+                    <motion.div
+                        whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
+                        className="px-6 py-5 rounded-2xl transition-colors relative group"
+                    >
+                        <label className="block text-[10px] font-bold uppercase tracking-[0.2em] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'rgba(237, 224, 213, 0.6)' }}>
                             Location
                         </label>
-                        <div className="flex items-center gap-2.5">
-                            <MapPin size={16} className="shrink-0" style={{ color: '#7C5C44' }} />
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-[#7C5C44]/20 flex items-center justify-center shrink-0">
+                                <MapPin size={16} style={{ color: '#EDE0D5' }} />
+                            </div>
                             <select
                                 value={city}
                                 onChange={(e) => setCity(e.target.value)}
-                                className="flex-1 bg-transparent text-[14px] font-medium outline-none cursor-pointer appearance-none"
-                                style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
+                                className="flex-1 bg-transparent text-[15px] font-semibold outline-none cursor-pointer appearance-none pr-6"
+                                style={{ fontFamily: "'Inter', sans-serif", color: '#FFFFFF' }}
                             >
-                                {CITIES.map(c => <option key={c}>{c}</option>)}
+                                {CITIES.map(c => <option key={c} className="bg-[#1A1A1A] text-white">{c}</option>)}
                             </select>
-                            <ChevronDown size={13} className="shrink-0" style={{ color: '#CCC' }} />
+                            <ChevronDown size={14} className="absolute right-6 top-1/2 mt-3 -translate-y-1/2 pointer-events-none opacity-40" style={{ color: '#FFF' }} />
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Property Type */}
-                    <div className="px-5 py-4 border-b sm:border-b lg:border-b-0 lg:border-r border-[#F0E6DB]">
-                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAAAAA' }}>
+                    <motion.div
+                        whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
+                        className="px-6 py-5 rounded-2xl transition-colors relative"
+                    >
+                        <label className="block text-[10px] font-bold uppercase tracking-[0.2em] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'rgba(237, 224, 213, 0.6)' }}>
                             Property Type
                         </label>
-                        <div className="flex items-center gap-2.5">
-                            <Home size={16} className="shrink-0" style={{ color: '#7C5C44' }} />
-                            <span className="text-[14px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}>
-                                {dealType === 'Sale' ? 'For Sale' : 'For Rent'}
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-[#7C5C44]/20 flex items-center justify-center shrink-0">
+                                <Home size={16} style={{ color: '#EDE0D5' }} />
+                            </div>
+                            <span className="text-[15px] font-semibold" style={{ fontFamily: "'Inter', sans-serif", color: '#FFFFFF' }}>
+                                {dealType === 'Sale' ? 'Residential Sale' : 'Monthly Rental'}
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Price Range */}
-                    <div className="px-5 py-4 border-b sm:border-b-0 lg:border-r border-[#F0E6DB]">
-                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAAAAA' }}>
-                            Price Range
+                    <motion.div
+                        whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
+                        className="px-6 py-5 rounded-2xl transition-colors relative"
+                    >
+                        <label className="block text-[10px] font-bold uppercase tracking-[0.2em] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'rgba(237, 224, 213, 0.6)' }}>
+                            Budget
                         </label>
-                        <div className="flex items-center gap-2.5">
-                            <span className="shrink-0 text-[14px] font-bold" style={{ color: '#7C5C44' }}>MAD</span>
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-[#7C5C44]/20 flex items-center justify-center shrink-0">
+                                <span className="text-[11px] font-bold" style={{ color: '#EDE0D5' }}>MAD</span>
+                            </div>
                             <select
                                 value={priceIdx}
                                 onChange={(e) => setPriceIdx(Number(e.target.value))}
-                                className="flex-1 bg-transparent text-[14px] font-medium outline-none cursor-pointer appearance-none"
-                                style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
+                                className="flex-1 bg-transparent text-[15px] font-semibold outline-none cursor-pointer appearance-none pr-6"
+                                style={{ fontFamily: "'Inter', sans-serif", color: '#FFFFFF' }}
                             >
-                                {priceRanges.map((pr, i) => <option key={pr.label} value={i}>{pr.label}</option>)}
+                                {priceRanges.map((pr, i) => <option key={pr.label} value={i} className="bg-[#1A1A1A] text-white">{pr.label}</option>)}
                             </select>
-                            <ChevronDown size={13} className="shrink-0" style={{ color: '#CCC' }} />
+                            <ChevronDown size={14} className="absolute right-6 top-1/2 mt-3 -translate-y-1/2 pointer-events-none opacity-40" style={{ color: '#FFF' }} />
                         </div>
-                    </div>
+                    </motion.div>
 
-                    {/* Bedrooms */}
-                    <div className="px-5 py-4">
-                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAAAAA' }}>
-                            Bedrooms
-                        </label>
-                        <div className="flex items-center gap-2.5">
-                            <Bed size={16} className="shrink-0" style={{ color: '#7C5C44' }} />
-                            <select
-                                value={bedsIdx}
-                                onChange={(e) => setBedsIdx(Number(e.target.value))}
-                                className="flex-1 bg-transparent text-[14px] font-medium outline-none cursor-pointer appearance-none"
-                                style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
-                            >
-                                {BEDROOM_OPTIONS.map((b, i) => <option key={b.label} value={i}>{b.label}</option>)}
-                            </select>
-                            <ChevronDown size={13} className="shrink-0" style={{ color: '#CCC' }} />
-                        </div>
+                    {/* Search Button Container */}
+                    <div className="p-1 h-full flex items-center">
+                        <motion.button
+                            whileHover={{
+                                scale: 1.02,
+                                boxShadow: '0 0 30px rgba(124, 92, 68, 0.4)'
+                            }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={handleSearch}
+                            className="w-full h-full flex items-center justify-center gap-3 text-white text-[14px] font-bold rounded-[20px] transition-all duration-300 py-6 lg:py-0"
+                            style={{
+                                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                                background: 'linear-gradient(135deg, #7C5C44 0%, #4A3528 100%)',
+                                boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
+                            }}
+                        >
+                            <Search size={20} />
+                            <span className="uppercase tracking-[0.1em]">Find Properties</span>
+                        </motion.button>
                     </div>
-                </div>
-
-                {/* Search Button — full width below fields */}
-                <div className="px-2 pb-2 pt-1">
-                    <button
-                        onClick={handleSearch}
-                        className="w-full flex items-center justify-center gap-2.5 text-white text-[15px] font-bold py-4 rounded-xl transition-all duration-200"
-                        style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = '#7C5C44')}
-                        onMouseLeave={(e) => (e.currentTarget.style.background = '#1A1A1A')}
-                    >
-                        <Search size={18} />
-                        Search Properties
-                    </button>
                 </div>
             </div>
         </div>
     );
 }
+

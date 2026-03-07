@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Bed, Bath, Maximize, Heart, ArrowRight } from 'lucide-react';
+import { MapPin, Bed, Bath, Maximize, Heart, ArrowRight, Star } from 'lucide-react';
+import { motion } from 'framer-motion';
 import type { Listing } from '../../types';
 
 interface Props {
@@ -8,118 +8,117 @@ interface Props {
 }
 
 export function PropertyCard({ listing }: Props) {
-    const [liked, setLiked] = useState(false);
-
-    const formatPrice = (price: number, type: string) => {
-        if (type === 'Rent') {
-            return `${price.toLocaleString()} MAD/mo`;
-        }
-        if (price >= 1_000_000) {
-            return `${(price / 1_000_000).toFixed(1).replace('.0', '')}M MAD`;
-        }
-        return `${price.toLocaleString()} MAD`;
-    };
-
     return (
-        <div className="group rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1" style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
-            {/* Image */}
-            <div className="relative h-[240px] overflow-hidden">
-                <img
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            whileHover={{ y: -8, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }}
+            className="group relative bg-white rounded-3xl overflow-hidden"
+            style={{
+                boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+                border: '1px solid #F0E6DB'
+            }}
+        >
+            {/* Image Section */}
+            <div className="relative aspect-[4/3] overflow-hidden">
+                <motion.img
                     src={listing.images[0]}
                     alt={listing.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 />
-                {/* Type Badge */}
-                <span
-                    className="absolute top-4 left-4 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-lg text-white"
-                    style={{
-                        fontFamily: "'Outfit', sans-serif",
-                        background: listing.type === 'Rent' ? '#7C5C44' : '#1A1A1A',
-                    }}
+
+                {/* Overlay Gradient (appears on hover) */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6"
                 >
-                    For {listing.type}
-                </span>
-                {/* Favorite */}
-                <button
-                    onClick={(e) => { e.preventDefault(); setLiked(!liked); }}
-                    className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200"
-                    style={{
-                        background: liked ? '#1A1A1A' : 'rgba(255,255,255,0.85)',
-                        backdropFilter: 'blur(8px)',
-                    }}
-                >
-                    <Heart
-                        size={16}
-                        fill={liked ? '#fff' : 'none'}
-                        style={{ color: liked ? '#fff' : '#666' }}
-                    />
-                </button>
-                {/* Price Overlay */}
-                <div className="absolute bottom-4 left-4">
-                    <span
-                        className="px-3 py-1.5 rounded-lg text-white text-[15px] font-bold"
-                        style={{
-                            fontFamily: "'Outfit', sans-serif",
-                            background: 'rgba(0,0,0,0.7)',
-                            backdropFilter: 'blur(8px)',
-                        }}
+                    <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        whileHover={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.1 }}
+                        className="flex items-center justify-between"
                     >
-                        {formatPrice(listing.price, listing.type)}
-                    </span>
+                        <span className="text-white text-[18px] font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                            {listing.price.toLocaleString()} MAD{listing.type === 'Rent' ? '/mo' : ''}
+                        </span>
+                        <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/30">
+                            <Star size={12} fill="#F59E0B" style={{ color: '#F59E0B' }} />
+                            <span className="text-white text-[12px] font-bold">4.9</span>
+                        </div>
+                    </motion.div>
+                </motion.div>
+
+                {/* Badges */}
+                <div className="absolute top-4 left-4 flex flex-col gap-2">
+                    <div
+                        className="px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-white shadow-lg backdrop-blur-md"
+                        style={{ background: listing.type === 'Sale' ? 'rgba(124, 92, 68, 0.9)' : 'rgba(26, 26, 26, 0.9)' }}
+                    >
+                        For {listing.type}
+                    </div>
                 </div>
+
+                <motion.button
+                    whileHover={{ scale: 1.15, backgroundColor: '#FFFFFF' }}
+                    whileTap={{ scale: 0.85 }}
+                    className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-lg"
+                    style={{ background: 'rgba(255, 255, 255, 0.9)', color: '#1A1A1A' }}
+                >
+                    <Heart size={16} />
+                </motion.button>
             </div>
 
-            {/* Content */}
-            <div className="p-5">
-                <h3
-                    className="text-[17px] font-bold mb-1.5 line-clamp-1"
-                    style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}
-                >
-                    {listing.title}
-                </h3>
-                <div className="flex items-center gap-1.5 mb-4">
-                    <MapPin size={13} style={{ color: '#7C5C44' }} />
-                    <span className="text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#999' }}>
+            {/* Content Section */}
+            <div className="p-6">
+                <div className="flex items-center gap-2 mb-2 text-[#888]">
+                    <MapPin size={14} className="shrink-0" style={{ color: '#7C5C44' }} />
+                    <span className="text-[12px] font-medium truncate" style={{ fontFamily: "'Inter', sans-serif" }}>
                         {listing.city}, Morocco
                     </span>
                 </div>
 
-                {/* Details Row */}
-                <div className="flex items-center gap-4 pb-4 border-b border-[#F0E6DB]">
-                    <div className="flex items-center gap-1.5">
-                        <Bed size={14} style={{ color: '#7C5C44' }} />
-                        <span className="text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#666' }}>
-                            {listing.bedrooms} {listing.bedrooms === 1 ? 'Bed' : 'Beds'}
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                        <Bath size={14} style={{ color: '#7C5C44' }} />
-                        <span className="text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#666' }}>
-                            {listing.bathrooms} {listing.bathrooms === 1 ? 'Bath' : 'Baths'}
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                        <Maximize size={14} style={{ color: '#7C5C44' }} />
-                        <span className="text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: '#666' }}>
-                            {listing.area} m²
-                        </span>
+                <h3 className="text-[17px] font-bold mb-4 line-clamp-1 transition-colors group-hover:text-[#7C5C44]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
+                    {listing.title}
+                </h3>
+
+                <div className="flex items-center justify-between pt-4 border-t border-[#F0E6DB]">
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1.5">
+                            <Bed size={15} style={{ color: '#7C5C44' }} />
+                            <span className="text-[13px] font-semibold" style={{ color: '#666' }}>{listing.bedrooms}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                            <Bath size={15} style={{ color: '#7C5C44' }} />
+                            <span className="text-[13px] font-semibold" style={{ color: '#666' }}>{listing.bathrooms}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                            <Maximize size={15} style={{ color: '#7C5C44' }} />
+                            <span className="text-[13px] font-semibold" style={{ color: '#666' }}>{listing.area} m²</span>
+                        </div>
                     </div>
                 </div>
-
-                {/* View Details */}
-                <Link
-                    to={`/properties/${listing.id}`}
-                    className="flex items-center justify-between mt-4 group/link"
-                >
-                    <span
-                        className="text-[13px] font-semibold transition-colors group-hover/link:text-[#7C5C44]"
-                        style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}
-                    >
-                        View Details
-                    </span>
-                    <ArrowRight size={16} className="transition-transform group-hover/link:translate-x-1" style={{ color: '#7C5C44' }} />
-                </Link>
             </div>
-        </div>
+
+            {/* Sliding View Details Button */}
+            <motion.div
+                className="absolute bottom-4 right-6 pointer-events-none"
+                initial={{ x: 100, opacity: 0 }}
+                whileHover={{ x: 0, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            >
+                <div className="pointer-events-auto">
+                    <Link
+                        to={`/properties/${listing.id}`}
+                        className="flex items-center gap-2 px-5 py-2.5 bg-[#1A1A1A] text-white text-[12px] font-bold uppercase tracking-widest rounded-xl shadow-xl hover:bg-[#7C5C44] transition-colors"
+                    >
+                        Details
+                        <ArrowRight size={14} />
+                    </Link>
+                </div>
+            </motion.div>
+        </motion.div>
     );
 }
+

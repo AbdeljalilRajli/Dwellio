@@ -11,7 +11,7 @@ export function Footer() {
                         <Link
                             to="/"
                             className="text-[28px] font-bold tracking-tight block mb-5"
-                            style={{ fontFamily: "'Playfair Display', serif", color: '#fff' }}
+                            style={{ fontFamily: "'Cormorant Garamond', serif", color: '#fff' }}
                         >
                             Dwellio
                         </Link>
@@ -36,7 +36,7 @@ export function Footer() {
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Outfit', sans-serif", color: '#fff' }}>
+                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#fff' }}>
                             Quick Links
                         </h3>
                         <ul className="space-y-3">
@@ -63,7 +63,7 @@ export function Footer() {
 
                     {/* Cities */}
                     <div>
-                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Outfit', sans-serif", color: '#fff' }}>
+                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#fff' }}>
                             Popular Cities
                         </h3>
                         <ul className="space-y-3">
@@ -85,7 +85,7 @@ export function Footer() {
 
                     {/* Contact */}
                     <div>
-                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Outfit', sans-serif", color: '#fff' }}>
+                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#fff' }}>
                             Get in Touch
                         </h3>
                         <ul className="space-y-4">

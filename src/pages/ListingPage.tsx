@@ -70,10 +70,10 @@ export default function ListingPage() {
             {/* Header */}
             <div className="pt-24 pb-8" style={{ background: '#F5EEE8' }}>
                 <div className="max-w-7xl mx-auto px-5 sm:px-8">
-                    <p className="text-[12px] font-bold uppercase tracking-[0.2em] mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#7C5C44' }}>
+                    <p className="text-[12px] font-bold uppercase tracking-[0.2em] mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#7C5C44' }}>
                         Browse Listings
                     </p>
-                    <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A', letterSpacing: '-0.02em' }}>
+                    <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A', letterSpacing: '-0.02em' }}>
                         {pageTitle}
                     </h1>
                     <p className="text-[15px] mt-2" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
@@ -107,7 +107,7 @@ export default function ListingPage() {
                                     onClick={() => setDealType(t)}
                                     className="px-4 py-3 text-[13px] font-semibold transition-all"
                                     style={{
-                                        fontFamily: "'Outfit', sans-serif",
+                                        fontFamily: "'Plus Jakarta Sans', sans-serif",
                                         background: dealType === t ? '#1A1A1A' : 'transparent',
                                         color: dealType === t ? '#fff' : '#888',
                                     }}
@@ -165,7 +165,7 @@ export default function ListingPage() {
                             <button
                                 onClick={clearFilters}
                                 className="flex items-center gap-1.5 px-4 py-3 rounded-xl text-[13px] font-semibold transition-colors"
-                                style={{ fontFamily: "'Outfit', sans-serif", color: '#7C5C44', border: '1px solid #7C5C44' }}
+                                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#7C5C44', border: '1px solid #7C5C44' }}
                             >
                                 <X size={13} /> Clear
                             </button>
@@ -180,17 +180,17 @@ export default function ListingPage() {
                     </p>
                     <div className="flex gap-2 flex-wrap justify-end">
                         {dealType !== 'All' && (
-                            <span className="text-[11px] font-bold px-3 py-1 rounded-full text-white" style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}>
+                            <span className="text-[11px] font-bold px-3 py-1 rounded-full text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: '#1A1A1A' }}>
                                 {dealType === 'Sale' ? 'For Sale' : 'For Rent'}
                             </span>
                         )}
                         {city !== 'All Cities' && (
-                            <span className="text-[11px] font-bold px-3 py-1 rounded-full" style={{ fontFamily: "'Outfit', sans-serif", background: '#F0E6DB', color: '#7C5C44' }}>
+                            <span className="text-[11px] font-bold px-3 py-1 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: '#F0E6DB', color: '#7C5C44' }}>
                                 {city}
                             </span>
                         )}
                         {propertyType !== 'All Types' && (
-                            <span className="text-[11px] font-bold px-3 py-1 rounded-full" style={{ fontFamily: "'Outfit', sans-serif", background: '#F0E6DB', color: '#7C5C44' }}>
+                            <span className="text-[11px] font-bold px-3 py-1 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: '#F0E6DB', color: '#7C5C44' }}>
                                 {propertyType}
                             </span>
                         )}
@@ -215,7 +215,7 @@ export default function ListingPage() {
                         <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5" style={{ background: '#F0E6DB' }}>
                             <SlidersHorizontal size={26} style={{ color: '#7C5C44' }} />
                         </div>
-                        <p className="text-xl font-bold mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                        <p className="text-xl font-bold mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
                             No properties found
                         </p>
                         <p className="text-[15px] mb-6" style={{ fontFamily: "'Inter', sans-serif", color: '#888' }}>
@@ -224,7 +224,7 @@ export default function ListingPage() {
                         <button
                             onClick={clearFilters}
                             className="text-[14px] font-bold text-white px-6 py-3 rounded-xl transition-all"
-                            style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
+                            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: '#1A1A1A' }}
                         >
                             Clear All Filters
                         </button>

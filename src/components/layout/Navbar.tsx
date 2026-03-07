@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Heart } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const NAV_LINKS = [
     { label: 'Home', path: '/' },
@@ -31,81 +32,84 @@ export function Navbar() {
     return (
         <>
             <nav
-                className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+                className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
                 style={{
-                    background: '#FFFFFF',
-                    boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.06)' : 'none',
+                    background: scrolled ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 1)',
+                    backdropFilter: scrolled ? 'blur(16px)' : 'none',
+                    borderBottom: scrolled ? '1px solid rgba(0, 0, 0, 0.05)' : '1px solid transparent',
+                    boxShadow: scrolled ? '0 10px 40px rgba(0,0,0,0.04)' : 'none',
                 }}
             >
                 <div className="max-w-7xl mx-auto px-5 sm:px-8">
-                    <div className="flex items-center justify-between h-[72px]">
+                    <div className="flex items-center justify-between h-[72px] sm:h-[84px]">
                         {/* Logo */}
                         <Link
                             to="/"
-                            className="text-[26px] font-bold tracking-tight"
-                            style={{ fontFamily: "'Playfair Display', serif", color: '#1A1A1A' }}
+                            className="text-[26px] font-bold tracking-tight group"
+                            style={{ fontFamily: "'Cormorant Garamond', serif", color: '#1A1A1A' }}
                         >
-                            Dwellio
+                            <span className="group-hover:text-[#7C5C44] transition-colors duration-300">Dwellio</span>
                         </Link>
 
                         {/* Desktop Nav */}
-                        <div className="hidden md:flex items-center gap-1">
+                        <div className="hidden md:flex items-center gap-10">
                             {NAV_LINKS.map(link => (
                                 <Link
                                     key={link.path}
                                     to={link.path}
-                                    className="relative px-5 py-2 text-[14px] font-medium rounded-xl transition-all duration-200"
+                                    className="relative py-2 text-[13px] font-bold uppercase tracking-widest transition-all duration-300"
                                     style={{
                                         fontFamily: "'Inter', sans-serif",
                                         color: isActive(link.path) ? '#1A1A1A' : '#888',
-                                        background: isActive(link.path) ? '#F5EEE8' : 'transparent',
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        if (!isActive(link.path)) e.currentTarget.style.color = '#1A1A1A';
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        if (!isActive(link.path)) e.currentTarget.style.color = '#888';
                                     }}
                                 >
-                                    {link.label}
+                                    <span className="relative z-10">{link.label}</span>
+                                    {isActive(link.path) && (
+                                        <motion.div
+                                            layoutId="navbar-indicator"
+                                            className="absolute -bottom-[6px] left-0 right-0 h-[2.5px] bg-[#7C5C44] rounded-full"
+                                            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                                        />
+                                    )}
                                 </Link>
                             ))}
                         </div>
 
                         {/* Right Section */}
-                        <div className="hidden md:flex items-center gap-3">
-                            <Link
-                                to="/dashboard/favorites"
-                                className="w-10 h-10 rounded-xl flex items-center justify-center transition-colors hover:bg-[#F5EEE8]"
-                                style={{ color: '#888' }}
-                            >
-                                <Heart size={18} />
-                            </Link>
-                            <Link
-                                to="/login"
-                                className="px-5 py-2.5 text-[14px] font-semibold rounded-xl transition-all duration-200"
-                                style={{
-                                    fontFamily: "'Inter', sans-serif",
-                                    color: '#1A1A1A',
-                                    border: '1.5px solid #E0E0E0',
-                                }}
-                                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#1A1A1A'; }}
-                                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#E0E0E0'; }}
-                            >
-                                Log In
-                            </Link>
-                            <Link
-                                to="/signup"
-                                className="px-5 py-2.5 text-[14px] font-semibold rounded-xl text-white transition-all duration-200"
-                                style={{
-                                    fontFamily: "'Inter', sans-serif",
-                                    background: '#1A1A1A',
-                                }}
-                                onMouseEnter={(e) => { e.currentTarget.style.background = '#7C5C44'; }}
-                                onMouseLeave={(e) => { e.currentTarget.style.background = '#1A1A1A'; }}
-                            >
-                                Sign Up
-                            </Link>
+                        <div className="hidden md:flex items-center gap-5">
+                            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                                <Link
+                                    to="/dashboard/favorites"
+                                    className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-[#F5EEE8]"
+                                    style={{ color: '#1A1A1A', border: '1px solid #E0E0E0' }}
+                                >
+                                    <Heart size={18} />
+                                </Link>
+                            </motion.div>
+
+                            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+                                <Link
+                                    to="/login"
+                                    className="text-[13px] font-bold uppercase tracking-widest transition-colors hover:text-[#7C5C44]"
+                                    style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
+                                >
+                                    Log In
+                                </Link>
+                            </motion.div>
+
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                <Link
+                                    to="/signup"
+                                    className="px-7 py-3 text-[13px] font-bold uppercase tracking-widest rounded-xl text-white shadow-xl transition-all duration-300"
+                                    style={{
+                                        fontFamily: "'Inter', sans-serif",
+                                        background: '#1A1A1A',
+                                        boxShadow: '0 8px 20px rgba(0,0,0,0.1)'
+                                    }}
+                                >
+                                    Sign Up
+                                </Link>
+                            </motion.div>
                         </div>
 
                         {/* Mobile Hamburger */}

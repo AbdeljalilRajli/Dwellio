@@ -28,11 +28,11 @@ export default function PropertyDetails() {
     if (!listing) return (
         <div className="h-screen flex items-center justify-center" style={{ background: '#FBF8F5' }}>
             <div className="text-center">
-                <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>Property not found</h2>
+                <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>Property not found</h2>
                 <button
                     onClick={() => navigate('/properties')}
                     className="px-6 py-3 text-[14px] font-bold text-white rounded-xl"
-                    style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: '#1A1A1A' }}
                 >
                     Back to Listings
                 </button>
@@ -73,7 +73,7 @@ export default function PropertyDetails() {
                                 <div className="flex items-center gap-3 mb-3">
                                     <span
                                         className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider rounded-lg text-white"
-                                        style={{ fontFamily: "'Outfit', sans-serif", background: listing.type === 'Rent' ? '#7C5C44' : '#1A1A1A' }}
+                                        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: listing.type === 'Rent' ? '#7C5C44' : '#1A1A1A' }}
                                     >
                                         For {listing.type}
                                     </span>
@@ -81,7 +81,7 @@ export default function PropertyDetails() {
                                         {listing.property_type}
                                     </span>
                                 </div>
-                                <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A', letterSpacing: '-0.02em' }}>
+                                <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A', letterSpacing: '-0.02em' }}>
                                     {listing.title}
                                 </h1>
                                 <div className="flex items-center gap-1.5">
@@ -111,7 +111,7 @@ export default function PropertyDetails() {
                             ].map(stat => (
                                 <div key={stat.label} className="bg-white rounded-2xl p-5 text-center" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
                                     <stat.icon size={22} className="mx-auto mb-2" style={{ color: '#7C5C44' }} />
-                                    <p className="text-[16px] font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>{stat.value}</p>
+                                    <p className="text-[16px] font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>{stat.value}</p>
                                     <p className="text-[11px] font-medium uppercase tracking-wider mt-1" style={{ fontFamily: "'Inter', sans-serif", color: '#AAA' }}>{stat.label}</p>
                                 </div>
                             ))}
@@ -119,7 +119,7 @@ export default function PropertyDetails() {
 
                         {/* Description */}
                         <div className="mb-10">
-                            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
                                 About This Property
                             </h2>
                             <p className="text-[15px] leading-relaxed" style={{ fontFamily: "'Inter', sans-serif", color: '#666' }}>
@@ -129,7 +129,7 @@ export default function PropertyDetails() {
 
                         {/* Amenities */}
                         <div className="mb-10">
-                            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
                                 Amenities & Features
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -153,13 +153,13 @@ export default function PropertyDetails() {
 
                         {/* Map Placeholder */}
                         <div className="mb-10">
-                            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
                                 Location
                             </h2>
                             <div className="rounded-2xl overflow-hidden h-[280px] flex items-center justify-center" style={{ background: '#EDE0D5' }}>
                                 <div className="text-center">
                                     <MapPinned size={40} style={{ color: '#7C5C44' }} className="mx-auto mb-3" />
-                                    <p className="text-[14px] font-semibold" style={{ fontFamily: "'Outfit', sans-serif", color: '#7C5C44' }}>
+                                    <p className="text-[14px] font-semibold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#7C5C44' }}>
                                         {listing.address}, {listing.city}
                                     </p>
                                     <p className="text-[12px] mt-1" style={{ fontFamily: "'Inter', sans-serif", color: '#999' }}>
@@ -175,10 +175,10 @@ export default function PropertyDetails() {
                         <div className="sticky top-28 bg-white rounded-2xl p-7" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
                             {/* Price */}
                             <div className="mb-7">
-                                <p className="text-[11px] font-bold uppercase tracking-widest mb-1" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                <p className="text-[11px] font-bold uppercase tracking-widest mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
                                     {listing.type === 'Rent' ? 'Monthly Rent' : 'Asking Price'}
                                 </p>
-                                <p className="text-3xl font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A' }}>
+                                <p className="text-3xl font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
                                     {formatPrice(listing.price, listing.type)}
                                 </p>
                             </div>
@@ -186,7 +186,7 @@ export default function PropertyDetails() {
                             {/* Visit Form */}
                             <div className="space-y-4 mb-6">
                                 <div>
-                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
                                         Preferred Date
                                     </label>
                                     <input
@@ -196,7 +196,7 @@ export default function PropertyDetails() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
                                         Your Name
                                     </label>
                                     <input
@@ -207,7 +207,7 @@ export default function PropertyDetails() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Outfit', sans-serif", color: '#AAA' }}>
+                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#AAA' }}>
                                         Your Phone
                                     </label>
                                     <input
@@ -221,7 +221,7 @@ export default function PropertyDetails() {
 
                             <button
                                 className="w-full py-4 text-[15px] font-bold text-white rounded-xl transition-all duration-200 mb-3"
-                                style={{ fontFamily: "'Outfit', sans-serif", background: '#1A1A1A' }}
+                                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: '#1A1A1A' }}
                                 onMouseEnter={(e) => (e.currentTarget.style.background = '#7C5C44')}
                                 onMouseLeave={(e) => (e.currentTarget.style.background = '#1A1A1A')}
                             >
@@ -230,7 +230,7 @@ export default function PropertyDetails() {
 
                             <button
                                 className="w-full py-4 text-[15px] font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
-                                style={{ fontFamily: "'Outfit', sans-serif", color: '#1A1A1A', border: '1.5px solid #EDE0D5' }}
+                                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A', border: '1.5px solid #EDE0D5' }}
                             >
                                 <Phone size={16} style={{ color: '#7C5C44' }} />
                                 Contact Agent
