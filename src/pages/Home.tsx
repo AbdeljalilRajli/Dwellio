@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowRight, Shield, Home, HeadphonesIcon, TrendingUp, MapPin, Star } from 'lucide-react';
+import { ArrowRight, Shield, Home, HeadphonesIcon, TrendingUp } from 'lucide-react';
 import { motion, useInView, useMotionValue, useSpring, animate } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { Navbar } from '../components/layout/Navbar';
@@ -65,7 +65,7 @@ export default function HomePage() {
     });
 
     const featuredSale = listings?.filter(l => l.type === 'Sale').slice(0, 3) ?? [];
-    const featuredRent = listings?.filter(l => l.type === 'Rent').slice(0, 3) ?? [];
+
 
     return (
         <div className="min-h-screen" style={{ background: '#FBF8F5' }}>
@@ -84,17 +84,17 @@ export default function HomePage() {
                     className="flex items-end justify-between mb-16"
                 >
                     <div className="space-y-2">
-                        <p className="text-[12px] font-bold uppercase tracking-[0.25em]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#7C5C44' }}>
+                        <p className="text-[12px] font-bold uppercase tracking-[0.25em]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#7C5C44' }}>
                             Premium Collection
                         </p>
-                        <h2 className="text-4xl sm:text-5xl font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A', letterSpacing: '-0.04em' }}>
+                        <h2 className="text-4xl sm:text-5xl font-bold" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A', letterSpacing: '-0.04em' }}>
                             Featured Properties <span className="text-[#7C5C44]">For Sale</span>
                         </h2>
                     </div>
                     <Link
                         to="/properties?type=Sale"
                         className="hidden sm:flex items-center gap-3 px-6 py-3 rounded-full border border-[#EDE0D5] text-[13px] font-bold uppercase tracking-widest transition-all hover:bg-[#1A1A1A] hover:text-white hover:border-[#1A1A1A]"
-                        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}
+                        style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}
                     >
                         Explore More <ArrowRight size={16} />
                     </Link>
@@ -120,7 +120,7 @@ export default function HomePage() {
                 <Link
                     to="/properties?type=Sale"
                     className="sm:hidden flex items-center justify-center gap-2 mt-10 text-[13px] font-bold uppercase tracking-widest py-4 rounded-xl border border-[#EDE0D5]"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#7C5C44' }}
+                    style={{ fontFamily: "'Quicksand', sans-serif", color: '#7C5C44' }}
                 >
                     View All For Sale <ArrowRight size={16} />
                 </Link>
@@ -136,13 +136,13 @@ export default function HomePage() {
                         variants={fadeInUp}
                         className="text-center max-w-3xl mx-auto mb-20"
                     >
-                        <p className="text-[12px] font-bold uppercase tracking-[0.25em] mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#7C5C44' }}>
+                        <p className="text-[12px] font-bold uppercase tracking-[0.25em] mb-4" style={{ fontFamily: "'Quicksand', sans-serif", color: '#7C5C44' }}>
                             The Dwellio Advantage
                         </p>
-                        <h2 className="text-4xl sm:text-5xl font-bold mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A', letterSpacing: '-0.04em' }}>
+                        <h2 className="text-4xl sm:text-5xl font-bold mb-6" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A', letterSpacing: '-0.04em' }}>
                             Excellence in Every Detail
                         </h2>
-                        <p className="text-[18px] leading-relaxed opacity-60" style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}>
+                        <p className="text-[18px] leading-relaxed opacity-60" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>
                             We set the gold standard for real estate in Morocco, bridging the gap between historical charm and contemporary luxury.
                         </p>
                     </motion.div>
@@ -173,10 +173,10 @@ export default function HomePage() {
                                     >
                                         <item.icon size={26} className="transition-colors duration-300 group-hover:text-white" style={{ color: '#7C5C44' }} />
                                     </div>
-                                    <h3 className="text-[18px] font-bold mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
+                                    <h3 className="text-[18px] font-bold mb-3" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A' }}>
                                         {item.title}
                                     </h3>
-                                    <p className="text-[14px] leading-relaxed opacity-50" style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}>
+                                    <p className="text-[14px] leading-relaxed opacity-50" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>
                                         {item.desc}
                                     </p>
                                 </motion.div>
@@ -197,7 +197,7 @@ export default function HomePage() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                             <div className="absolute bottom-10 left-10 right-10 p-8 rounded-[32px] bg-white/10 backdrop-blur-2xl border border-white/20">
-                                <p className="text-white text-lg italic leading-relaxed font-light" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                                <p className="text-white text-lg italic leading-relaxed font-light" style={{ fontFamily: "'Cormorant', serif" }}>
                                     "Dwellio isn't just a platform; it's the gateway to a refined Moroccan life."
                                 </p>
                             </div>
@@ -217,10 +217,10 @@ export default function HomePage() {
                         className="flex items-end justify-between mb-16"
                     >
                         <div className="space-y-2">
-                            <p className="text-[12px] font-bold uppercase tracking-[0.25em]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#7C5C44' }}>
+                            <p className="text-[12px] font-bold uppercase tracking-[0.25em]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#7C5C44' }}>
                                 Discover the Kingdom
                             </p>
-                            <h2 className="text-4xl sm:text-5xl font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A', letterSpacing: '-0.04em' }}>
+                            <h2 className="text-4xl sm:text-5xl font-bold" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A', letterSpacing: '-0.04em' }}>
                                 Iconic <span className="text-[#7C5C44]">Destinations</span>
                             </h2>
                         </div>
@@ -252,7 +252,7 @@ export default function HomePage() {
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent transition-opacity group-hover:opacity-80" />
 
                                     <div className="absolute bottom-8 left-8 right-8">
-                                        <h3 className="text-2xl font-bold text-white mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                                        <h3 className="text-2xl font-bold text-white mb-1" style={{ fontFamily: "'Cormorant', serif" }}>
                                             {item.city}
                                         </h3>
                                         <p className="text-[13px] font-bold text-[#EDE0D5] uppercase tracking-widest opacity-70">
@@ -290,10 +290,10 @@ export default function HomePage() {
                     variants={fadeInUp}
                     className="max-w-4xl mx-auto px-5 sm:px-8 text-center relative z-10"
                 >
-                    <h2 className="text-5xl sm:text-6xl font-bold mb-8" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#fff', letterSpacing: '-0.04em' }}>
-                        Begin Your Search for the <span className="text-[#EDE0D5] italic font-light" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Extraordinary.</span>
+                    <h2 className="text-5xl sm:text-6xl font-bold mb-8" style={{ fontFamily: "'Cormorant', serif", color: '#fff', letterSpacing: '-0.04em' }}>
+                        Begin Your Search for the <span className="text-[#EDE0D5] italic font-light" style={{ fontFamily: "'Cormorant', serif" }}>Extraordinary.</span>
                     </h2>
-                    <p className="text-[20px] leading-relaxed mb-12 opacity-60 font-light" style={{ fontFamily: "'Inter', sans-serif", color: '#fff' }}>
+                    <p className="text-[20px] leading-relaxed mb-12 opacity-60 font-light" style={{ fontFamily: "'Quicksand', sans-serif", color: '#fff' }}>
                         Expertly curated Moroccan luxury, just one click away.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -301,7 +301,7 @@ export default function HomePage() {
                             <Link
                                 to="/properties"
                                 className="block px-10 py-5 text-[15px] font-bold uppercase tracking-widest rounded-2xl text-[#1A1A1A] transition-all"
-                                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: '#EDE0D5' }}
+                                style={{ fontFamily: "'Quicksand', sans-serif", background: '#EDE0D5' }}
                             >
                                 Explore Collection
                             </Link>
@@ -310,7 +310,7 @@ export default function HomePage() {
                             <Link
                                 to="/contact"
                                 className="block px-10 py-5 text-[15px] font-bold uppercase tracking-widest rounded-2xl text-white border border-[#EDE0D5] transition-all hover:bg-white/5"
-                                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                                style={{ fontFamily: "'Quicksand', sans-serif" }}
                             >
                                 Personal Advisory
                             </Link>

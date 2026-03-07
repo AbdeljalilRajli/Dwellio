@@ -10,9 +10,9 @@
   --color-brand-muted: #888888;
 
   /* Typography */
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Plus Jakarta Sans", sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: "Cormorant", Georgia, serif;
+  --font-sans: "Quicksand", sans-serif;
+  --font-body: "Quicksand", system-ui, sans-serif;
 }
 
 @layer base {
@@ -28,7 +28,7 @@
   body {
     background-color: #FBF8F5;
     color: #1A1A1A;
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Quicksand", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -37,7 +37,7 @@
   h2,
   h3,
   h4 {
-    font-family: "Outfit", sans-serif;
+    font-family: "Cormorant", serif;
     font-weight: 700;
     letter-spacing: -0.03em;
     color: #1A1A1A;

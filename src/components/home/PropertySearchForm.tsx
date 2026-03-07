@@ -63,7 +63,7 @@ export function PropertySearchForm() {
                         onClick={() => { setDealType(t); setPriceIdx(0); }}
                         className="px-6 py-2.5 text-[13px] font-bold uppercase tracking-wider rounded-full transition-colors duration-200 mr-2"
                         style={{
-                            fontFamily: "'Plus Jakarta Sans', sans-serif",
+                            fontFamily: "'Quicksand', sans-serif",
                             background: dealType === t ? '#1A1A1A' : 'rgba(255,255,255,0.15)',
                             color: dealType === t ? '#fff' : '#EDE0D5',
                             border: dealType === t ? 'none' : '1px solid rgba(255,255,255,0.2)',
@@ -85,7 +85,7 @@ export function PropertySearchForm() {
                         whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
                         className="px-6 py-5 rounded-2xl transition-colors relative group"
                     >
-                        <label className="block text-[10px] font-bold uppercase tracking-[0.2em] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'rgba(237, 224, 213, 0.6)' }}>
+                        <label className="block text-[10px] font-bold uppercase tracking-[0.2em] mb-3" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(237, 224, 213, 0.6)' }}>
                             Location
                         </label>
                         <div className="flex items-center gap-3">
@@ -96,7 +96,7 @@ export function PropertySearchForm() {
                                 value={city}
                                 onChange={(e) => setCity(e.target.value)}
                                 className="flex-1 bg-transparent text-[15px] font-semibold outline-none cursor-pointer appearance-none pr-6"
-                                style={{ fontFamily: "'Inter', sans-serif", color: '#FFFFFF' }}
+                                style={{ fontFamily: "'Quicksand', sans-serif", color: '#FFFFFF' }}
                             >
                                 {CITIES.map(c => <option key={c} className="bg-[#1A1A1A] text-white">{c}</option>)}
                             </select>
@@ -109,14 +109,14 @@ export function PropertySearchForm() {
                         whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
                         className="px-6 py-5 rounded-2xl transition-colors relative"
                     >
-                        <label className="block text-[10px] font-bold uppercase tracking-[0.2em] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'rgba(237, 224, 213, 0.6)' }}>
+                        <label className="block text-[10px] font-bold uppercase tracking-[0.2em] mb-3" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(237, 224, 213, 0.6)' }}>
                             Property Type
                         </label>
                         <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-[#7C5C44]/20 flex items-center justify-center shrink-0">
                                 <Home size={16} style={{ color: '#EDE0D5' }} />
                             </div>
-                            <span className="text-[15px] font-semibold" style={{ fontFamily: "'Inter', sans-serif", color: '#FFFFFF' }}>
+                            <span className="text-[15px] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif", color: '#FFFFFF' }}>
                                 {dealType === 'Sale' ? 'Residential Sale' : 'Monthly Rental'}
                             </span>
                         </div>
@@ -127,7 +127,7 @@ export function PropertySearchForm() {
                         whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
                         className="px-6 py-5 rounded-2xl transition-colors relative"
                     >
-                        <label className="block text-[10px] font-bold uppercase tracking-[0.2em] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'rgba(237, 224, 213, 0.6)' }}>
+                        <label className="block text-[10px] font-bold uppercase tracking-[0.2em] mb-3" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(237, 224, 213, 0.6)' }}>
                             Budget
                         </label>
                         <div className="flex items-center gap-3">
@@ -138,7 +138,7 @@ export function PropertySearchForm() {
                                 value={priceIdx}
                                 onChange={(e) => setPriceIdx(Number(e.target.value))}
                                 className="flex-1 bg-transparent text-[15px] font-semibold outline-none cursor-pointer appearance-none pr-6"
-                                style={{ fontFamily: "'Inter', sans-serif", color: '#FFFFFF' }}
+                                style={{ fontFamily: "'Quicksand', sans-serif", color: '#FFFFFF' }}
                             >
                                 {priceRanges.map((pr, i) => <option key={pr.label} value={i} className="bg-[#1A1A1A] text-white">{pr.label}</option>)}
                             </select>
@@ -157,7 +157,7 @@ export function PropertySearchForm() {
                             onClick={handleSearch}
                             className="w-full h-full flex items-center justify-center gap-3 text-white text-[14px] font-bold rounded-[20px] transition-all duration-300 py-6 lg:py-0"
                             style={{
-                                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                                fontFamily: "'Quicksand', sans-serif",
                                 background: 'linear-gradient(135deg, #7C5C44 0%, #4A3528 100%)',
                                 boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
                             }}

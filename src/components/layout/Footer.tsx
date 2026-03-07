@@ -11,11 +11,11 @@ export function Footer() {
                         <Link
                             to="/"
                             className="text-[28px] font-bold tracking-tight block mb-5"
-                            style={{ fontFamily: "'Cormorant Garamond', serif", color: '#fff' }}
+                            style={{ fontFamily: "'Cormorant', serif", color: '#fff' }}
                         >
                             Dwellio
                         </Link>
-                        <p className="text-[15px] leading-relaxed mb-8" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
+                        <p className="text-[15px] leading-relaxed mb-8" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
                             Morocco's premier real estate platform. Find luxury villas, modern apartments, and charming riads across the kingdom.
                         </p>
                         <div className="flex items-center gap-3">
@@ -36,7 +36,7 @@ export function Footer() {
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#fff' }}>
+                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Quicksand', sans-serif", color: '#fff' }}>
                             Quick Links
                         </h3>
                         <ul className="space-y-3">
@@ -50,7 +50,7 @@ export function Footer() {
                                     <Link
                                         to={link.path}
                                         className="text-[14px] font-medium transition-colors"
-                                        style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}
+                                        style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.45)' }}
                                         onMouseEnter={(e) => { e.currentTarget.style.color = '#fff'; }}
                                         onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; }}
                                     >
@@ -63,7 +63,7 @@ export function Footer() {
 
                     {/* Cities */}
                     <div>
-                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#fff' }}>
+                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Quicksand', sans-serif", color: '#fff' }}>
                             Popular Cities
                         </h3>
                         <ul className="space-y-3">
@@ -72,7 +72,7 @@ export function Footer() {
                                     <Link
                                         to={`/properties?city=${city}`}
                                         className="text-[14px] font-medium transition-colors"
-                                        style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}
+                                        style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.45)' }}
                                         onMouseEnter={(e) => { e.currentTarget.style.color = '#fff'; }}
                                         onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; }}
                                     >
@@ -85,25 +85,25 @@ export function Footer() {
 
                     {/* Contact */}
                     <div>
-                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#fff' }}>
+                        <h3 className="text-[14px] font-bold uppercase tracking-widest mb-6" style={{ fontFamily: "'Quicksand', sans-serif", color: '#fff' }}>
                             Get in Touch
                         </h3>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3">
                                 <MapPin size={16} className="shrink-0 mt-0.5" style={{ color: '#7C5C44' }} />
-                                <span className="text-[14px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
+                                <span className="text-[14px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
                                     123 Boulevard Mohammed V, Casablanca, Morocco
                                 </span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail size={16} className="shrink-0" style={{ color: '#7C5C44' }} />
-                                <span className="text-[14px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
+                                <span className="text-[14px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
                                     hello@dwellio.com
                                 </span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone size={16} className="shrink-0" style={{ color: '#7C5C44' }} />
-                                <span className="text-[14px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
+                                <span className="text-[14px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.45)' }}>
                                     +212 5 22 00 00 00
                                 </span>
                             </li>
@@ -112,10 +112,10 @@ export function Footer() {
                 </div>
 
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.3)' }}>
+                    <p className="text-[13px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.3)' }}>
                         © 2026 Dwellio. All rights reserved.
                     </p>
-                    <div className="flex gap-8 text-[13px] font-medium" style={{ fontFamily: "'Inter', sans-serif", color: 'rgba(255,255,255,0.3)' }}>
+                    <div className="flex gap-8 text-[13px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.3)' }}>
                         <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
                         <a href="#" className="hover:text-white transition-colors">Terms of Use</a>
                     </div>

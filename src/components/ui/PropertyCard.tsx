@@ -40,7 +40,7 @@ export function PropertyCard({ listing }: Props) {
                         transition={{ delay: 0.1 }}
                         className="flex items-center justify-between"
                     >
-                        <span className="text-white text-[18px] font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                        <span className="text-white text-[18px] font-bold" style={{ fontFamily: "'Quicksand', sans-serif" }}>
                             {listing.price.toLocaleString()} MAD{listing.type === 'Rent' ? '/mo' : ''}
                         </span>
                         <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/30">
@@ -74,12 +74,12 @@ export function PropertyCard({ listing }: Props) {
             <div className="p-6">
                 <div className="flex items-center gap-2 mb-2 text-[#888]">
                     <MapPin size={14} className="shrink-0" style={{ color: '#7C5C44' }} />
-                    <span className="text-[12px] font-medium truncate" style={{ fontFamily: "'Inter', sans-serif" }}>
+                    <span className="text-[12px] font-medium truncate" style={{ fontFamily: "'Quicksand', sans-serif" }}>
                         {listing.city}, Morocco
                     </span>
                 </div>
 
-                <h3 className="text-[17px] font-bold mb-4 line-clamp-1 transition-colors group-hover:text-[#7C5C44]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#1A1A1A' }}>
+                <h3 className="text-[17px] font-bold mb-4 line-clamp-1 transition-colors group-hover:text-[#7C5C44]" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A' }}>
                     {listing.title}
                 </h3>
 

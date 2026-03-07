@@ -55,7 +55,7 @@ export function Navbar() {
                             to="/"
                             className="text-[26px] font-bold tracking-tight group"
                             style={{
-                                fontFamily: "'Cormorant Garamond', serif",
+                                fontFamily: "'Cormorant', serif",
                                 color: showSolidNav ? '#1A1A1A' : '#FFFFFF'
                             }}
                         >
@@ -70,7 +70,7 @@ export function Navbar() {
                                     to={link.path}
                                     className="relative py-2 text-[13px] font-bold uppercase tracking-widest transition-all duration-300"
                                     style={{
-                                        fontFamily: "'Inter', sans-serif",
+                                        fontFamily: "'Quicksand', sans-serif",
                                         color: isActive(link.path)
                                             ? (showSolidNav ? '#1A1A1A' : '#FFFFFF')
                                             : (showSolidNav ? '#888' : 'rgba(255, 255, 255, 0.7)'),
@@ -111,7 +111,7 @@ export function Navbar() {
                                             to="/dashboard"
                                             className="text-[13px] font-bold uppercase tracking-widest transition-colors hover:text-[#7C5C44]"
                                             style={{
-                                                fontFamily: "'Inter', sans-serif",
+                                                fontFamily: "'Quicksand', sans-serif",
                                                 color: showSolidNav ? '#1A1A1A' : '#FFFFFF'
                                             }}
                                         >
@@ -124,7 +124,7 @@ export function Navbar() {
                                             to="/dashboard/listings/create"
                                             className="px-7 py-3 text-[13px] font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shadows-glow"
                                             style={{
-                                                fontFamily: "'Inter', sans-serif",
+                                                fontFamily: "'Quicksand', sans-serif",
                                                 background: showSolidNav ? '#1A1A1A' : '#FFFFFF',
                                                 color: showSolidNav ? '#FFFFFF' : '#1A1A1A',
                                                 boxShadow: showSolidNav ? '0 8px 20px rgba(0,0,0,0.1)' : '0 8px 25px rgba(255,255,255,0.2)'
@@ -141,7 +141,7 @@ export function Navbar() {
                                             to="/login"
                                             className="text-[13px] font-bold uppercase tracking-widest transition-colors hover:text-[#7C5C44]"
                                             style={{
-                                                fontFamily: "'Inter', sans-serif",
+                                                fontFamily: "'Quicksand', sans-serif",
                                                 color: showSolidNav ? '#1A1A1A' : '#FFFFFF'
                                             }}
                                         >
@@ -154,7 +154,7 @@ export function Navbar() {
                                             to="/signup"
                                             className="px-7 py-3 text-[13px] font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shadows-glow"
                                             style={{
-                                                fontFamily: "'Inter', sans-serif",
+                                                fontFamily: "'Quicksand', sans-serif",
                                                 background: showSolidNav ? '#1A1A1A' : '#FFFFFF',
                                                 color: showSolidNav ? '#FFFFFF' : '#1A1A1A',
                                                 boxShadow: showSolidNav ? '0 8px 20px rgba(0,0,0,0.1)' : '0 8px 25px rgba(255,255,255,0.2)'
@@ -196,7 +196,7 @@ export function Navbar() {
                                 to={link.path}
                                 className="block px-5 py-3.5 text-[15px] font-bold uppercase tracking-widest rounded-xl transition-colors"
                                 style={{
-                                    fontFamily: "'Inter', sans-serif",
+                                    fontFamily: "'Quicksand', sans-serif",
                                     color: isActive(link.path) ? '#1A1A1A' : '#888',
                                     background: isActive(link.path) ? '#F5EEE8' : 'transparent',
                                 }}
@@ -207,19 +207,19 @@ export function Navbar() {
                         <div className="border-t border-[#EDE0D5] pt-4 mt-4 flex flex-col gap-3">
                             {user ? (
                                 <>
-                                    <Link to="/dashboard" className="w-full text-center py-3.5 text-[13px] font-bold uppercase tracking-widest rounded-xl border border-[#E0E0E0]" style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}>
+                                    <Link to="/dashboard" className="w-full text-center py-3.5 text-[13px] font-bold uppercase tracking-widest rounded-xl border border-[#E0E0E0]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>
                                         Dashboard
                                     </Link>
-                                    <Link to="/dashboard/listings/create" className="w-full text-center py-3.5 text-[13px] font-bold uppercase tracking-widest rounded-xl text-white" style={{ fontFamily: "'Inter', sans-serif", background: '#1A1A1A' }}>
+                                    <Link to="/dashboard/listings/create" className="w-full text-center py-3.5 text-[13px] font-bold uppercase tracking-widest rounded-xl text-white" style={{ fontFamily: "'Quicksand', sans-serif", background: '#1A1A1A' }}>
                                         List a Property
                                     </Link>
                                 </>
                             ) : (
                                 <div className="flex gap-3">
-                                    <Link to="/login" className="flex-1 text-center py-3.5 text-[13px] font-bold uppercase tracking-widest rounded-xl border border-[#E0E0E0]" style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}>
+                                    <Link to="/login" className="flex-1 text-center py-3.5 text-[13px] font-bold uppercase tracking-widest rounded-xl border border-[#E0E0E0]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>
                                         Log In
                                     </Link>
-                                    <Link to="/signup" className="flex-1 text-center py-3.5 text-[13px] font-bold uppercase tracking-widest rounded-xl text-white" style={{ fontFamily: "'Inter', sans-serif", background: '#1A1A1A' }}>
+                                    <Link to="/signup" className="flex-1 text-center py-3.5 text-[13px] font-bold uppercase tracking-widest rounded-xl text-white" style={{ fontFamily: "'Quicksand', sans-serif", background: '#1A1A1A' }}>
                                         Sign Up
                                     </Link>
                                 </div>

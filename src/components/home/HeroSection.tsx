@@ -91,7 +91,7 @@ export function HeroSection() {
                         <motion.h1
                             variants={textRevealVariants}
                             style={{
-                                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                                fontFamily: "'Cormorant', serif",
                                 fontSize: 'clamp(3rem, 7vw, 5.5rem)',
                                 fontWeight: 700,
                                 color: '#FFFFFF',
@@ -109,7 +109,7 @@ export function HeroSection() {
                             variants={textRevealVariants}
                             transition={{ delay: 0.1 }}
                             style={{
-                                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                                fontFamily: "'Cormorant', serif",
                                 fontSize: 'clamp(3rem, 7vw, 5.5rem)',
                                 fontWeight: 700,
                                 color: '#FFFFFF',
@@ -118,7 +118,7 @@ export function HeroSection() {
                                 textShadow: '0 8px 32px rgba(0,0,0,0.4)'
                             }}
                         >
-                            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', color: '#EDE0D5' }}>
+                            <span style={{ fontFamily: "'Cormorant', serif", fontStyle: 'italic', color: '#EDE0D5' }}>
                                 Finding Home
                             </span>
                         </motion.h1>
@@ -127,7 +127,7 @@ export function HeroSection() {
                     <motion.p
                         variants={fadeInUp}
                         className="text-[19px] sm:text-[22px] leading-relaxed max-w-2xl mx-auto opacity-90 font-light"
-                        style={{ fontFamily: "'Inter', sans-serif", color: '#FBF8F5', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}
+                        style={{ fontFamily: "'Quicksand', sans-serif", color: '#FBF8F5', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}
                     >
                         A curated selection of the finest riads, villas, and modern luxury apartments across the Kingdom.
                     </motion.p>
@@ -172,11 +172,11 @@ export function HeroSection() {
                             <motion.p
                                 whileHover={{ scale: 1.1, color: '#EDE0D5' }}
                                 className="text-3xl sm:text-4xl font-bold transition-colors"
-                                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: '#FFFFFF' }}
+                                style={{ fontFamily: "'Cormorant', serif", color: '#FFFFFF' }}
                             >
                                 {stat.value}
                             </motion.p>
-                            <p className="text-[12px] font-bold uppercase tracking-widest mt-2 opacity-50 group-hover:opacity-100 transition-opacity" style={{ fontFamily: "'Inter', sans-serif", color: '#EDE0D5' }}>
+                            <p className="text-[12px] font-bold uppercase tracking-widest mt-2 opacity-50 group-hover:opacity-100 transition-opacity" style={{ fontFamily: "'Quicksand', sans-serif", color: '#EDE0D5' }}>
                                 {stat.label}
                             </p>
                         </motion.div>
