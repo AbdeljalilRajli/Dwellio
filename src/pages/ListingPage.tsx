@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search, SlidersHorizontal, MapPin, X, Bed, ChevronDown } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
@@ -13,13 +13,24 @@ const PROPERTY_TYPES = ['All Types', 'Villa', 'Apartment', 'House', 'Penthouse',
 export default function ListingPage() {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [dealType, setDealType] = useState<'All' | 'Sale' | 'Rent'>(
-        (searchParams.get('type') as 'Sale' | 'Rent') || 'All'
-    );
-    const [city, setCity] = useState(searchParams.get('city') || 'All Cities');
-    const [propertyType, setPropertyType] = useState(searchParams.get('property_type') || 'All Types');
     const [search, setSearch] = useState('');
-    const [bedsMin, setBedsMin] = useState(0);
+
+    const dealType = (searchParams.get('type') as 'Sale' | 'Rent' | 'All') || 'All';
+    const city = searchParams.get('city') || 'All Cities';
+    const propertyType = searchParams.get('property_type') || 'All Types';
+    const bedsMin = Number(searchParams.get('minBedrooms')) || 0;
+
+    const updateFilter = (updates: Record<string, string | number | undefined>) => {
+        const newParams = new URLSearchParams(searchParams);
+        Object.entries(updates).forEach(([key, value]) => {
+            if (value === undefined || value === 'All' || value === 'All Cities' || value === 'All Types' || value === 0) {
+                newParams.delete(key);
+            } else {
+                newParams.set(key, String(value));
+            }
+        });
+        setSearchParams(newParams);
+    };
 
     const filters = {
         type: dealType !== 'All' ? (dealType as 'Sale' | 'Rent') : undefined,
@@ -44,22 +55,9 @@ export default function ListingPage() {
     const hasFilters = dealType !== 'All' || city !== 'All Cities' || propertyType !== 'All Types' || search || bedsMin > 0;
 
     const clearFilters = () => {
-        setDealType('All');
-        setCity('All Cities');
-        setPropertyType('All Types');
         setSearch('');
-        setBedsMin(0);
-        setSearchParams({});
+        setSearchParams({}, { replace: true });
     };
-
-    useEffect(() => {
-        const params: Record<string, string> = {};
-        if (dealType !== 'All') params.type = dealType;
-        if (city !== 'All Cities') params.city = city;
-        if (propertyType !== 'All Types') params.property_type = propertyType;
-        if (bedsMin > 0) params.minBedrooms = String(bedsMin);
-        setSearchParams(params, { replace: true });
-    }, [dealType, city, propertyType, bedsMin]);
 
     const pageTitle = dealType === 'Rent' ? 'Properties for Rent' : dealType === 'Sale' ? 'Properties for Sale' : 'All Properties';
 
@@ -104,7 +102,7 @@ export default function ListingPage() {
                             {(['All', 'Sale', 'Rent'] as const).map(t => (
                                 <button
                                     key={t}
-                                    onClick={() => setDealType(t)}
+                                    onClick={() => updateFilter({ type: t })}
                                     className="px-4 py-3 text-[13px] font-semibold transition-all"
                                     style={{
                                         fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -122,7 +120,7 @@ export default function ListingPage() {
                             <MapPin size={14} style={{ color: '#7C5C44' }} />
                             <select
                                 value={city}
-                                onChange={(e) => setCity(e.target.value)}
+                                onChange={(e) => updateFilter({ city: e.target.value })}
                                 className="bg-transparent text-[13px] font-medium outline-none cursor-pointer appearance-none pr-4"
                                 style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
                             >
@@ -136,7 +134,7 @@ export default function ListingPage() {
                             <SlidersHorizontal size={14} style={{ color: '#7C5C44' }} />
                             <select
                                 value={propertyType}
-                                onChange={(e) => setPropertyType(e.target.value)}
+                                onChange={(e) => updateFilter({ property_type: e.target.value })}
                                 className="bg-transparent text-[13px] font-medium outline-none cursor-pointer appearance-none pr-4"
                                 style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
                             >
@@ -150,7 +148,7 @@ export default function ListingPage() {
                             <Bed size={14} style={{ color: '#7C5C44' }} />
                             <select
                                 value={bedsMin}
-                                onChange={(e) => setBedsMin(Number(e.target.value))}
+                                onChange={(e) => updateFilter({ minBedrooms: e.target.value })}
                                 className="bg-transparent text-[13px] font-medium outline-none cursor-pointer appearance-none pr-4"
                                 style={{ fontFamily: "'Inter', sans-serif", color: '#1A1A1A' }}
                             >
