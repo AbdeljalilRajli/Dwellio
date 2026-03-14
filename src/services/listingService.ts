@@ -68,10 +68,11 @@ export const listingService = {
     },
 
     async submitInquiry(messageData: {
-        sender_id: string;
+        sender_id: string | null;
         receiver_id: string;
         property_id: string;
         content: string;
+        sender_email: string;
     }) {
         const { error } = await supabase
             .from('messages')
@@ -81,18 +82,60 @@ export const listingService = {
     },
 
     async getUserMessages(userId: string) {
+        // Try joined query first
         const { data, error } = await supabase
             .from('messages')
             .select(`
                 *,
-                listings (title, images),
-                sender: sender_id (full_name, email)
+                listings:property_id (title, images),
+                sender:sender_id (full_name, email)
             `)
             .or(`receiver_id.eq.${userId},sender_id.eq.${userId}`)
             .order('created_at', { ascending: false });
 
-        if (error) throw error;
-        return data;
+        // If joined query works, return it
+        if (!error && data) return data;
+
+        // Fallback: fetch messages without joins, then enrich manually
+        console.warn('Joined messages query failed, using fallback:', error?.message);
+        const { data: rawMessages, error: rawError } = await supabase
+            .from('messages')
+            .select('*')
+            .or(`receiver_id.eq.${userId},sender_id.eq.${userId}`)
+            .order('created_at', { ascending: false });
+
+        if (rawError) throw rawError;
+        if (!rawMessages || rawMessages.length === 0) return [];
+
+        // Enrich with listing and sender data
+        const enriched = await Promise.all(
+            rawMessages.map(async (msg: any) => {
+                let listings = null;
+                let sender = null;
+
+                if (msg.property_id) {
+                    const { data: listing } = await supabase
+                        .from('listings')
+                        .select('title, images')
+                        .eq('id', msg.property_id)
+                        .single();
+                    listings = listing;
+                }
+
+                if (msg.sender_id) {
+                    const { data: user } = await supabase
+                        .from('users')
+                        .select('full_name, email')
+                        .eq('id', msg.sender_id)
+                        .single();
+                    sender = user;
+                }
+
+                return { ...msg, listings, sender };
+            })
+        );
+
+        return enriched;
     },
 
     async uploadImages(files: File[], userId: string): Promise<string[]> {

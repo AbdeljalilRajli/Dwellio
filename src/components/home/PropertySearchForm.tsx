@@ -7,18 +7,18 @@ const CITIES = ['Any Location', 'Marrakech', 'Casablanca', 'Rabat', 'Tangier', '
 
 const SALE_PRICE_RANGES = [
     { label: 'Any Price', min: 0, max: Infinity },
-    { label: 'Under 2M MAD', min: 0, max: 2_000_000 },
-    { label: '2M – 5M MAD', min: 2_000_000, max: 5_000_000 },
-    { label: '5M – 10M MAD', min: 5_000_000, max: 10_000_000 },
-    { label: '10M+ MAD', min: 10_000_000, max: Infinity },
+    { label: 'Under $2M', min: 0, max: 2_000_000 },
+    { label: '$2M – $5M', min: 2_000_000, max: 5_000_000 },
+    { label: '$5M – $10M', min: 5_000_000, max: 10_000_000 },
+    { label: '$10M+', min: 10_000_000, max: Infinity },
 ];
 
 const RENT_PRICE_RANGES = [
     { label: 'Any Price', min: 0, max: Infinity },
-    { label: 'Under 8,000 MAD', min: 0, max: 8_000 },
-    { label: '8,000 – 15,000 MAD', min: 8_000, max: 15_000 },
-    { label: '15,000 – 25,000 MAD', min: 15_000, max: 25_000 },
-    { label: '25,000+ MAD', min: 25_000, max: Infinity },
+    { label: 'Under $8,000', min: 0, max: 8_000 },
+    { label: '$8,000 – $15,000', min: 8_000, max: 15_000 },
+    { label: '$15,000 – $25,000', min: 15_000, max: 25_000 },
+    { label: '$25,000+', min: 25_000, max: Infinity },
 ];
 
 const BEDROOM_OPTIONS = [
@@ -132,7 +132,7 @@ export function PropertySearchForm() {
                         </label>
                         <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-[#7C5C44]/20 flex items-center justify-center shrink-0">
-                                <span className="text-[11px] font-bold" style={{ color: '#EDE0D5' }}>MAD</span>
+                                <span className="text-[11px] font-bold" style={{ color: '#EDE0D5' }}>$</span>
                             </div>
                             <select
                                 value={priceIdx}

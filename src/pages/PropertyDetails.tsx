@@ -12,6 +12,7 @@ export default function PropertyDetails() {
     const navigate = useNavigate();
     const { user } = useAuth();
     const [message, setMessage] = useState('');
+    const [senderEmail, setSenderEmail] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { data: listing, isLoading } = useQuery({
@@ -21,7 +22,7 @@ export default function PropertyDetails() {
     });
 
     const formatPrice = (price: number, type: string) => {
-        return `${price.toLocaleString()} MAD${type === 'Rent' ? '/mo' : ''}`;
+        return `$${price.toLocaleString()}${type === 'Rent' ? '/mo' : ''}`;
     };
 
     if (isLoading) return (
@@ -192,7 +193,20 @@ export default function PropertyDetails() {
                             <div className="space-y-4 mb-6">
                                 <div>
                                     <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Quicksand', sans-serif", color: '#AAA' }}>
-                                        Send Message to Owner
+                                        Your Email
+                                    </label>
+                                    <input
+                                        type="email"
+                                        value={senderEmail}
+                                        onChange={(e) => setSenderEmail(e.target.value)}
+                                        placeholder="your@email.com"
+                                        className="w-full px-4 py-3.5 rounded-xl text-[14px] font-medium outline-none"
+                                        style={{ background: '#FAFAFA', border: '1px solid #EDE0D5', fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[11px] font-bold uppercase tracking-widest mb-2" style={{ fontFamily: "'Quicksand', sans-serif", color: '#AAA' }}>
+                                        Your Message
                                     </label>
                                     <textarea
                                         rows={4}
@@ -207,21 +221,22 @@ export default function PropertyDetails() {
 
                             <button
                                 onClick={async () => {
-                                    if (!user) {
-                                        navigate('/login');
+                                    if (!senderEmail.trim() || !message.trim()) {
+                                        alert('Please enter your email and a message.');
                                         return;
                                     }
-                                    if (!message.trim()) return;
 
                                     setIsSubmitting(true);
                                     try {
                                         await listingService.submitInquiry({
-                                            sender_id: user.id,
+                                            sender_id: user?.id || null,
                                             receiver_id: listing.owner_id,
                                             property_id: listing.id,
-                                            content: message
+                                            content: message,
+                                            sender_email: senderEmail.trim()
                                         });
                                         setMessage('');
+                                        setSenderEmail('');
                                         alert('Message sent successfully!');
                                     } catch (err: any) {
                                         alert(err.message || 'Error sending message');

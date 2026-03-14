@@ -30,8 +30,7 @@ export default function Messages() {
                     </div>
                 ) : (
                     messages.map((msg: any) => (
-                        <div
-                            key={msg.id}
+                        <div key={msg.id}
                             className="bg-brand-bg/30 rounded-3xl p-6 border border-brand-secondary/5 hover:border-brand-primary/20 transition-all group"
                         >
                             <div className="flex flex-col sm:flex-row justify-between gap-4">
@@ -48,7 +47,7 @@ export default function Messages() {
                                         <div className="flex items-center gap-3 text-xs text-brand-accent font-bold uppercase tracking-wider mt-1">
                                             <span className="flex items-center gap-1">
                                                 <User size={12} />
-                                                {msg.sender?.full_name}
+                                                {msg.sender_email || msg.sender?.email || 'Unknown'}
                                             </span>
                                             <span className="flex items-center gap-1">
                                                 <Calendar size={12} />
@@ -65,7 +64,7 @@ export default function Messages() {
 
                             <div className="mt-4 flex justify-end">
                                 <a
-                                    href={`mailto:${msg.sender?.email}?subject=Re: Inquiry for ${msg.listings?.title}`}
+                                    href={`mailto:${msg.sender_email || msg.sender?.email || ''}?subject=Re: Inquiry for ${msg.listings?.title || 'your property'}`}
                                     className="text-xs font-bold uppercase tracking-widest text-brand-primary hover:text-brand-accent transition-colors py-2 px-4 bg-brand-secondary/10 rounded-xl"
                                 >
                                     Reply via Email
