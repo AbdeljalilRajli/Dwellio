@@ -93,8 +93,8 @@ export default function HomePage() {
                     </div>
                     <Link
                         to="/properties?type=Sale"
-                        className="hidden sm:flex items-center gap-3 px-6 py-3 rounded-full border border-[#EDE0D5] text-[13px] font-bold uppercase tracking-widest transition-all hover:bg-[#1A1A1A] hover:text-white hover:border-[#1A1A1A]"
-                        style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}
+                        className="hidden sm:flex items-center gap-3 px-6 py-3 rounded-full border border-[#EDE0D5] text-[13px] font-bold uppercase tracking-widest transition-all text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white hover:border-[#1A1A1A]"
+                        style={{ fontFamily: "'Quicksand', sans-serif" }}
                     >
                         Explore More <ArrowRight size={16} />
                     </Link>
