@@ -270,53 +270,180 @@ export default function HomePage() {
                 </div>
             </section>
 
+            {/* Testimonials */}
+            <section className="py-28 overflow-hidden" style={{ background: '#FBF8F5' }}>
+                <div className="max-w-7xl mx-auto px-5 sm:px-8">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        variants={fadeInUp}
+                        className="text-center mb-20"
+                    >
+                        <p className="text-[12px] font-bold uppercase tracking-[0.25em] mb-3" style={{ fontFamily: "'Quicksand', sans-serif", color: '#7C5C44' }}>
+                            Client Stories
+                        </p>
+                        <h2 className="text-4xl sm:text-5xl font-bold" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A', letterSpacing: '-0.04em' }}>
+                            What Our <span className="text-[#7C5C44]">Clients Say</span>
+                        </h2>
+                    </motion.div>
+
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        variants={staggerContainer}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                    >
+                        {[
+                            {
+                                name: 'Sarah Mitchell',
+                                role: 'Property Investor',
+                                text: 'Dwellio made finding our dream investment property effortless. The curated listings and attention to detail are unmatched. We closed on a stunning villa within weeks.',
+                                rating: 5,
+                                avatar: 'S'
+                            },
+                            {
+                                name: 'James Thornton',
+                                role: 'First-time Buyer',
+                                text: 'As a first-time buyer, I was overwhelmed by the process. Dwellio simplified everything — from browsing to connecting with sellers. Couldn\'t recommend it more.',
+                                rating: 5,
+                                avatar: 'J'
+                            },
+                            {
+                                name: 'Elena Rodriguez',
+                                role: 'Relocating Professional',
+                                text: 'Relocating to a new city was stressful until I found Dwellio. The platform\'s filtering and direct messaging features helped me find the perfect apartment fast.',
+                                rating: 5,
+                                avatar: 'E'
+                            }
+                        ].map((testimonial, i) => (
+                            <motion.div
+                                key={i}
+                                variants={fadeInUp}
+                                className="relative bg-white rounded-[2rem] p-8 lg:p-10 transition-all duration-500 hover:-translate-y-2"
+                                style={{ boxShadow: '0 4px 30px rgba(0,0,0,0.04)', border: '1px solid #F0E6DB' }}
+                            >
+                                {/* Quote mark */}
+                                <div className="absolute top-6 right-8 text-[80px] font-bold leading-none select-none" style={{ fontFamily: "'Cormorant', serif", color: '#F0E6DB' }}>"</div>
+
+                                {/* Stars */}
+                                <div className="flex gap-1 mb-6">
+                                    {Array(testimonial.rating).fill(0).map((_, j) => (
+                                        <svg key={j} className="w-4 h-4" viewBox="0 0 20 20" fill="#F59E0B">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                    ))}
+                                </div>
+
+                                {/* Text */}
+                                <p className="text-[15px] leading-relaxed mb-8 relative z-10" style={{ fontFamily: "'Quicksand', sans-serif", color: '#555' }}>
+                                    {testimonial.text}
+                                </p>
+
+                                {/* Author */}
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-[16px] font-bold" style={{ background: '#7C5C44' }}>
+                                        {testimonial.avatar}
+                                    </div>
+                                    <div>
+                                        <p className="text-[15px] font-bold" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>
+                                            {testimonial.name}
+                                        </p>
+                                        <p className="text-[12px] font-bold uppercase tracking-widest" style={{ fontFamily: "'Quicksand', sans-serif", color: '#AAA' }}>
+                                            {testimonial.role}
+                                        </p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+
             {/* CTA */}
-            <section className="py-32 overflow-hidden relative" style={{ background: '#1A1A1A' }}>
-                <motion.div
-                    className="absolute inset-0 z-0 opacity-40 pointer-events-none"
-                    animate={{
-                        backgroundPosition: ['0% 0%', '100% 100%'],
-                    }}
-                    transition={{ duration: 15, ease: 'linear', repeat: Infinity, repeatType: 'reverse' }}
-                    style={{
-                        backgroundImage: 'radial-gradient(circle at 70% 30%, #7C5C44 0%, transparent 50%), radial-gradient(circle at 20% 80%, #4A3528 0%, transparent 50%)',
-                        backgroundSize: '200% 200%',
-                    }}
-                />
-                <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                    variants={fadeInUp}
-                    className="max-w-4xl mx-auto px-5 sm:px-8 text-center relative z-10"
-                >
-                    <h2 className="text-5xl sm:text-6xl font-bold mb-8" style={{ fontFamily: "'Cormorant', serif", color: '#fff', letterSpacing: '-0.04em' }}>
-                        Begin Your Search for the <span className="text-[#EDE0D5] italic font-light" style={{ fontFamily: "'Cormorant', serif" }}>Extraordinary.</span>
-                    </h2>
-                    <p className="text-[20px] leading-relaxed mb-12 opacity-60 font-light" style={{ fontFamily: "'Quicksand', sans-serif", color: '#fff' }}>
-                        Expertly curated Moroccan luxury, just one click away.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                        <motion.div whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }} whileTap={{ scale: 0.95 }}>
-                            <Link
-                                to="/properties"
-                                className="block px-10 py-5 text-[15px] font-bold uppercase tracking-widest rounded-2xl text-[#1A1A1A] transition-all"
-                                style={{ fontFamily: "'Quicksand', sans-serif", background: '#EDE0D5' }}
-                            >
-                                Explore Collection
-                            </Link>
+            <section className="relative overflow-hidden" style={{ background: '#1A1A1A' }}>
+                {/* Background effects */}
+                <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute top-0 left-0 w-[600px] h-[600px] rounded-full opacity-20" style={{ background: 'radial-gradient(circle, #7C5C44, transparent 70%)' }} />
+                    <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full opacity-15" style={{ background: 'radial-gradient(circle, #4A3528, transparent 70%)' }} />
+                    {/* Grid pattern */}
+                    <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+                </div>
+
+                <div className="max-w-7xl mx-auto px-5 sm:px-8 py-32 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        {/* Left */}
+                        <motion.div
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-100px" }}
+                            variants={fadeInUp}
+                        >
+                            <p className="text-[12px] font-bold uppercase tracking-[0.25em] mb-6" style={{ fontFamily: "'Quicksand', sans-serif", color: '#7C5C44' }}>
+                                Start Today
+                            </p>
+                            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-[1.05]" style={{ fontFamily: "'Cormorant', serif", color: '#fff', letterSpacing: '-0.04em' }}>
+                                Begin Your Search for the{' '}
+                                <span className="italic font-light" style={{ color: '#EDE0D5' }}>Extraordinary.</span>
+                            </h2>
+                            <p className="text-[17px] leading-relaxed mb-10 max-w-lg" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.5)' }}>
+                                Discover properties that match your lifestyle. Whether you're looking for a modern apartment or a luxury villa, your perfect home is just a click away.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+                                    <Link
+                                        to="/properties"
+                                        className="block px-10 py-5 text-[14px] font-bold uppercase tracking-widest rounded-2xl text-[#1A1A1A] text-center transition-all hover:shadow-2xl"
+                                        style={{ fontFamily: "'Quicksand', sans-serif", background: '#EDE0D5' }}
+                                    >
+                                        Explore Collection
+                                    </Link>
+                                </motion.div>
+                                <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+                                    <Link
+                                        to="/contact"
+                                        className="block px-10 py-5 text-[14px] font-bold uppercase tracking-widest rounded-2xl text-white text-center border border-white/20 transition-all hover:bg-white/5"
+                                        style={{ fontFamily: "'Quicksand', sans-serif" }}
+                                    >
+                                        Contact Us
+                                    </Link>
+                                </motion.div>
+                            </div>
                         </motion.div>
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                            <Link
-                                to="/contact"
-                                className="block px-10 py-5 text-[15px] font-bold uppercase tracking-widest rounded-2xl text-white border border-[#EDE0D5] transition-all hover:bg-white/5"
-                                style={{ fontFamily: "'Quicksand', sans-serif" }}
-                            >
-                                Personal Advisory
-                            </Link>
+
+                        {/* Right — Stats cards */}
+                        <motion.div
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-100px" }}
+                            variants={staggerContainer}
+                            className="grid grid-cols-2 gap-5"
+                        >
+                            {[
+                                { value: '2,500+', label: 'Listed Properties' },
+                                { value: '98%', label: 'Client Satisfaction' },
+                                { value: '150+', label: 'Cities Covered' },
+                                { value: '24/7', label: 'Support Available' },
+                            ].map((stat, i) => (
+                                <motion.div
+                                    key={i}
+                                    variants={fadeInUp}
+                                    className="rounded-3xl p-8 text-center transition-all duration-500 hover:-translate-y-1"
+                                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
+                                >
+                                    <p className="text-3xl sm:text-4xl font-bold mb-2" style={{ fontFamily: "'Cormorant', serif", color: '#EDE0D5' }}>
+                                        {stat.value}
+                                    </p>
+                                    <p className="text-[11px] font-bold uppercase tracking-widest" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.4)' }}>
+                                        {stat.label}
+                                    </p>
+                                </motion.div>
+                            ))}
                         </motion.div>
                     </div>
-                </motion.div>
+                </div>
             </section>
 
             <Footer />

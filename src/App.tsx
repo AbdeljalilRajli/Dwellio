@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
+import { AuthProvider } from './hooks/useAuth';
 
 import Home from './pages/Home';
 import ListingPage from './pages/ListingPage';
@@ -77,13 +78,16 @@ function AnimatedRoutes() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <div className="min-h-screen flex flex-col">
-          <AnimatedRoutes />
-        </div>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <div className="min-h-screen flex flex-col">
+            <AnimatedRoutes />
+          </div>
+        </Router>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
 
 export default App;
+

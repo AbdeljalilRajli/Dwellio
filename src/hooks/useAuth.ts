@@ -1,7 +1,22 @@
-import { useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { supabase } from '../lib/supabaseClient';
+import React from 'react';
 
-export function useAuth() {
+interface AuthContextType {
+    user: any;
+    profile: any;
+    loading: boolean;
+    signOut: () => Promise<void>;
+}
+
+const AuthContext = createContext<AuthContextType>({
+    user: null,
+    profile: null,
+    loading: true,
+    signOut: async () => { },
+});
+
+export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<any>(null);
     const [profile, setProfile] = useState<any>(null);
     const [loading, setLoading] = useState(true);
@@ -37,7 +52,7 @@ export function useAuth() {
                 .from('users')
                 .select('*')
                 .eq('id', userId)
-                .maybeSingle(); // Better than .single() when profile might be delayed
+                .maybeSingle();
 
             if (error) {
                 console.warn('Profile fetch issue:', error.message);
@@ -52,7 +67,13 @@ export function useAuth() {
         }
     };
 
-    const signOut = () => supabase.auth.signOut();
+    const signOut = async () => {
+        await supabase.auth.signOut();
+    };
 
-    return { user, profile, loading, signOut };
+    return React.createElement(AuthContext.Provider, { value: { user, profile, loading, signOut } }, children);
+}
+
+export function useAuth() {
+    return useContext(AuthContext);
 }
