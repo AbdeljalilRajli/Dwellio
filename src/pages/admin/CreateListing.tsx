@@ -18,7 +18,6 @@ export default function CreateListing() {
                     bedrooms: parseInt(formData.bedrooms),
                     bathrooms: parseInt(formData.bathrooms),
                     area: parseFloat(formData.area),
-                    city: formData.address.split(',').pop()?.trim() || 'Unknown'
                 }]);
 
             if (error) throw error;

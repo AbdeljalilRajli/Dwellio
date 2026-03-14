@@ -135,6 +135,29 @@ export default function ListingForm({ initialData, onSubmit, title }: ListingFor
                         </div>
 
                         <div>
+                            <label className="block text-xs font-bold uppercase text-brand-accent tracking-widest mb-3 ml-4">City</label>
+                            <div className="relative group">
+                                <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-accent/30 group-focus-within:text-brand-accent transition-colors" size={20} />
+                                <select
+                                    name="city"
+                                    required
+                                    className="w-full pl-16 pr-8 py-5 bg-white rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-bold text-brand-primary appearance-none cursor-pointer shadow-sm"
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Select a city</option>
+                                    <option value="Marrakech">Marrakech</option>
+                                    <option value="Casablanca">Casablanca</option>
+                                    <option value="Rabat">Rabat</option>
+                                    <option value="Tangier">Tangier</option>
+                                    <option value="Agadir">Agadir</option>
+                                    <option value="Essaouira">Essaouira</option>
+                                    <option value="Fes">Fes</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
                             <label className="block text-xs font-bold uppercase text-brand-accent tracking-widest mb-3 ml-4">Listing Type</label>
                             <div className="flex p-1 bg-white rounded-2xl shadow-sm">
                                 {['Sale', 'Rent'].map((type) => (

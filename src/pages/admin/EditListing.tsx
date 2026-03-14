@@ -24,18 +24,18 @@ export default function EditListing() {
                     bedrooms: parseInt(formData.bedrooms),
                     bathrooms: parseInt(formData.bathrooms),
                     area: parseFloat(formData.area),
-                    city: formData.address.split(',').pop()?.trim() || 'Unknown'
                 })
                 .eq('id', id);
 
             if (error) throw error;
-            navigate('/admin/listings');
+            navigate('/dashboard/listings');
         } catch (err: any) {
             alert(err.message || 'Error occurred while updating listing');
         }
     };
 
     if (isLoading) return <div className="text-center py-20 font-bold text-brand-primary animate-pulse italic">Loading property details...</div>;
+    if (!listing) return <div className="text-center py-20 font-bold text-red-500">Property not found</div>;
 
     return <ListingForm title="Edit Property" initialData={listing} onSubmit={handleUpdate} />;
 }
