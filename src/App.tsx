@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'r
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AuthProvider } from './hooks/useAuth';
+import ScrollToTop from './components/ScrollToTop';
 
 import Home from './pages/Home';
 import ListingPage from './pages/ListingPage';
@@ -80,6 +81,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <Router>
+          <ScrollToTop />
           <div className="min-h-screen flex flex-col">
             <AnimatedRoutes />
           </div>
@@ -90,4 +92,3 @@ function App() {
 }
 
 export default App;
-
