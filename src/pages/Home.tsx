@@ -11,6 +11,12 @@ import { PropertyCard } from '../components/ui/PropertyCard';
 import { SkeletonListing } from '../components/ui/SkeletonListing';
 import { listingService } from '../services/listingService';
 
+// Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+
 // Reusable animated counter component
 function AnimatedCounter({ value, duration = 2 }: { value: string, duration?: number }) {
     const ref = useRef(null);
@@ -207,7 +213,7 @@ export default function HomePage() {
             </section>
 
             {/* Popular Cities */}
-            <section className="py-24 overflow-hidden">
+            <section className="py-24 overflow-hidden relative">
                 <div className="max-w-7xl mx-auto px-5 sm:px-8">
                     <motion.div
                         initial="hidden"
@@ -230,42 +236,59 @@ export default function HomePage() {
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, margin: "-100px" }}
-                        variants={staggerContainer}
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+                        variants={fadeInUp}
+                        className="-mx-5 sm:-mx-8 px-5 sm:px-8"
                     >
-                        {[
-                            { city: 'Marrakech', count: 45, img: 'https://images.unsplash.com/photo-1597212618440-806262de496b?auto=format&fit=crop&q=80&w=600' },
-                            { city: 'Casablanca', count: 62, img: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?auto=format&fit=crop&q=80&w=600' },
-                            { city: 'Rabat', count: 38, img: 'https://images.unsplash.com/photo-1590054320251-ce0f607d7301?auto=format&fit=crop&q=80&w=600' },
-                            { city: 'Tangier', count: 29, img: 'https://images.unsplash.com/photo-1544971587-b842c2636c1e?auto=format&fit=crop&q=80&w=600' },
-                        ].map(item => (
-                            <motion.div key={item.city} variants={fadeInUp}>
-                                <Link
-                                    to={`/properties?city=${item.city}`}
-                                    className="group relative h-[450px] rounded-[32px] overflow-hidden block"
-                                >
-                                    <img
-                                        src={item.img}
-                                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                                        alt={item.city}
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent transition-opacity group-hover:opacity-80" />
+                        <Swiper
+                            modules={[FreeMode, Autoplay]}
+                            freeMode={true}
+                            grabCursor={true}
+                            slidesPerView="auto"
+                            spaceBetween={24}
+                            autoplay={{
+                                delay: 3000,
+                                disableOnInteraction: false,
+                                pauseOnMouseEnter: true
+                            }}
+                            className="w-full !overflow-visible group/swiper"
+                        >
+                            {[
+                                { city: 'Marrakech', count: 45, img: '/images/cities/marrakech.jpg' },
+                                { city: 'Casablanca', count: 62, img: '/images/cities/casablanca.jpg' },
+                                { city: 'Rabat', count: 38, img: '/images/cities/rabat.jpg' },
+                                { city: 'Tangier', count: 29, img: '/images/cities/tangier.jpg' },
+                                { city: 'Agadir', count: 34, img: '/images/cities/agadir.jpg' },
+                                { city: 'Essaouira', count: 18, img: '/images/cities/essaouira.jpg' },
+                                { city: 'Fes', count: 22, img: '/images/cities/fes.jpg' },
+                            ].map((item) => (
+                                <SwiperSlide key={item.city} className="!w-[280px] sm:!w-[340px]">
+                                    <Link
+                                        to={`/properties?city=${item.city}`}
+                                        className="group relative h-[450px] rounded-[32px] overflow-hidden block"
+                                    >
+                                        <img
+                                            src={item.img}
+                                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                                            alt={item.city}
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent transition-opacity group-hover:opacity-80" />
 
-                                    <div className="absolute bottom-8 left-8 right-8">
-                                        <h3 className="text-2xl font-bold text-white mb-1" style={{ fontFamily: "'Cormorant', serif" }}>
-                                            {item.city}
-                                        </h3>
-                                        <p className="text-[13px] font-bold text-[#EDE0D5] uppercase tracking-widest opacity-70">
-                                            <AnimatedCounter value={`${item.count}+`} /> Listings
-                                        </p>
-                                    </div>
+                                        <div className="absolute bottom-8 left-8 right-8">
+                                            <h3 className="text-2xl font-bold text-white mb-1" style={{ fontFamily: "'Cormorant', serif" }}>
+                                                {item.city}
+                                            </h3>
+                                            <p className="text-[13px] font-bold text-[#EDE0D5] uppercase tracking-widest opacity-70">
+                                                <AnimatedCounter value={`${item.count}+`} /> Listings
+                                            </p>
+                                        </div>
 
-                                    <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                                        <ArrowRight size={20} className="text-white" />
-                                    </div>
-                                </Link>
-                            </motion.div>
-                        ))}
+                                        <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                                            <ArrowRight size={20} className="text-white" />
+                                        </div>
+                                    </Link>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
                     </motion.div>
                 </div>
             </section>
