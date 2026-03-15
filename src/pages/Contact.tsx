@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { MapPin, Mail, Phone, Clock, Send } from 'lucide-react';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
+import { PageHeader } from '../components/ui/PageHeader';
 
 export default function Contact() {
     const [sent, setSent] = useState(false);
@@ -16,20 +17,11 @@ export default function Contact() {
         <div className="min-h-screen" style={{ background: '#FBF8F5' }}>
             <Navbar />
 
-            {/* Header */}
-            <div className="pt-24 pb-10" style={{ background: '#F5EEE8' }}>
-                <div className="max-w-7xl mx-auto px-5 sm:px-8">
-                    <p className="text-[12px] font-bold uppercase tracking-[0.2em] mb-2" style={{ fontFamily: "'Quicksand', sans-serif", color: '#7C5C44' }}>
-                        Get in Touch
-                    </p>
-                    <h1 className="text-3xl sm:text-4xl font-bold mb-2" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A', letterSpacing: '-0.02em' }}>
-                        Contact Us
-                    </h1>
-                    <p className="text-[15px]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>
-                        Have a question or want to schedule a property visit? We'd love to hear from you.
-                    </p>
-                </div>
-            </div>
+            <PageHeader
+                title="Contact Us"
+                subtitle="Have a question or want to schedule a property visit? We'd love to hear from you."
+                breadcrumbs={[{ label: 'Home', path: '/' }, { label: 'Contact Us' }]}
+            />
 
             <main className="max-w-7xl mx-auto px-5 sm:px-8 py-14">
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">

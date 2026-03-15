@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
 import { PropertyCard } from '../components/ui/PropertyCard';
+import { PageHeader } from '../components/ui/PageHeader';
 import { listingService } from '../services/listingService';
 
 const CITIES = ['All Cities', 'Marrakech', 'Casablanca', 'Rabat', 'Tangier', 'Agadir', 'Essaouira', 'Fes'];
@@ -61,24 +62,28 @@ export default function ListingPage() {
 
     const pageTitle = dealType === 'Rent' ? 'Properties for Rent' : dealType === 'Sale' ? 'Properties for Sale' : 'All Properties';
 
+    const breadcrumbs: { label: string; path?: string }[] = [
+        { label: 'Home', path: '/' },
+        { label: 'Properties', path: '/properties' }
+    ];
+
+    if (dealType !== 'All') {
+        breadcrumbs.push({ label: `For ${dealType}` });
+    } else if (city !== 'All Cities') {
+        breadcrumbs.push({ label: city });
+    } else if (propertyType !== 'All Types') {
+        breadcrumbs.push({ label: propertyType });
+    }
+
     return (
         <div className="min-h-screen" style={{ background: '#FBF8F5' }}>
             <Navbar />
 
-            {/* Header */}
-            <div className="pt-24 pb-8" style={{ background: '#F5EEE8' }}>
-                <div className="max-w-7xl mx-auto px-5 sm:px-8">
-                    <p className="text-[12px] font-bold uppercase tracking-[0.2em] mb-2" style={{ fontFamily: "'Quicksand', sans-serif", color: '#7C5C44' }}>
-                        Browse Listings
-                    </p>
-                    <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A', letterSpacing: '-0.02em' }}>
-                        {pageTitle}
-                    </h1>
-                    <p className="text-[15px] mt-2" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>
-                        Discover verified properties across Morocco's most desirable cities.
-                    </p>
-                </div>
-            </div>
+            <PageHeader 
+                title={pageTitle} 
+                subtitle="Discover verified properties across Morocco's most desirable cities."
+                breadcrumbs={breadcrumbs}
+            />
 
             <main className="max-w-7xl mx-auto px-5 sm:px-8 py-8">
                 {/* Filter Bar */}
