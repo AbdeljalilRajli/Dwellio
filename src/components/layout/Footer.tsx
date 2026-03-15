@@ -79,6 +79,7 @@ export function Footer() {
                         </h3>
                         <ul className="space-y-4">
                             {[
+                                { label: 'About Us', path: '/about' },
                                 { label: 'For Rent', path: '/properties?type=Rent' },
                                 { label: 'For Sale', path: '/properties?type=Sale' },
                                 { label: 'List Property', path: '/dashboard/listings/create' },

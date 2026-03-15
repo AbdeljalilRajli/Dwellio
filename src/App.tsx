@@ -5,6 +5,7 @@ import { AuthProvider } from './hooks/useAuth';
 import ScrollToTop from './components/ScrollToTop';
 
 import Home from './pages/Home';
+import About from './pages/About';
 import ListingPage from './pages/ListingPage';
 import PropertyDetails from './pages/PropertyDetails';
 import Contact from './pages/Contact';
@@ -47,6 +48,7 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         {/* Public Routes */}
         <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+        <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
         <Route path="/properties" element={<PageWrapper><ListingPage /></PageWrapper>} />
         <Route path="/properties/:id" element={<PageWrapper><PropertyDetails /></PageWrapper>} />
         <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
