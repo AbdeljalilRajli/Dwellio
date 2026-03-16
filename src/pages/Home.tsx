@@ -107,6 +107,7 @@ export default function HomePage() {
                 </motion.div>
 
                 <motion.div
+                    key={isLoading ? 'loading' : 'ready'}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-100px" }}
@@ -253,41 +254,44 @@ export default function HomePage() {
                             className="w-full !overflow-visible group/swiper"
                         >
                             {[
-                                { city: 'Marrakech', count: 45, img: '/images/cities/marrakech.jpg' },
-                                { city: 'Casablanca', count: 62, img: '/images/cities/casablanca.jpg' },
-                                { city: 'Rabat', count: 38, img: '/images/cities/rabat.jpg' },
-                                { city: 'Tangier', count: 29, img: '/images/cities/tangier.jpg' },
-                                { city: 'Agadir', count: 34, img: '/images/cities/agadir.jpg' },
-                                { city: 'Essaouira', count: 18, img: '/images/cities/essaouira.jpg' },
-                                { city: 'Fes', count: 22, img: '/images/cities/fes.jpg' },
-                            ].map((item) => (
-                                <SwiperSlide key={item.city} className="!w-[280px] sm:!w-[340px]">
-                                    <Link
-                                        to={`/properties?city=${item.city}`}
-                                        className="group relative h-[450px] rounded-[32px] overflow-hidden block"
-                                    >
-                                        <img
-                                            src={item.img}
-                                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                                            alt={item.city}
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent transition-opacity group-hover:opacity-80" />
+                                { city: 'Marrakech', img: '/images/cities/marrakech.jpg' },
+                                { city: 'Casablanca', img: '/images/cities/casablanca.jpg' },
+                                { city: 'Rabat', img: '/images/cities/rabat.jpg' },
+                                { city: 'Tangier', img: '/images/cities/tangier.jpg' },
+                                { city: 'Agadir', img: '/images/cities/agadir.jpg' },
+                                { city: 'Essaouira', img: '/images/cities/essaouira.jpg' },
+                                { city: 'Fes', img: '/images/cities/fes.jpg' },
+                            ].map((item) => {
+                                const cityCount = listings?.filter(l => l.city === item.city).length || 0;
+                                return (
+                                    <SwiperSlide key={item.city} className="!w-[280px] sm:!w-[340px]">
+                                        <Link
+                                            to={`/properties?city=${item.city}`}
+                                            className="group relative h-[450px] rounded-[32px] overflow-hidden block"
+                                        >
+                                            <img
+                                                src={item.img}
+                                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                                                alt={item.city}
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent transition-opacity group-hover:opacity-80" />
 
-                                        <div className="absolute bottom-8 left-8 right-8">
-                                            <h3 className="text-2xl font-bold text-white mb-1" style={{ fontFamily: "'Cormorant', serif" }}>
-                                                {item.city}
-                                            </h3>
-                                            <p className="text-[13px] font-bold text-[#EDE0D5] uppercase tracking-widest opacity-70">
-                                                <AnimatedCounter value={`${item.count}+`} /> Listings
-                                            </p>
-                                        </div>
+                                            <div className="absolute bottom-8 left-8 right-8">
+                                                <h3 className="text-2xl font-bold text-white mb-1" style={{ fontFamily: "'Cormorant', serif" }}>
+                                                    {item.city}
+                                                </h3>
+                                                <p className="text-[13px] font-bold text-[#EDE0D5] uppercase tracking-widest opacity-70">
+                                                    <AnimatedCounter value={`${cityCount}`} /> Listings
+                                                </p>
+                                            </div>
 
-                                        <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                                            <ArrowRight size={20} className="text-white" />
-                                        </div>
-                                    </Link>
-                                </SwiperSlide>
-                            ))}
+                                            <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                                                <ArrowRight size={20} className="text-white" />
+                                            </div>
+                                        </Link>
+                                    </SwiperSlide>
+                                );
+                            })}
                         </Swiper>
                     </motion.div>
                 </div>

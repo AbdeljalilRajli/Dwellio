@@ -127,10 +127,11 @@ export default function ListingForm({ initialData, onSubmit, title }: ListingFor
                                 value={formData.property_type}
                                 onChange={handleChange}
                             >
-                                <option>House</option>
-                                <option>Apartment</option>
                                 <option>Villa</option>
-                                <option>Studio</option>
+                                <option>Apartment</option>
+                                <option>House</option>
+                                <option>Penthouse</option>
+                                <option>Riad</option>
                             </select>
                         </div>
 

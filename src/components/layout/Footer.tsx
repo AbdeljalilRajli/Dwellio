@@ -107,7 +107,7 @@ export function Footer() {
                             Property Types
                         </h3>
                         <ul className="space-y-4">
-                            {['Apartments', 'Houses', 'Villas', 'Penthouses', 'Condos'].map(type => (
+                            {['Apartments', 'Houses', 'Villas', 'Penthouses', 'Riads'].map(type => (
                                 <li key={type}>
                                     <Link
                                         to={`/properties`}
