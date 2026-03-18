@@ -1,8 +1,8 @@
 import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowRight, Shield, Home, HeadphonesIcon, TrendingUp } from 'lucide-react';
-import { motion, useInView, useMotionValue, useSpring, animate } from 'framer-motion';
+import { ArrowRight, Shield, Home, HeadphonesIcon, TrendingUp, ChevronDown } from 'lucide-react';
+import { motion, useInView, useMotionValue, useSpring, animate, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
@@ -62,6 +62,54 @@ const staggerContainer: Variants = {
             delayChildren: 0.1
         }
     }
+};
+
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+    const [isOpen, setIsOpen] = useState(false);
+    return (
+        <div className="border-b border-[#F0E6DB] pb-6">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex items-center justify-between w-full text-left group pt-2"
+            >
+                <h3 className="text-xl font-bold transition-colors group-hover:text-[#7C5C44] pr-8" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A' }}>
+                    {question}
+                </h3>
+                <motion.div
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex-shrink-0"
+                    style={{ color: '#7C5C44' }}
+                >
+                    <ChevronDown size={20} />
+                </motion.div>
+            </button>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden"
+                    >
+                        <p className="pt-4 text-[15px] leading-relaxed opacity-60" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>
+                            {faq_answers[question] || answer}
+                        </p>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+}
+
+const faq_answers: Record<string, string> = {
+    "How do I list my property on Dwellio?": "Simply create an account and head to your dashboard. Click the 'List a Property' button to fill in the details, set your price, and upload high-quality images.",
+    "Is there a fee for using the platform?": "Browsing listings and contacting property owners is completely free. We believe in making the search for your next home as accessible as possible.",
+    "Are the property listings verified?": "Every listing undergoes a manual review process to maintain our high standards. However, we always recommend a physical visit before making any financial commitments.",
+    "How do I contact a property owner?": "Each property details page includes a direct inquiry form. Once submitted, the owner receives an instant notification in their Dwellio inbox.",
+    "Can I save my favorite properties?": "Yes! By clicking the heart icon on any property card, you can save it to your personalized Favorites list for quick access at any time.",
+    "What cities does Dwellio cover?": "We focus on premium residences across Morocco's most iconic destinations, including Marrakech, Casablanca, Rabat, Tangier, and Agadir."
 };
 
 export default function HomePage() {
@@ -147,7 +195,7 @@ export default function HomePage() {
                             The Dwellio Advantage
                         </p>
                         <h2 className="text-4xl sm:text-5xl font-bold mb-6" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A', letterSpacing: '-0.04em' }}>
-                            Excellence in Every Detail
+                            Excellence in <span className="text-[#7C5C44]">Every Detail</span>
                         </h2>
                         <p className="text-[18px] leading-relaxed opacity-60" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>
                             We set the gold standard for real estate in Morocco, bridging the gap between historical charm and contemporary luxury.
@@ -385,6 +433,48 @@ export default function HomePage() {
                             </motion.div>
                         ))}
                     </motion.div>
+                </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section className="py-24 overflow-hidden" style={{ background: '#FBF8F5' }}>
+                <div className="max-w-7xl mx-auto px-5 sm:px-8">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        variants={fadeInUp}
+                        className="text-center mb-20"
+                    >
+                        <p className="text-[12px] font-bold uppercase tracking-[0.25em] mb-3" style={{ fontFamily: "'Quicksand', sans-serif", color: '#7C5C44' }}>
+                            Support & Info
+                        </p>
+                        <h2 className="text-4xl sm:text-5xl font-bold" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A', letterSpacing: '-0.04em' }}>
+                            Frequently Asked <span className="text-[#7C5C44]">Questions</span>
+                        </h2>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
+                        {[
+                            { q: "How do I list my property on Dwellio?", a: "" },
+                            { q: "Is there a fee for using the platform?", a: "" },
+                            { q: "Are the property listings verified?", a: "" },
+                            { q: "How do I contact a property owner?", a: "" },
+                            { q: "Can I save my favorite properties?", a: "" },
+                            { q: "What cities does Dwellio cover?", a: "" }
+                        ].map((faq, i) => (
+                            <motion.div
+                                key={i}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true }}
+                                variants={fadeInUp}
+                                custom={i}
+                            >
+                                <FAQItem question={faq.q} answer={faq_answers[faq.q] || ""} />
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
             </section>
 
