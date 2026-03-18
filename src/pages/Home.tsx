@@ -64,24 +64,43 @@ const staggerContainer: Variants = {
     }
 };
 
-function FAQItem({ question, answer }: { question: string; answer: string }) {
+function FAQItem({ question, answer, index }: { question: string; answer: string, index: number }) {
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <div className="border-b border-[#F0E6DB] pb-6">
+        <motion.div
+            layout
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            whileHover={{ 
+                y: -5,
+                borderColor: 'rgba(124, 92, 68, 0.4)',
+                boxShadow: '0 20px 40px -15px rgba(0,0,0,0.05)'
+            }}
+            variants={fadeInUp}
+            className="rounded-[32px] p-6 lg:p-8 transition-all duration-300 border mb-4 bg-white overflow-hidden"
+            style={{ 
+                borderColor: isOpen ? '#7C5C44' : '#F0E6DB',
+                background: isOpen ? '#FDFBFA' : '#FFF'
+            }}
+        >
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center justify-between w-full text-left group pt-2"
+                className="flex items-start justify-between w-full text-left group"
             >
-                <h3 className="text-xl font-bold transition-colors group-hover:text-[#7C5C44] pr-8" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A' }}>
-                    {question}
-                </h3>
+                <div className="flex gap-6 items-start">
+                    <span className="text-[13px] font-bold opacity-30 mt-1.5" style={{ fontFamily: "'Quicksand', sans-serif" }}>
+                        {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <h3 className="text-xl lg:text-2xl font-bold transition-colors group-hover:text-[#7C5C44] pr-8" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A' }}>
+                        {question}
+                    </h3>
+                </div>
                 <motion.div
-                    animate={{ rotate: isOpen ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex-shrink-0"
-                    style={{ color: '#7C5C44' }}
+                    animate={{ rotate: isOpen ? 180 : 0, backgroundColor: isOpen ? '#7C5C44' : 'transparent' }}
+                    className="flex-shrink-0 w-8 h-8 rounded-full border border-[#EDE0D5] flex items-center justify-center transition-colors"
                 >
-                    <ChevronDown size={20} />
+                    <ChevronDown size={18} style={{ color: isOpen ? '#FFF' : '#7C5C44' }} />
                 </motion.div>
             </button>
             <AnimatePresence>
@@ -90,16 +109,15 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        className="overflow-hidden"
+                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        <p className="pt-4 text-[15px] leading-relaxed opacity-60" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>
+                        <p className="pt-6 ml-11 text-[16px] leading-relaxed opacity-60" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>
                             {faq_answers[question] || answer}
                         </p>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+        </motion.div>
     );
 }
 
@@ -471,7 +489,7 @@ export default function HomePage() {
                                 variants={fadeInUp}
                                 custom={i}
                             >
-                                <FAQItem question={faq.q} answer={faq_answers[faq.q] || ""} />
+                                <FAQItem question={faq.q} answer={faq_answers[faq.q] || ""} index={i} />
                             </motion.div>
                         ))}
                     </div>

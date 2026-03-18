@@ -78,7 +78,7 @@ export function Navbar() {
                                 >
                                     <motion.span 
                                         className="relative z-10"
-                                        whileHover={!isActive(link.path) ? { color: showSolidNav ? '#7C5C44' : '#FFFFFF', opacity: 1 } : {}}
+                                        whileHover={!isActive(link.path) ? { color: showSolidNav ? '#1A1A1A' : '#FFFFFF', opacity: 1 } : {}}
                                         transition={{ duration: 0.2 }}
                                     >
                                         {link.label}
@@ -121,7 +121,7 @@ export function Navbar() {
                                                 color: showSolidNav ? '#1A1A1A' : 'rgba(255, 255, 255, 0.7)'
                                             }}
                                         >
-                                            <motion.span whileHover={{ color: showSolidNav ? '#7C5C44' : '#FFFFFF', opacity: 1 }}>
+                                            <motion.span whileHover={{ color: showSolidNav ? '#1A1A1A' : '#FFFFFF', opacity: 1 }}>
                                                 Dashboard
                                             </motion.span>
                                         </Link>
@@ -153,7 +153,7 @@ export function Navbar() {
                                                 color: showSolidNav ? '#1A1A1A' : 'rgba(255, 255, 255, 0.7)'
                                             }}
                                         >
-                                            <motion.span whileHover={{ color: showSolidNav ? '#7C5C44' : '#FFFFFF', opacity: 1 }}>
+                                            <motion.span whileHover={{ color: showSolidNav ? '#1A1A1A' : '#FFFFFF', opacity: 1 }}>
                                                 Login
                                             </motion.span>
                                         </Link>
