@@ -53,7 +53,7 @@ export function Navbar() {
                         {/* Logo */}
                         <Link
                             to="/"
-                            className="text-[26px] font-bold tracking-tight group"
+                            className="text-[26px] font-bold tracking-tight group no-underline"
                             style={{
                                 fontFamily: "'Cormorant', serif",
                                 color: showSolidNav ? '#1A1A1A' : '#FFFFFF'
@@ -68,7 +68,7 @@ export function Navbar() {
                                 <Link
                                     key={link.path}
                                     to={link.path}
-                                    className="relative py-2 text-[13px] font-bold uppercase tracking-widest transition-all duration-300"
+                                    className="relative py-2 text-[13px] font-bold uppercase tracking-widest transition-all duration-300 no-underline"
                                     style={{
                                         fontFamily: "'Quicksand', sans-serif",
                                         color: isActive(link.path)
@@ -78,18 +78,11 @@ export function Navbar() {
                                 >
                                     <motion.span 
                                         className="relative z-10"
-                                        whileHover={!isActive(link.path) ? { color: showSolidNav ? '#1A1A1A' : '#FFFFFF', opacity: 1 } : {}}
+                                        whileHover={{ color: showSolidNav ? '#7C5C44' : '#FFFFFF', opacity: 1 }}
                                         transition={{ duration: 0.2 }}
                                     >
                                         {link.label}
                                     </motion.span>
-                                    {isActive(link.path) && (
-                                        <motion.div
-                                            layoutId="navbar-indicator"
-                                            className="absolute -bottom-[6px] left-0 right-0 h-[2.5px] bg-[#7C5C44] rounded-full"
-                                            transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                                        />
-                                    )}
                                 </Link>
                             ))}
                         </div>
@@ -101,7 +94,7 @@ export function Navbar() {
                                     <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                                         <Link
                                             to="/dashboard/favorites"
-                                            className="w-10 h-10 rounded-full flex items-center justify-center transition-all"
+                                            className="w-10 h-10 rounded-full flex items-center justify-center transition-all no-underline"
                                             style={{
                                                 color: showSolidNav ? '#1A1A1A' : '#FFFFFF',
                                                 border: showSolidNav ? '1px solid #E0E0E0' : '1px solid rgba(255,255,255,0.3)',
@@ -115,13 +108,13 @@ export function Navbar() {
                                     <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
                                         <Link
                                             to="/dashboard"
-                                            className="text-[13px] font-bold uppercase tracking-widest transition-colors"
+                                            className="text-[13px] font-bold uppercase tracking-widest transition-colors no-underline"
                                             style={{
                                                 fontFamily: "'Quicksand', sans-serif",
                                                 color: showSolidNav ? '#1A1A1A' : 'rgba(255, 255, 255, 0.7)'
                                             }}
                                         >
-                                            <motion.span whileHover={{ color: showSolidNav ? '#1A1A1A' : '#FFFFFF', opacity: 1 }}>
+                                            <motion.span whileHover={{ color: showSolidNav ? '#7C5C44' : '#FFFFFF', opacity: 1 }}>
                                                 Dashboard
                                             </motion.span>
                                         </Link>
@@ -130,7 +123,7 @@ export function Navbar() {
                                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                         <Link
                                             to="/dashboard/listings/create"
-                                            className="px-7 py-3 text-[13px] font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shadows-glow"
+                                            className="px-7 py-3 text-[13px] font-bold uppercase tracking-widest rounded-xl transition-all duration-300 shadows-glow no-underline"
                                             style={{
                                                 fontFamily: "'Quicksand', sans-serif",
                                                 background: showSolidNav ? '#1A1A1A' : '#FFFFFF',
@@ -147,13 +140,13 @@ export function Navbar() {
                                     <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
                                         <Link
                                             to="/login"
-                                            className="text-[13px] font-bold uppercase tracking-widest transition-colors"
+                                            className="text-[13px] font-bold uppercase tracking-widest transition-colors no-underline"
                                             style={{
                                                 fontFamily: "'Quicksand', sans-serif",
                                                 color: showSolidNav ? '#1A1A1A' : 'rgba(255, 255, 255, 0.7)'
                                             }}
                                         >
-                                            <motion.span whileHover={{ color: showSolidNav ? '#1A1A1A' : '#FFFFFF', opacity: 1 }}>
+                                            <motion.span whileHover={{ color: showSolidNav ? '#7C5C44' : '#FFFFFF', opacity: 1 }}>
                                                 Login
                                             </motion.span>
                                         </Link>
