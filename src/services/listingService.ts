@@ -168,5 +168,53 @@ export const listingService = {
         });
 
         return Promise.all(uploadPromises);
+    },
+
+    async toggleFavorite(userId: string, listingId: string) {
+        const { data: existing } = await supabase
+            .from('favorites')
+            .select('id')
+            .eq('user_id', userId)
+            .eq('listing_id', listingId)
+            .single();
+
+        if (existing) {
+            const { error } = await supabase
+                .from('favorites')
+                .delete()
+                .eq('id', existing.id);
+            if (error) throw error;
+            return false;
+        } else {
+            const { error } = await supabase
+                .from('favorites')
+                .insert([{ user_id: userId, listing_id: listingId }]);
+            if (error) throw error;
+            return true;
+        }
+    },
+
+    async getFavorites(userId: string): Promise<Listing[]> {
+        const { data, error } = await supabase
+            .from('favorites')
+            .select(`
+                listing:listing_id (*)
+            `)
+            .eq('user_id', userId)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        return (data || []).map((fav: any) => fav.listing) as Listing[];
+    },
+
+    async isFavorite(userId: string, listingId: string): Promise<boolean> {
+        const { data, error } = await supabase
+            .from('favorites')
+            .select('id')
+            .eq('user_id', userId)
+            .eq('listing_id', listingId)
+            .single();
+
+        return !!data && !error;
     }
 };

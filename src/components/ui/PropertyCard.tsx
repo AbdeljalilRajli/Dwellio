@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { MapPin, Bed, Bath, Maximize, Heart, ArrowRight, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { Listing } from '../../types';
+import { useAuth } from '../../hooks/useAuth';
+import { listingService } from '../../services/listingService';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface Props {
     listing: Listing;
@@ -10,6 +13,32 @@ interface Props {
 
 export function PropertyCard({ listing }: Props) {
     const [isHovered, setIsHovered] = useState(false);
+    const { user } = useAuth();
+    const queryClient = useQueryClient();
+
+    const { data: isFavorited } = useQuery({
+        queryKey: ['is-favorite', user?.id, listing.id],
+        queryFn: () => listingService.isFavorite(user!.id, listing.id),
+        enabled: !!user?.id
+    });
+
+    const toggleFavoriteMutation = useMutation({
+        mutationFn: () => listingService.toggleFavorite(user!.id, listing.id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['is-favorite', user?.id, listing.id] });
+            queryClient.invalidateQueries({ queryKey: ['user-favorites', user?.id] });
+        }
+    });
+
+    const handleToggleFavorite = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!user) {
+            alert('Please login to save favorites');
+            return;
+        }
+        toggleFavoriteMutation.mutate();
+    };
 
     return (
         <motion.div
@@ -112,14 +141,10 @@ export function PropertyCard({ listing }: Props) {
             <motion.button
                 whileHover={{ scale: 1.15, backgroundColor: '#FFFFFF' }}
                 whileTap={{ scale: 0.85 }}
-                onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }}
-                className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center shadow-lg z-20"
-                style={{ background: 'rgba(255, 255, 255, 0.9)', color: '#1A1A1A' }}
+                onClick={handleToggleFavorite}
+                className={`absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center shadow-lg z-20 transition-colors duration-300 ${isFavorited ? 'text-red-500 bg-white' : 'text-[#1A1A1A] bg-white/90'}`}
             >
-                <Heart size={16} />
+                <Heart size={16} fill={isFavorited ? "currentColor" : "none"} />
             </motion.button>
 
             {/* Sliding View Details Button */}

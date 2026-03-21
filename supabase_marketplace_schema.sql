@@ -108,3 +108,30 @@ CREATE POLICY "Owners can delete their images" ON storage.objects
         bucket_id = 'property-images' 
         AND auth.uid()::text = (storage.foldername(name))[1]
     );
+
+-- 5. Create favorites table
+CREATE TABLE IF NOT EXISTS favorites (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES auth.users(id) NOT NULL,
+    listing_id UUID REFERENCES listings(id) ON DELETE CASCADE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    UNIQUE(user_id, listing_id)
+);
+
+-- Favorites Security
+ALTER TABLE favorites ENABLE ROW LEVEL SECURITY;
+
+-- Users can see their own favorites
+DROP POLICY IF EXISTS "Users can see their own favorites" ON favorites;
+CREATE POLICY "Users can see their own favorites" ON favorites
+    FOR SELECT USING (auth.uid() = user_id);
+
+-- Users can add favorites for themselves
+DROP POLICY IF EXISTS "Users can add their own favorites" ON favorites;
+CREATE POLICY "Users can add their own favorites" ON favorites
+    FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+-- Users can remove their own favorites
+DROP POLICY IF EXISTS "Users can remove their own favorites" ON favorites;
+CREATE POLICY "Users can remove their own favorites" ON favorites
+    FOR DELETE USING (auth.uid() = user_id);
