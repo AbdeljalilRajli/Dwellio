@@ -15,10 +15,16 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, subtitle, breadcrumbs }: PageHeaderProps) {
     return (
-        <div className="relative pt-32 pb-16 overflow-hidden bg-[#F5EEE8]">
-            {/* Subtle Texture/Gradient layer */}
-            <div className="absolute inset-0 opacity-40 mix-blend-multiply" style={{ backgroundImage: 'radial-gradient(#EDE0D5 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#F5EEE8]" />
+        <div className="relative pt-32 pb-16 overflow-hidden">
+            {/* Background Image as-is */}
+            <div 
+                className="absolute inset-0 z-0"
+                style={{ 
+                    backgroundImage: 'url("/images/breadcrumb.webp")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }} 
+            />
 
             <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
                 {/* Breadcrumbs Trail */}

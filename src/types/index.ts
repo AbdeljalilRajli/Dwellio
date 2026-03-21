@@ -16,6 +16,8 @@ export interface Listing {
     images: string[];
     owner_id: string;
     owner_phone?: string;
+    latitude?: number;
+    longitude?: number;
     created_at: string;
 }
 

@@ -135,7 +135,7 @@ export function Footer() {
                                     <MapPin size={15} style={{ color: '#7C5C44' }} />
                                 </div>
                                 <span className="text-[14px] font-medium leading-relaxed" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.4)' }}>
-                                    123 Boulevard Mohammed V,<br />Casablanca, Morocco
+                                    45 Avenue Mohamed VI,<br />Marrakech, Morocco
                                 </span>
                             </li>
                             <li className="flex items-center gap-3">
@@ -143,7 +143,7 @@ export function Footer() {
                                     <Mail size={15} style={{ color: '#7C5C44' }} />
                                 </div>
                                 <span className="text-[14px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.4)' }}>
-                                    hello@dwellio.com
+                                    concierge@dwellio.com
                                 </span>
                             </li>
                             <li className="flex items-center gap-3">
@@ -151,7 +151,7 @@ export function Footer() {
                                     <Phone size={15} style={{ color: '#7C5C44' }} />
                                 </div>
                                 <span className="text-[14px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.4)' }}>
-                                    +212 5 22 00 00 00
+                                    +212 5 24 40 00 00
                                 </span>
                             </li>
                         </ul>

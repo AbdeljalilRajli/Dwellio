@@ -1,11 +1,12 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { MapPin, Bed, Bath, Maximize, Calendar, ArrowLeft, Heart, Share2, CheckCircle2, Phone, MapPinned } from 'lucide-react';
+import { MapPin, Bed, Bath, Maximize, Calendar, ArrowLeft, Heart, Share2, CheckCircle2, Phone } from 'lucide-react';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
 import { listingService } from '../services/listingService';
 import { useAuth } from '../hooks/useAuth';
 import { useState } from 'react';
+import { PropertyMap } from '../components/ui/PropertyMap';
 
 export default function PropertyDetails() {
     const { id } = useParams();
@@ -157,22 +158,23 @@ export default function PropertyDetails() {
                             </div>
                         </div>
 
-                        {/* Map Placeholder */}
+                        {/* Interactive Map */}
                         <div className="mb-10">
                             <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A' }}>
                                 Location
                             </h2>
-                            <div className="rounded-2xl overflow-hidden h-[280px] flex items-center justify-center" style={{ background: '#EDE0D5' }}>
-                                <div className="text-center">
-                                    <MapPinned size={40} style={{ color: '#7C5C44' }} className="mx-auto mb-3" />
-                                    <p className="text-[14px] font-semibold" style={{ fontFamily: "'Cormorant', serif", color: '#7C5C44' }}>
-                                        {listing.address}, {listing.city}
-                                    </p>
-                                    <p className="text-[12px] mt-1" style={{ fontFamily: "'Quicksand', sans-serif", color: '#999' }}>
-                                        Interactive map coming soon
-                                    </p>
-                                </div>
+                            <div className="rounded-2xl overflow-hidden h-[350px] shadow-sm border border-[#EDE0D5]">
+                                <PropertyMap 
+                                    latitude={listing.latitude} 
+                                    longitude={listing.longitude} 
+                                    address={listing.address}
+                                    city={listing.city}
+                                />
                             </div>
+                            <p className="mt-3 text-[13px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>
+                                <MapPin size={12} className="inline-block mr-1 -mt-0.5" />
+                                {listing.address}, {listing.city}, Morocco
+                            </p>
                         </div>
                     </div>
 

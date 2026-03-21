@@ -3,6 +3,7 @@ import { MapPin, Mail, Phone, Clock, Send } from 'lucide-react';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
 import { PageHeader } from '../components/ui/PageHeader';
+import { PropertyMap } from '../components/ui/PropertyMap';
 
 export default function Contact() {
     const [sent, setSent] = useState(false);
@@ -118,7 +119,7 @@ export default function Contact() {
                                     <div>
                                         <p className="text-[13px] font-bold mb-0.5" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>Address</p>
                                         <p className="text-[13px]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>
-                                            123 Boulevard Mohammed V<br />Casablanca, Morocco
+                                            45 Avenue Mohamed VI<br />Hivernage, Marrakech, Morocco
                                         </p>
                                     </div>
                                 </div>
@@ -128,7 +129,7 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <p className="text-[13px] font-bold mb-0.5" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>Phone</p>
-                                        <p className="text-[13px]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>+212 5 22 00 00 00</p>
+                                        <p className="text-[13px]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>+212 5 24 40 00 00</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3">
@@ -137,7 +138,7 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <p className="text-[13px] font-bold mb-0.5" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>Email</p>
-                                        <p className="text-[13px]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>hello@dwellio.com</p>
+                                        <p className="text-[13px]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>concierge@dwellio.com</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3">
@@ -154,17 +155,14 @@ export default function Contact() {
                             </div>
                         </div>
 
-                        {/* Map Placeholder */}
-                        <div className="rounded-2xl overflow-hidden h-[220px] flex items-center justify-center" style={{ background: '#EDE0D5' }}>
-                            <div className="text-center">
-                                <MapPin size={32} style={{ color: '#7C5C44' }} className="mx-auto mb-2" />
-                                <p className="text-[13px] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif", color: '#7C5C44' }}>
-                                    Casablanca, Morocco
-                                </p>
-                                <p className="text-[11px] mt-1" style={{ fontFamily: "'Quicksand', sans-serif", color: '#999' }}>
-                                    Interactive map coming soon
-                                </p>
-                            </div>
+                        {/* Interactive Map */}
+                        <div className="rounded-2xl overflow-hidden h-[300px] shadow-sm border border-[#EDE0D5]">
+                            <PropertyMap 
+                                latitude={31.6346} 
+                                longitude={-8.0100} 
+                                address="Dwellio Headquarters"
+                                city="Marrakech"
+                            />
                         </div>
                     </div>
                 </div>
