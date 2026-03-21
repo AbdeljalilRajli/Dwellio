@@ -264,9 +264,9 @@ export default function HomePage() {
                             className="relative aspect-square rounded-[40px] overflow-hidden shadow-2xl"
                         >
                             <img
-                                src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1000"
+                                src="/images/home-about-img.webp"
                                 className="w-full h-full object-cover"
-                                alt="Luxury Service"
+                                alt="Excellence in Detail"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                             <div className="absolute bottom-10 left-10 right-10 p-8 rounded-[32px] bg-white/10 backdrop-blur-2xl border border-white/20">
