@@ -58,6 +58,11 @@ CREATE POLICY "Users can see their own messages" ON messages
 DROP POLICY IF EXISTS "Anyone can send a message" ON messages;
 CREATE POLICY "Anyone can send a message" ON messages
     FOR INSERT WITH CHECK (auth.uid() = sender_id);
+
+-- Users can delete their own messages
+DROP POLICY IF EXISTS "Users can delete their own messages" ON messages;
+CREATE POLICY "Users can delete their own messages" ON messages
+    FOR DELETE USING (auth.uid() = sender_id OR auth.uid() = receiver_id);
 -- Users Table Security (Profiles)
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 

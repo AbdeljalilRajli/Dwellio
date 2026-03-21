@@ -138,6 +138,19 @@ export const listingService = {
         return enriched;
     },
 
+    async deleteMessage(id: string) {
+        console.log('Service: Deleting message ID', id);
+        const { error } = await supabase
+            .from('messages')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
+            console.error('Service: Delete error', error);
+            throw error;
+        }
+    },
+
     async uploadImages(files: File[], userId: string): Promise<string[]> {
         const uploadPromises = files.map(async (file) => {
             const fileName = `${userId}/${Date.now()}-${file.name}`;
