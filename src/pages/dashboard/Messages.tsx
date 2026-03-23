@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import { listingService } from '../../services/listingService';
 import { useAuth } from '../../hooks/useAuth';
 import { MessageSquare, Calendar, User, Trash2 } from 'lucide-react';
@@ -83,9 +84,11 @@ export default function Messages() {
                                                 />
                                             </div>
                                             <div>
-                                                <h3 className="text-xl font-bold text-brand-primary group-hover:text-brand-accent transition-colors duration-300">
-                                                    {msg.listings?.title}
-                                                </h3>
+                                                <Link to={`/properties/${msg.listings?.slug || msg.listings?.id}`}>
+                                                    <h3 className="text-xl font-bold text-brand-primary group-hover:text-brand-accent transition-colors duration-300">
+                                                        {msg.listings?.title}
+                                                    </h3>
+                                                </Link>
                                                 <div className="flex flex-wrap items-center gap-4 text-[11px] text-brand-accent font-bold uppercase tracking-[0.15em] mt-2">
                                                     <span className="flex items-center gap-2 bg-brand-secondary/10 px-3 py-1.5 rounded-full">
                                                         <User size={12} />

@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { PropertyMap } from '../components/ui/PropertyMap';
 
 export default function PropertyDetails() {
-    const { id } = useParams();
+    const { slug } = useParams();
     const navigate = useNavigate();
     const { user } = useAuth();
     const [message, setMessage] = useState('');
@@ -17,9 +17,9 @@ export default function PropertyDetails() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { data: listing, isLoading } = useQuery({
-        queryKey: ['listing', id],
-        queryFn: () => listingService.getListingById(id!),
-        enabled: !!id
+        queryKey: ['listing', slug],
+        queryFn: () => listingService.getListingBySlug(slug!),
+        enabled: !!slug
     });
 
     const formatPrice = (price: number, type: string) => {

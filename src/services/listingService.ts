@@ -58,6 +58,27 @@ export const listingService = {
         return data as Listing;
     },
 
+    async getListingBySlug(slug: string): Promise<Listing | null> {
+        const { data, error } = await supabase
+            .from('listings')
+            .select('*')
+            .eq('slug', slug)
+            .single();
+
+        if (error) return null;
+        return data as Listing;
+    },
+
+    generateSlug(title: string): string {
+        return title
+            .toString()
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, '-')     // Replace spaces with -
+            .replace(/[^\w-]+/g, '')  // Remove all non-word chars
+            .replace(/--+/g, '-');    // Replace multiple - with single -
+    },
+
     async deleteListing(id: string) {
         const { error } = await supabase
             .from('listings')

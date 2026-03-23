@@ -16,10 +16,15 @@ export default function EditListing() {
 
     const handleUpdate = async (formData: any) => {
         try {
+            const slug = listing!.title === formData.title 
+                ? listing!.slug 
+                : `${listingService.generateSlug(formData.title)}-${id?.substring(0, 4)}`;
+
             const { error } = await supabase
                 .from('listings')
                 .update({
                     ...formData,
+                    slug,
                     price: parseFloat(formData.price),
                     bedrooms: parseInt(formData.bedrooms),
                     bathrooms: parseInt(formData.bathrooms),

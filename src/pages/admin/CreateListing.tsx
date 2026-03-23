@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import ListingForm from './ListingForm';
 import { supabase } from '../../lib/supabaseClient';
 import { useAuth } from '../../hooks/useAuth';
+import { listingService } from '../../services/listingService';
 
 export default function CreateListing() {
     const navigate = useNavigate();
@@ -9,10 +10,13 @@ export default function CreateListing() {
 
     const handleCreate = async (formData: any) => {
         try {
+            const slug = `${listingService.generateSlug(formData.title)}-${Math.random().toString(36).substring(2, 6)}`;
+            
             const { error } = await supabase
                 .from('listings')
                 .insert([{
                     ...formData,
+                    slug,
                     owner_id: user?.id,
                     price: parseFloat(formData.price),
                     bedrooms: parseInt(formData.bedrooms),

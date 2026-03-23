@@ -54,7 +54,7 @@ export function PropertyCard({ listing }: Props) {
                 transform: isHovered ? 'translateY(-10px)' : 'translateY(0)'
             }}
         >
-            <Link to={`/properties/${listing.id}`} className="block flex-1 flex flex-col h-full">
+            <Link to={`/properties/${listing.slug || listing.id}`} className="block flex-1 flex flex-col h-full">
                 {/* Image Section */}
                 <div className="relative aspect-[4/3] overflow-hidden">
                     <img
@@ -157,7 +157,7 @@ export function PropertyCard({ listing }: Props) {
             >
                 <div className="pointer-events-auto">
                     <Link
-                        to={`/properties/${listing.id}`}
+                        to={`/properties/${listing.slug || listing.id}`}
                         className="flex items-center gap-2 px-5 py-2.5 text-white text-[12px] font-bold uppercase tracking-widest rounded-xl shadow-xl transition-colors duration-300"
                         style={{ background: '#1A1A1A' }}
                     >

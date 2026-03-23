@@ -82,7 +82,7 @@ export default function ManageListings() {
                                         </td>
                                         <td className="py-6 pr-4 text-right">
                                             <div className="flex items-center justify-end space-x-2">
-                                                <Link to={`/properties/${item.id}`} className="p-2 text-brand-accent hover:text-brand-primary transition-colors">
+                                                <Link to={`/properties/${item.slug || item.id}`} className="p-2 text-brand-accent hover:text-brand-primary transition-colors">
                                                     <Eye size={18} />
                                                 </Link>
                                                 <Link to={`/dashboard/listings/edit/${item.id}`} className="p-2 text-brand-accent hover:text-brand-primary transition-colors">

@@ -51,7 +51,7 @@ function AnimatedRoutes() {
         <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
         <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
         <Route path="/properties" element={<PageWrapper><ListingPage /></PageWrapper>} />
-        <Route path="/properties/:id" element={<PageWrapper><PropertyDetails /></PageWrapper>} />
+        <Route path="/properties/:slug" element={<PageWrapper><PropertyDetails /></PageWrapper>} />
         <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
         <Route path="/login" element={<PageWrapper><Login /></PageWrapper>} />
         <Route path="/signup" element={<PageWrapper><Signup /></PageWrapper>} />

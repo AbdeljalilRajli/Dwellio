@@ -3,6 +3,7 @@ export type ListingType = 'Rent' | 'Sale';
 
 export interface Listing {
     id: string;
+    slug: string;
     title: string;
     description: string;
     price: number;
