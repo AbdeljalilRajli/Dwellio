@@ -18,6 +18,7 @@ export interface Listing {
     owner_phone?: string;
     latitude?: number;
     longitude?: number;
+    amenities: string[];
     created_at: string;
 }
 

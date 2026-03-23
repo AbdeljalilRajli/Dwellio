@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Save, ArrowLeft, Loader2, Maximize, Bed, Bath, MapPin, Plus, X as CloseIcon, Image as ImageIcon } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, Maximize, Bed, Bath, MapPin, Plus, X as CloseIcon, Image as ImageIcon, CheckCircle2, MapPinned } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { listingService } from '../../services/listingService';
 import { useAuth } from '../../hooks/useAuth';
@@ -25,7 +25,21 @@ export default function ListingForm({ initialData, onSubmit, title }: ListingFor
         bathrooms: initialData?.bathrooms || '',
         area: initialData?.area || '',
         images: initialData?.images || [],
+        amenities: initialData?.amenities || [],
+        latitude: initialData?.latitude || '',
+        longitude: initialData?.longitude || '',
     });
+
+    const AMENITIES_LIST = [
+        'Private Swimming Pool',
+        'Covered Parking',
+        'Landscaped Garden',
+        'Central Air Conditioning',
+        'Smart Home System',
+        '24/7 Security',
+        'High-Speed Internet',
+        'Marble Flooring'
+    ];
 
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [previews, setPreviews] = useState<string[]>(initialData?.images || []);
@@ -237,6 +251,38 @@ export default function ListingForm({ initialData, onSubmit, title }: ListingFor
                         </div>
 
                         <div>
+                            <label className="block text-xs font-bold uppercase text-brand-accent tracking-widest mb-3 ml-4">Latitude</label>
+                            <div className="relative group">
+                                <MapPinned className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-accent/30 group-focus-within:text-brand-accent transition-colors" size={20} />
+                                <input
+                                    type="number"
+                                    step="any"
+                                    name="latitude"
+                                    className="w-full pl-16 pr-8 py-5 bg-white rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-bold text-brand-primary shadow-sm"
+                                    value={formData.latitude}
+                                    onChange={handleChange}
+                                    placeholder="e.g. 31.6295"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-xs font-bold uppercase text-brand-accent tracking-widest mb-3 ml-4">Longitude</label>
+                            <div className="relative group">
+                                <MapPinned className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-accent/30 group-focus-within:text-brand-accent transition-colors" size={20} />
+                                <input
+                                    type="number"
+                                    step="any"
+                                    name="longitude"
+                                    className="w-full pl-16 pr-8 py-5 bg-white rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-bold text-brand-primary shadow-sm"
+                                    value={formData.longitude}
+                                    onChange={handleChange}
+                                    placeholder="e.g. -7.9811"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
                             <label className="block text-xs font-bold uppercase text-brand-accent tracking-widest mb-3 ml-4">Bedrooms</label>
                             <div className="relative group">
                                 <Bed className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-accent/30 group-focus-within:text-brand-accent transition-colors" size={20} />
@@ -262,6 +308,46 @@ export default function ListingForm({ initialData, onSubmit, title }: ListingFor
                                     onChange={handleChange}
                                 />
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Amenities & Features */}
+                <div className="bg-brand-bg/30 p-10 rounded-[3rem] border border-brand-secondary/5 space-y-8">
+                    <div>
+                        <h3 className="text-xl font-display font-bold text-brand-primary mb-6 ml-4">Amenities & Features</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {AMENITIES_LIST.map((item) => (
+                                <button
+                                    key={item}
+                                    type="button"
+                                    onClick={() => {
+                                        setFormData(prev => {
+                                            const amenities = prev.amenities.includes(item)
+                                                ? prev.amenities.filter(a => a !== item)
+                                                : [...prev.amenities, item];
+                                            return { ...prev, amenities };
+                                        });
+                                    }}
+                                    className={`flex items-center gap-3 py-4 px-6 rounded-2xl transition-all duration-200 border text-left group ${formData.amenities.includes(item)
+                                            ? 'bg-white border-brand-primary/20 shadow-sm'
+                                            : 'bg-white/40 border-transparent hover:bg-white hover:border-brand-primary/10'
+                                        }`}
+                                >
+                                    <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-colors ${formData.amenities.includes(item)
+                                            ? 'bg-brand-primary text-white'
+                                            : 'bg-brand-secondary/20 text-brand-accent/30 group-hover:text-brand-primary/40'
+                                        }`}>
+                                        <CheckCircle2 size={14} strokeWidth={3} />
+                                    </div>
+                                    <span className={`text-[14px] font-bold transition-colors ${formData.amenities.includes(item)
+                                            ? 'text-brand-primary'
+                                            : 'text-brand-accent group-hover:text-brand-primary'
+                                        }`} style={{ fontFamily: "'Quicksand', sans-serif" }}>
+                                        {item}
+                                    </span>
+                                </button>
+                            ))}
                         </div>
                     </div>
                 </div>

@@ -140,21 +140,16 @@ export default function PropertyDetails() {
                                 Amenities & Features
                             </h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                {[
-                                    'Private Swimming Pool',
-                                    'Covered Parking',
-                                    'Landscaped Garden',
-                                    'Central Air Conditioning',
-                                    'Smart Home System',
-                                    '24/7 Security',
-                                    'High-Speed Internet',
-                                    'Marble Flooring',
-                                ].map(item => (
-                                    <div key={item} className="flex items-center gap-3 py-3 px-4 rounded-xl" style={{ background: '#F5EEE8' }}>
-                                        <CheckCircle2 size={16} style={{ color: '#7C5C44' }} />
-                                        <span className="text-[14px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>{item}</span>
-                                    </div>
-                                ))}
+                                {listing.amenities?.length > 0 ? (
+                                    listing.amenities.map(item => (
+                                        <div key={item} className="flex items-center gap-3 py-3 px-4 rounded-xl" style={{ background: '#F5EEE8' }}>
+                                            <CheckCircle2 size={16} style={{ color: '#7C5C44' }} />
+                                            <span className="text-[14px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>{item}</span>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-[14px] text-gray-500 italic">No specific amenities listed.</p>
+                                )}
                             </div>
                         </div>
 

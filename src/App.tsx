@@ -12,6 +12,7 @@ import Contact from './pages/Contact';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 // Dashboard Components
@@ -55,6 +56,7 @@ function AnimatedRoutes() {
         <Route path="/login" element={<PageWrapper><Login /></PageWrapper>} />
         <Route path="/signup" element={<PageWrapper><Signup /></PageWrapper>} />
         <Route path="/forgot-password" element={<PageWrapper><ForgotPassword /></PageWrapper>} />
+        <Route path="/reset-password" element={<PageWrapper><ResetPassword /></PageWrapper>} />
 
         {/* Convenience routes */}
         <Route path="/for-rent" element={<Navigate to="/properties?type=Rent" replace />} />

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { User, Mail, Save, Loader2, ShieldCheck } from 'lucide-react';
+import { User, Mail, Save, Loader2, ShieldCheck, Lock } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabaseClient';
 
 export default function MyProfile() {
     const { profile, user } = useAuth();
     const [fullName, setFullName] = useState(profile?.full_name || '');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
@@ -14,14 +16,32 @@ export default function MyProfile() {
         setLoading(true);
         setMessage(null);
 
+        if (password && password !== confirmPassword) {
+            setMessage({ type: 'error', text: 'Passwords do not match' });
+            setLoading(false);
+            return;
+        }
+
         try {
-            const { error } = await supabase
+            // Update profile info
+            const { error: profileError } = await supabase
                 .from('users')
                 .update({ full_name: fullName })
                 .eq('id', user.id);
 
-            if (error) throw error;
+            if (profileError) throw profileError;
+
+            // Update password if provided
+            if (password) {
+                const { error: authError } = await supabase.auth.updateUser({
+                    password: password
+                });
+                if (authError) throw authError;
+            }
+
             setMessage({ type: 'success', text: 'Profile updated successfully!' });
+            setPassword('');
+            setConfirmPassword('');
         } catch (err: any) {
             setMessage({ type: 'error', text: err.message || 'Failed to update profile' });
         } finally {
@@ -30,7 +50,7 @@ export default function MyProfile() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto pb-20">
             <div className="text-center mb-12">
                 <h1 className="text-3xl font-display font-bold text-brand-primary mb-2">My Profile</h1>
                 <p className="text-brand-accent italic">Manage your personal information and security</p>
@@ -44,7 +64,9 @@ export default function MyProfile() {
             )}
 
             <form onSubmit={handleUpdate} className="space-y-8">
-                <div className="p-8 bg-brand-bg/30 rounded-[2.5rem] border border-brand-secondary/5">
+                {/* Personal Information */}
+                <div className="p-8 bg-brand-bg/30 rounded-[2.5rem] border border-brand-secondary/5 space-y-6">
+                    <h3 className="text-xs font-bold uppercase text-brand-primary tracking-[0.2em] mb-4 ml-2">Personal Information</h3>
                     <div className="space-y-6">
                         <div>
                             <label className="block text-[10px] font-bold uppercase text-brand-accent tracking-widest mb-3 ml-4">Account Role</label>
@@ -79,6 +101,37 @@ export default function MyProfile() {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Security */}
+                <div className="p-8 bg-brand-bg/30 rounded-[2.5rem] border border-brand-secondary/5 space-y-6">
+                    <div className="flex items-center space-x-3 mb-4 ml-2">
+                        <Lock className="text-brand-accent" size={18} />
+                        <h3 className="text-xs font-bold uppercase text-brand-primary tracking-[0.2em]">Security & Password</h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-[10px] font-bold uppercase text-brand-accent tracking-widest mb-3 ml-4">New Password</label>
+                            <input
+                                type="password"
+                                className="w-full px-8 py-5 bg-white rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-bold text-brand-primary shadow-sm"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="••••••••"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-[10px] font-bold uppercase text-brand-accent tracking-widest mb-3 ml-4">Confirm New Password</label>
+                            <input
+                                type="password"
+                                className="w-full px-8 py-5 bg-white rounded-2xl border-none focus:outline-none focus:ring-4 focus:ring-brand-accent/5 font-bold text-brand-primary shadow-sm"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                placeholder="••••••••"
+                            />
+                        </div>
+                    </div>
+                    <p className="mt-2 ml-4 text-[10px] text-brand-accent opacity-60 italic">Leave blank if you don't want to change your password.</p>
                 </div>
 
                 <button

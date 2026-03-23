@@ -18,6 +18,8 @@ export default function CreateListing() {
                     bedrooms: parseInt(formData.bedrooms),
                     bathrooms: parseInt(formData.bathrooms),
                     area: parseFloat(formData.area),
+                    latitude: formData.latitude ? parseFloat(formData.latitude) : null,
+                    longitude: formData.longitude ? parseFloat(formData.longitude) : null,
                 }]);
 
             if (error) throw error;
