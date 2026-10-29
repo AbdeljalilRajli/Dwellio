@@ -63,21 +63,35 @@ export function HeroSection() {
             onMouseLeave={() => { mouseX.set(0.5); mouseY.set(0.5); }}
             className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden min-h-[95vh] flex items-center w-full max-w-full"
         >
-            {/* Background Image Container */}
-            <div className="absolute inset-0 z-0 overflow-hidden">
+            {/* Background Video & Fallback Container */}
+            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                 <motion.div
                     style={{
-                        backgroundImage: 'url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=2000")',
                         y: useTransform(() => yBg.get() + moveY.get()),
                         x: moveX,
-                        scale: 1.15
+                        scale: 1.08
                     }}
-                    className="absolute -inset-[10%] bg-cover bg-center"
-                />
-                {/* Overlay for legibility */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70" />
-            </div>
+                    className="absolute -inset-[5%] w-[110%] h-[110%]"
+                >
+                    <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
+                        poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=2000"
+                        className="w-full h-full object-cover object-center filter brightness-[0.88] contrast-[1.05]"
+                    >
+                        <source src="/nestlux-hero-video.mp4" type="video/mp4" />
+                        <source src="/nestlux hero section video.mp4" type="video/mp4" />
+                    </video>
+                </motion.div>
 
+                {/* Cinematic Vignette & Luxury Overlays */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/35 to-black/75" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.5)_100%)] pointer-events-none" />
+                <div className="absolute inset-0 bg-[#12100E]/20 mix-blend-multiply pointer-events-none" />
+            </div>
             <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full">
                 {/* Text Content */}
                 <motion.div
@@ -186,4 +200,5 @@ export function HeroSection() {
         </section>
     );
 }
+
 
