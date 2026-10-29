@@ -1,6 +1,6 @@
 # NestLux — Premium Real Estate Marketplace
 
-![NestLux Mockup](./public/images/nestlux-mockup.png)
+![NestLux Cover](./public/images/nestlux-project-cover.webp)
 
 NestLux is a high-end real estate marketplace specifically curated for the Moroccan market, focusing on iconic destinations like Marrakech, Casablanca, and Rabat. It bridges the gap between traditional charm and contemporary luxury, offering a seamless experience for both buyers and property owners.
 
