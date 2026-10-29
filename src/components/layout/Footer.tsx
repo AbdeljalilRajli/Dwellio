@@ -47,7 +47,7 @@ export function Footer() {
                             className="text-[32px] font-bold tracking-tight block mb-5"
                             style={{ fontFamily: "'Cormorant', serif", color: '#fff' }}
                         >
-                            Dwellio
+                            NestLux
                         </Link>
                         <p className="text-[14px] leading-relaxed mb-8 max-w-xs" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.4)' }}>
                             Your premier real estate platform. Find luxury villas, modern apartments, and unique properties worldwide.
@@ -143,7 +143,7 @@ export function Footer() {
                                     <Mail size={15} style={{ color: '#7C5C44' }} />
                                 </div>
                                 <span className="text-[14px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.4)' }}>
-                                    concierge@dwellio.com
+                                    concierge@nestlux.com
                                 </span>
                             </li>
                             <li className="flex items-center gap-3">
@@ -161,7 +161,7 @@ export function Footer() {
                 {/* Bottom Bar */}
                 <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-[13px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.25)' }}>
-                        © 2026 Dwellio. All rights reserved.
+                        © 2026 NestLux. All rights reserved.
                     </p>
                     <div className="flex gap-8 text-[13px] font-medium" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.25)' }}>
                         <a href="#" className="hover:text-white/60 transition-colors">Privacy Policy</a>

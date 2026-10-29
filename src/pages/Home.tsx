@@ -122,12 +122,12 @@ function FAQItem({ question, answer, index }: { question: string; answer: string
 }
 
 const faq_answers: Record<string, string> = {
-    "How do I list my property on Dwellio?": "Simply create an account and head to your dashboard. Click the 'List a Property' button to fill in the details, set your price, and upload high-quality images.",
+    "How do I list my property on NestLux?": "Simply create an account and head to your dashboard. Click the 'List a Property' button to fill in the details, set your price, and upload high-quality images.",
     "Is there a fee for using the platform?": "Browsing listings and contacting property owners is completely free. We believe in making the search for your next home as accessible as possible.",
     "Are the property listings verified?": "Every listing undergoes a manual review process to maintain our high standards. However, we always recommend a physical visit before making any financial commitments.",
-    "How do I contact a property owner?": "Each property details page includes a direct inquiry form. Once submitted, the owner receives an instant notification in their Dwellio inbox.",
+    "How do I contact a property owner?": "Each property details page includes a direct inquiry form. Once submitted, the owner receives an instant notification in their NestLux inbox.",
     "Can I save my favorite properties?": "Yes! By clicking the heart icon on any property card, you can save it to your personalized Favorites list for quick access at any time.",
-    "What cities does Dwellio cover?": "We focus on premium residences across Morocco's most iconic destinations, including Marrakech, Casablanca, Rabat, Tangier, and Agadir."
+    "What cities does NestLux cover?": "We focus on premium residences across Morocco's most iconic destinations, including Marrakech, Casablanca, Rabat, Tangier, and Agadir."
 };
 
 export default function HomePage() {
@@ -210,7 +210,7 @@ export default function HomePage() {
                         className="text-center max-w-3xl mx-auto mb-20"
                     >
                         <p className="text-[12px] font-bold uppercase tracking-[0.25em] mb-4" style={{ fontFamily: "'Quicksand', sans-serif", color: '#7C5C44' }}>
-                            The Dwellio Advantage
+                            The NestLux Advantage
                         </p>
                         <h2 className="text-4xl sm:text-5xl font-bold mb-6" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A', letterSpacing: '-0.04em' }}>
                             Excellence in <span className="text-[#7C5C44]">Every Detail</span>
@@ -271,7 +271,7 @@ export default function HomePage() {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                             <div className="absolute bottom-10 left-10 right-10 p-8 rounded-[32px] bg-white/10 backdrop-blur-2xl border border-white/20">
                                 <p className="text-white text-lg italic leading-relaxed font-light" style={{ fontFamily: "'Cormorant', serif" }}>
-                                    "Dwellio isn't just a platform; it's the gateway to a refined Moroccan life."
+                                    "NestLux isn't just a platform; it's the gateway to a refined Moroccan life."
                                 </p>
                             </div>
                         </motion.div>
@@ -392,21 +392,21 @@ export default function HomePage() {
                             {
                                 name: 'Sarah Mitchell',
                                 role: 'Property Investor',
-                                text: 'Dwellio made finding our dream investment property effortless. The curated listings and attention to detail are unmatched. We closed on a stunning villa within weeks.',
+                                text: 'NestLux made finding our dream investment property effortless. The curated listings and attention to detail are unmatched. We closed on a stunning villa within weeks.',
                                 rating: 5,
                                 avatar: 'S'
                             },
                             {
                                 name: 'James Thornton',
                                 role: 'First-time Buyer',
-                                text: 'As a first-time buyer, I was overwhelmed by the process. Dwellio simplified everything — from browsing to connecting with sellers. Couldn\'t recommend it more.',
+                                text: 'As a first-time buyer, I was overwhelmed by the process. NestLux simplified everything — from browsing to connecting with sellers. Couldn\'t recommend it more.',
                                 rating: 5,
                                 avatar: 'J'
                             },
                             {
                                 name: 'Elena Rodriguez',
                                 role: 'Relocating Professional',
-                                text: 'Relocating to a new city was stressful until I found Dwellio. The platform\'s filtering and direct messaging features helped me find the perfect apartment fast.',
+                                text: 'Relocating to a new city was stressful until I found NestLux. The platform\'s filtering and direct messaging features helped me find the perfect apartment fast.',
                                 rating: 5,
                                 avatar: 'E'
                             }
@@ -474,12 +474,12 @@ export default function HomePage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4">
                         {[
-                            { q: "How do I list my property on Dwellio?", a: "" },
+                            { q: "How do I list my property on NestLux?", a: "" },
                             { q: "Is there a fee for using the platform?", a: "" },
                             { q: "Are the property listings verified?", a: "" },
                             { q: "How do I contact a property owner?", a: "" },
                             { q: "Can I save my favorite properties?", a: "" },
-                            { q: "What cities does Dwellio cover?", a: "" }
+                            { q: "What cities does NestLux cover?", a: "" }
                         ].map((faq, i) => (
                             <motion.div
                                 key={i}

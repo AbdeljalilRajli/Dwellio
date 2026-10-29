@@ -62,7 +62,7 @@ export default function Signup() {
                         {/* Header */}
                         <div className="text-center mb-8">
                             <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A' }}>
-                                Join Dwellio
+                                Join NestLux
                             </h1>
                             <p className="text-[14px]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>
                                 Create your account and start exploring

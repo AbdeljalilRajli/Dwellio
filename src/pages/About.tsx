@@ -50,7 +50,7 @@ export default function About() {
                             <span className="text-[#7C5C44]">Luxury Living</span>
                         </h1>
                         <p className="text-lg sm:text-xl text-[#888] font-['Quicksand'] leading-relaxed">
-                            Dwellio is Morocco's premier real estate boutique, connecting discerning buyers with extraordinary properties across the Kingdom's most iconic destinations.
+                            NestLux is Morocco's premier real estate boutique, connecting discerning buyers with extraordinary properties across the Kingdom's most iconic destinations.
                         </p>
                     </motion.div>
                 </div>
@@ -122,7 +122,7 @@ export default function About() {
                             </h2>
                             <div className="space-y-6 text-[#888] font-['Quicksand'] text-lg leading-relaxed">
                                 <p>
-                                    Founded with a vision to transform the Moroccan real estate landscape, Dwellio brings a curated approach to property buying, selling, and renting. We believe that a home is more than just a physical space; it's a foundation for life's most cherished moments.
+                                    Founded with a vision to transform the Moroccan real estate landscape, NestLux brings a curated approach to property buying, selling, and renting. We believe that a home is more than just a physical space; it's a foundation for life's most cherished moments.
                                 </p>
                                 <p>
                                     Our portfolio exclusively features properties that meet our rigorous standards for architecture, location, and lifestyle amenities. Whether you seek a traditional Riad in the heart of Marrakech or a contemporary penthouse in Casablanca, our experts guide you to the perfect match.
@@ -144,7 +144,7 @@ export default function About() {
                         className="text-center max-w-2xl mx-auto mb-16"
                     >
                         <h2 className="text-4xl sm:text-5xl font-bold text-[#1A1A1A] mb-4 font-['Cormorant'] tracking-tight">
-                            The Dwellio Difference
+                            The NestLux Difference
                         </h2>
                         <p className="text-[#888] font-['Quicksand'] text-lg">
                             We operate on a foundation of integrity, market mastery, and an unwavering commitment to our clients.

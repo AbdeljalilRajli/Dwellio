@@ -59,7 +59,7 @@ export function Navbar() {
                                 color: showSolidNav ? '#1A1A1A' : '#FFFFFF'
                             }}
                         >
-                            <span className="group-hover:text-[#7C5C44] transition-colors duration-300">Dwellio</span>
+                            <span className="group-hover:text-[#7C5C44] transition-colors duration-300">NestLux</span>
                         </Link>
 
                         {/* Desktop Nav */}

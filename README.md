@@ -1,8 +1,8 @@
-# Dwellio — Premium Real Estate Marketplace
+# NestLux — Premium Real Estate Marketplace
 
-![Dwellio Mockup](./public/images/dwellio-mockup.png)
+![NestLux Mockup](./public/images/nestlux-mockup.png)
 
-Dwellio is a high-end real estate marketplace specifically curated for the Moroccan market, focusing on iconic destinations like Marrakech, Casablanca, and Rabat. It bridges the gap between traditional charm and contemporary luxury, offering a seamless experience for both buyers and property owners.
+NestLux is a high-end real estate marketplace specifically curated for the Moroccan market, focusing on iconic destinations like Marrakech, Casablanca, and Rabat. It bridges the gap between traditional charm and contemporary luxury, offering a seamless experience for both buyers and property owners.
 
 ## ✨ Key Features
 
@@ -36,8 +36,8 @@ Dwellio is a high-end real estate marketplace specifically curated for the Moroc
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/dwellio.git
-   cd dwellio
+   git clone https://github.com/yourusername/nestlux.git
+   cd nestlux
    ```
 
 2. **Install dependencies**
@@ -50,7 +50,7 @@ Dwellio is a high-end real estate marketplace specifically curated for the Moroc
    ```env
    VITE_SUPABASE_URL=your_supabase_url
    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-   VITE_SITE_URL=https://dwellio-home.vercel.app
+   VITE_SITE_URL=https://nestlux.vercel.app
    ```
 
 4. **Run the development server**

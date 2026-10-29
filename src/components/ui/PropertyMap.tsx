@@ -20,7 +20,7 @@ const DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-// Custom Gold Icon for Dwellio branding
+// Custom Gold Icon for NestLux branding
 const GoldIcon = L.divIcon({
     className: 'custom-div-icon',
     html: `<div style="background-color: #7C5C44; width: 32px; height: 32px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; items-center; justify-center; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">

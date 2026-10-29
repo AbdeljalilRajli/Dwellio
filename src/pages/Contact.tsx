@@ -138,7 +138,7 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <p className="text-[13px] font-bold mb-0.5" style={{ fontFamily: "'Quicksand', sans-serif", color: '#1A1A1A' }}>Email</p>
-                                        <p className="text-[13px]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>concierge@dwellio.com</p>
+                                        <p className="text-[13px]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>concierge@nestlux.com</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3">
@@ -160,7 +160,7 @@ export default function Contact() {
                             <PropertyMap 
                                 latitude={31.6346} 
                                 longitude={-8.0100} 
-                                address="Dwellio Headquarters"
+                                address="NestLux Headquarters"
                                 city="Marrakech"
                             />
                         </div>

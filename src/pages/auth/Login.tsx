@@ -46,7 +46,7 @@ export default function Login() {
                                 Welcome Back
                             </h1>
                             <p className="text-[14px]" style={{ fontFamily: "'Quicksand', sans-serif", color: '#888' }}>
-                                Log in to your Dwellio account
+                                Log in to your NestLux account
                             </p>
                         </div>
 
