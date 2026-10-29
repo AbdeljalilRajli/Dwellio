@@ -1,4 +1,4 @@
-﻿import { PropertySearchForm } from './PropertySearchForm';
+import { PropertySearchForm } from './PropertySearchForm';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 
@@ -31,7 +31,7 @@ const textRevealVariants: Variants = {
 
 export function HeroSection() {
     return (
-        <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden min-h-[95vh] flex items-center w-full max-w-full">
+        <section className="relative pt-24 pb-10 sm:pt-28 sm:pb-12 overflow-hidden min-h-screen lg:h-screen flex flex-col justify-center w-full max-w-full">
             {/* Background Video & Fallback Container */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                 <video
@@ -41,16 +41,15 @@ export function HeroSection() {
                     playsInline
                     preload="auto"
                     poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=2000"
-                    className="w-full h-full object-cover object-center filter brightness-[0.88] contrast-[1.05]"
+                    className="w-full h-full object-cover object-center"
                 >
                     <source src="/nestlux-hero-video.mp4" type="video/mp4" />
                     <source src="/nestlux hero section video.mp4" type="video/mp4" />
                 </video>
 
-                {/* Cinematic Vignette & Luxury Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/35 to-black/75" />
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.5)_100%)] pointer-events-none" />
-                <div className="absolute inset-0 bg-[#12100E]/20 mix-blend-multiply pointer-events-none" />
+                {/* Clean, Luminous Overlays - keeps video vivid & text legible */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/15 to-black/55 pointer-events-none" />
+                <div className="absolute inset-0 bg-black/10 pointer-events-none" />
             </div>
 
             <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full">
@@ -59,9 +58,9 @@ export function HeroSection() {
                     variants={staggerContainer}
                     initial="hidden"
                     animate="visible"
-                    className="text-center max-w-4xl mx-auto mb-16"
+                    className="text-center max-w-4xl mx-auto mb-10 sm:mb-12"
                 >
-                    <div className="overflow-hidden pb-2 mb-0">
+                    <div className="overflow-hidden pb-1 -mb-1 sm:-mb-2">
                         <motion.h1
                             variants={textRevealVariants}
                             style={{
@@ -69,7 +68,7 @@ export function HeroSection() {
                                 fontSize: 'clamp(2.25rem, 6vw, 5.5rem)',
                                 fontWeight: 700,
                                 color: '#FFFFFF',
-                                lineHeight: 1.1,
+                                lineHeight: 0.98,
                                 letterSpacing: '-0.05em',
                                 textShadow: '0 8px 32px rgba(0,0,0,0.4)'
                             }}
@@ -78,7 +77,7 @@ export function HeroSection() {
                         </motion.h1>
                     </div>
 
-                    <div className="overflow-hidden pb-4 mb-8">
+                    <div className="overflow-hidden pb-2 mb-4 sm:mb-5">
                         <motion.h1
                             variants={textRevealVariants}
                             transition={{ delay: 0.1 }}
@@ -87,7 +86,7 @@ export function HeroSection() {
                                 fontSize: 'clamp(2.25rem, 6vw, 5.5rem)',
                                 fontWeight: 700,
                                 color: '#FFFFFF',
-                                lineHeight: 1.1,
+                                lineHeight: 0.98,
                                 letterSpacing: '-0.05em',
                                 textShadow: '0 8px 32px rgba(0,0,0,0.4)'
                             }}
@@ -100,7 +99,7 @@ export function HeroSection() {
 
                     <motion.p
                         variants={fadeInUp}
-                        className="text-[19px] sm:text-[22px] leading-relaxed max-w-2xl mx-auto opacity-90 font-light"
+                        className="text-[17px] sm:text-[20px] leading-snug sm:leading-normal max-w-2xl mx-auto opacity-90 font-light"
                         style={{ fontFamily: "'Quicksand', sans-serif", color: '#FBF8F5', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}
                     >
                         A curated selection of the finest riads, villas, and modern luxury apartments across the Kingdom.
@@ -128,7 +127,7 @@ export function HeroSection() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1.5, delay: 1 }}
-                    className="flex flex-wrap justify-center gap-12 sm:gap-24 mt-20 pt-10 border-t border-white/10"
+                    className="flex flex-wrap justify-center gap-10 sm:gap-20 mt-12 sm:mt-14 pt-8 border-t border-white/10"
                 >
                     {[
                         { value: '2,500+', label: 'Listings' },
@@ -160,3 +159,4 @@ export function HeroSection() {
         </section>
     );
 }
+
