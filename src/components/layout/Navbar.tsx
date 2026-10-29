@@ -53,13 +53,13 @@ export function Navbar() {
                         {/* Logo */}
                         <Link
                             to="/"
-                            className="text-[26px] font-bold tracking-tight group no-underline"
-                            style={{
-                                fontFamily: "'Cormorant', serif",
-                                color: showSolidNav ? '#1A1A1A' : '#FFFFFF'
-                            }}
+                            className="flex items-center group no-underline"
                         >
-                            <span className="group-hover:text-[#7C5C44] transition-colors duration-300">NestLux</span>
+                            <img
+                                src={showSolidNav ? "/NestLux-colored-logo.png" : "/NestLux-white-logo.png"}
+                                alt="NestLux"
+                                className="h-8 sm:h-9 w-auto object-contain transition-all duration-300"
+                            />
                         </Link>
 
                         {/* Desktop Nav */}
@@ -234,4 +234,5 @@ export function Navbar() {
         </>
     );
 }
+
 

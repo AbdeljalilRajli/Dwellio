@@ -44,10 +44,13 @@ export function Footer() {
                     <div className="lg:col-span-4">
                         <Link
                             to="/"
-                            className="text-[32px] font-bold tracking-tight block mb-5"
-                            style={{ fontFamily: "'Cormorant', serif", color: '#fff' }}
+                            className="block mb-5"
                         >
-                            NestLux
+                            <img
+                                src="/NestLux-white-logo.png"
+                                alt="NestLux"
+                                className="h-9 w-auto object-contain"
+                            />
                         </Link>
                         <p className="text-[14px] leading-relaxed mb-8 max-w-xs" style={{ fontFamily: "'Quicksand', sans-serif", color: 'rgba(255,255,255,0.4)' }}>
                             Your premier real estate platform. Find luxury villas, modern apartments, and unique properties worldwide.
@@ -173,4 +176,5 @@ export function Footer() {
         </footer>
     );
 }
+
 
