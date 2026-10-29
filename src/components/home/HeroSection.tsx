@@ -1,6 +1,5 @@
-import { useRef } from 'react';
-import { PropertySearchForm } from './PropertySearchForm';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+﻿import { PropertySearchForm } from './PropertySearchForm';
+import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 
 const fadeInUp: Variants = {
@@ -31,67 +30,29 @@ const textRevealVariants: Variants = {
 };
 
 export function HeroSection() {
-    const { scrollY } = useScroll();
-    const sectionRef = useRef<HTMLElement>(null);
-
-    // Parallax effect: background moves slower than foreground
-    const yBg = useTransform(scrollY, [0, 1000], [0, 300]);
-
-    // Mouse Parallax
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    const springX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-    const springY = useSpring(mouseY, { stiffness: 50, damping: 20 });
-
-    const moveX = useTransform(springX, [0, 1], [-20, 20]);
-    const moveY = useTransform(springY, [0, 1], [-20, 20]);
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-        if (!sectionRef.current) return;
-        const rect = sectionRef.current.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;
-        const y = (e.clientY - rect.top) / rect.height;
-        mouseX.set(x);
-        mouseY.set(y);
-    };
-
     return (
-        <section
-            ref={sectionRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={() => { mouseX.set(0.5); mouseY.set(0.5); }}
-            className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden min-h-[95vh] flex items-center w-full max-w-full"
-        >
+        <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden min-h-[95vh] flex items-center w-full max-w-full">
             {/* Background Video & Fallback Container */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                <motion.div
-                    style={{
-                        y: useTransform(() => yBg.get() + moveY.get()),
-                        x: moveX,
-                        scale: 1.08
-                    }}
-                    className="absolute -inset-[5%] w-[110%] h-[110%]"
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=2000"
+                    className="w-full h-full object-cover object-center filter brightness-[0.88] contrast-[1.05]"
                 >
-                    <video
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="auto"
-                        poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=2000"
-                        className="w-full h-full object-cover object-center filter brightness-[0.88] contrast-[1.05]"
-                    >
-                        <source src="/nestlux-hero-video.mp4" type="video/mp4" />
-                        <source src="/nestlux hero section video.mp4" type="video/mp4" />
-                    </video>
-                </motion.div>
+                    <source src="/nestlux-hero-video.mp4" type="video/mp4" />
+                    <source src="/nestlux hero section video.mp4" type="video/mp4" />
+                </video>
 
                 {/* Cinematic Vignette & Luxury Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/35 to-black/75" />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.5)_100%)] pointer-events-none" />
                 <div className="absolute inset-0 bg-[#12100E]/20 mix-blend-multiply pointer-events-none" />
             </div>
+
             <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full">
                 {/* Text Content */}
                 <motion.div
@@ -100,7 +61,6 @@ export function HeroSection() {
                     animate="visible"
                     className="text-center max-w-4xl mx-auto mb-16"
                 >
-
                     <div className="overflow-hidden pb-2 mb-0">
                         <motion.h1
                             variants={textRevealVariants}
@@ -200,5 +160,3 @@ export function HeroSection() {
         </section>
     );
 }
-
-
