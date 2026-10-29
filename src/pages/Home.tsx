@@ -86,13 +86,13 @@ function FAQItem({ question, answer, index }: { question: string; answer: string
         >
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-start justify-between w-full text-left group"
+                className="flex items-start justify-between w-full text-left group gap-4"
             >
-                <div className="flex gap-6 items-start">
+                <div className="flex gap-4 sm:gap-6 items-start min-w-0 flex-1">
                     <span className="text-[13px] font-bold opacity-30 mt-1.5" style={{ fontFamily: "'Quicksand', sans-serif" }}>
                         {String(index + 1).padStart(2, '0')}
                     </span>
-                    <h3 className="text-xl lg:text-2xl font-bold transition-colors group-hover:text-[#7C5C44] pr-8" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A' }}>
+                    <h3 className="text-xl lg:text-2xl font-bold transition-colors group-hover:text-[#7C5C44] pr-4 sm:pr-8 min-w-0 break-words" style={{ fontFamily: "'Cormorant', serif", color: '#1A1A1A' }}>
                         {question}
                     </h3>
                 </div>
@@ -140,7 +140,7 @@ export default function HomePage() {
 
 
     return (
-        <div className="min-h-screen" style={{ background: '#FBF8F5' }}>
+        <div className="min-h-screen w-full max-w-full overflow-x-hidden" style={{ background: '#FBF8F5' }}>
             <Navbar />
 
             {/* Hero */}
@@ -304,7 +304,7 @@ export default function HomePage() {
                         whileInView="visible"
                         viewport={{ once: true, margin: "-100px" }}
                         variants={fadeInUp}
-                        className="-mx-5 sm:-mx-8 px-5 sm:px-8"
+                        className="-mx-5 sm:-mx-8 px-5 sm:px-8 overflow-hidden"
                     >
                         <Swiper
                             modules={[FreeMode, Autoplay]}
@@ -585,3 +585,4 @@ export default function HomePage() {
         </div>
     );
 }
+

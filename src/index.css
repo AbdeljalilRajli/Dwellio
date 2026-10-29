@@ -23,6 +23,9 @@
 
   html {
     @apply scroll-smooth;
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
   }
 
   body {
@@ -31,6 +34,10 @@
     font-family: "Quicksand", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+    position: relative;
   }
 
   h1,

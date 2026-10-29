@@ -31,11 +31,11 @@ const queryClient = new QueryClient();
 // Page Transition Wrapper
 const PageWrapper = ({ children }: { children: React.ReactNode }) => (
   <motion.div
-    initial={{ opacity: 0, y: 15 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -15 }}
-    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-    className="w-full flex-1 flex flex-col"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.35, ease: 'easeOut' }}
+    className="w-full max-w-full flex-1 flex flex-col min-w-0"
   >
     {children}
   </motion.div>
@@ -86,7 +86,7 @@ function App() {
       <AuthProvider>
         <Router>
           <ScrollToTop />
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col w-full max-w-full overflow-x-hidden">
             <AnimatedRoutes />
           </div>
         </Router>
@@ -96,3 +96,5 @@ function App() {
 }
 
 export default App;
+
+

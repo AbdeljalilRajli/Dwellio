@@ -61,7 +61,7 @@ export function HeroSection() {
             ref={sectionRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={() => { mouseX.set(0.5); mouseY.set(0.5); }}
-            className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden min-h-[95vh] flex items-center"
+            className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden min-h-[95vh] flex items-center w-full max-w-full"
         >
             {/* Background Image Container */}
             <div className="absolute inset-0 z-0 overflow-hidden">
@@ -92,7 +92,7 @@ export function HeroSection() {
                             variants={textRevealVariants}
                             style={{
                                 fontFamily: "'Cormorant', serif",
-                                fontSize: 'clamp(3rem, 7vw, 5.5rem)',
+                                fontSize: 'clamp(2.25rem, 6vw, 5.5rem)',
                                 fontWeight: 700,
                                 color: '#FFFFFF',
                                 lineHeight: 1.1,
@@ -110,7 +110,7 @@ export function HeroSection() {
                             transition={{ delay: 0.1 }}
                             style={{
                                 fontFamily: "'Cormorant', serif",
-                                fontSize: 'clamp(3rem, 7vw, 5.5rem)',
+                                fontSize: 'clamp(2.25rem, 6vw, 5.5rem)',
                                 fontWeight: 700,
                                 color: '#FFFFFF',
                                 lineHeight: 1.1,
@@ -186,3 +186,4 @@ export function HeroSection() {
         </section>
     );
 }
+

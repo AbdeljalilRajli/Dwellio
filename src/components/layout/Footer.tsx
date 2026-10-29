@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export function Footer() {
     return (
-        <footer style={{ background: '#1A1A1A' }}>
+        <footer className="w-full max-w-full overflow-hidden" style={{ background: '#1A1A1A' }}>
             {/* Newsletter Strip */}
             <div className="border-b border-white/5">
                 <div className="max-w-7xl mx-auto px-5 sm:px-8 py-14">
@@ -17,17 +17,17 @@ export function Footer() {
                                 Get notified about new premium listings and market insights.
                             </p>
                         </div>
-                        <div className="flex w-full lg:w-auto gap-3">
+                        <div className="flex flex-col sm:flex-row w-full lg:w-auto gap-3">
                             <input
                                 type="email"
                                 placeholder="Enter your email"
-                                className="flex-1 lg:w-80 px-6 py-4 rounded-xl text-[14px] font-medium outline-none transition-all focus:ring-2 focus:ring-[#7C5C44]"
+                                className="w-full flex-1 min-w-0 lg:w-80 px-6 py-4 rounded-xl text-[14px] font-medium outline-none transition-all focus:ring-2 focus:ring-[#7C5C44]"
                                 style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', fontFamily: "'Quicksand', sans-serif", color: '#fff' }}
                             />
                             <motion.button
                                 whileHover={{ scale: 1.04 }}
                                 whileTap={{ scale: 0.96 }}
-                                className="px-8 py-4 rounded-xl text-[13px] font-bold uppercase tracking-widest text-[#1A1A1A] shrink-0"
+                                className="w-full sm:w-auto px-8 py-4 rounded-xl text-[13px] font-bold uppercase tracking-widest text-[#1A1A1A] shrink-0"
                                 style={{ fontFamily: "'Quicksand', sans-serif", background: '#EDE0D5' }}
                             >
                                 Subscribe
@@ -173,3 +173,4 @@ export function Footer() {
         </footer>
     );
 }
+
